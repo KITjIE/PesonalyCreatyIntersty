@@ -1,0 +1,59 @@
+﻿<UserControl x:Class="WPFTemplateLib.UserControls.UC_ConfirmBox"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:userControls="clr-namespace:WPFTemplateLib.UserControls"
+             xmlns:wpfConverters="clr-namespace:WPFTemplateLib.WpfConverters"
+             mc:Ignorable="d" 
+             d:DesignHeight="500" d:DesignWidth="600">
+
+    <UserControl.Resources>
+        <wpfConverters:VisibleConverter x:Key="VisibleConverter"></wpfConverters:VisibleConverter>
+        <wpfConverters:CollapsedConverter x:Key="CollapsedConverter"></wpfConverters:CollapsedConverter>
+    </UserControl.Resources>
+
+    <Grid Background="#905F9EA0">
+        <Grid Background="Gainsboro" d:DesignWidth="400" d:DesignHeight="300"
+              Width="{Binding DialogWidth, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}" 
+              Height="{Binding DialogHeight, RelativeSource={RelativeSource AncestorType=UserControl}, Mode=TwoWay}">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="28"></RowDefinition>
+                <RowDefinition Height="28"></RowDefinition>
+                <RowDefinition Height="*"></RowDefinition>
+                <RowDefinition Height="Auto"></RowDefinition>
+            </Grid.RowDefinitions>
+
+            <DockPanel Height="28" Background="SteelBlue">
+                <TextBox Text="{Binding DialogTitle, TargetNullValue='注意', FallbackValue='注意'}" Height="26" Width="Auto" Background="SteelBlue" BorderThickness="0" 
+                         HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" FontSize="16" Focusable="False" IsHitTestVisible="False" IsTabStop="False" 
+                         VerticalContentAlignment="Center" Padding="2,0,0,0">
+                </TextBox>
+                <Button x:Name="BtnClose" Command="{Binding CloseCommand}" Visibility="{Binding IsShowButton, Converter={StaticResource VisibleConverter}, FallbackValue=Visible}" Height="26" Width="26" HorizontalAlignment="Right" VerticalAlignment="Center" FontSize="16" 
+                        Background="Transparent" Foreground="White" BorderThickness="0" >X</Button>
+            </DockPanel>
+
+            <StackPanel Grid.Row="1" Orientation="Horizontal" FlowDirection="RightToLeft">
+                <TextBox VerticalContentAlignment="Center" Text="{Binding LeftTime, FallbackValue=20, TargetNullValue=20}" FontSize="16" Background="Transparent" Foreground="Coral" 
+                         BorderThickness="0" Margin="5,0"></TextBox>
+            </StackPanel>
+
+            <ScrollViewer Grid.Row="2" HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                <StackPanel Margin="5" VerticalAlignment="Center">
+                    <TextBlock FontSize="16" Text="{Binding DialogMessage, FallbackValue='是否确认操作？是否确认操作？是否确认操作？是否确认操作？是否确认操作？', TargetNullValue='是否确认操作？'}" TextWrapping="Wrap" 
+                               VerticalAlignment="Center" HorizontalAlignment="Center" Visibility="{Binding IsShowText, Converter={StaticResource VisibleConverter}, FallbackValue=Visible}">
+                    </TextBlock>
+
+                    <ContentControl Visibility="{Binding IsShowCustom, Converter={StaticResource VisibleConverter}, FallbackValue=Collapsed}" Content="{Binding CustomContent}" 
+                                    HorizontalAlignment="{Binding CustomContentHorizontalAlignment, TargetNullValue=Center, Mode=OneWay}" HorizontalContentAlignment="Center" MinWidth="50">
+                    </ContentControl>
+                </StackPanel>
+            </ScrollViewer>
+
+            <StackPanel Grid.Row="3" Visibility="{Binding IsShowButton, Converter={StaticResource VisibleConverter}, FallbackValue=Visible}" Orientation="Horizontal" FlowDirection="RightToLeft" VerticalAlignment="Center" Margin="0, 10">
+                <Button x:Name="BtnConfirm" Command="{Binding ConfirmCommand}" Content="{Binding DialogConfirmBtnText, TargetNullValue='确认', FallbackValue='确认'}" FontSize="16" Background="SteelBlue" Foreground="White" Margin="10, 0" Width="120"></Button>
+                <Button x:Name="BtnCancel" Command="{Binding CancelCommand}" Content="{Binding DialogCancelBtnText, TargetNullValue='取消', FallbackValue='取消'}" FontSize="16" Background="SteelBlue" Foreground="White" Margin="10, 0" Width="120"></Button>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</UserControl>

@@ -1,0 +1,41 @@
+﻿<UserControl x:Class="WpfUI.WpfComponents.table"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfUI.WpfComponents"
+             mc:Ignorable="d" Width="727">
+    <!--<Grid>-->
+        <StackPanel Orientation="Vertical">
+            <GroupBox BorderBrush="#e9e9e9" BorderThickness="1" Margin="10"> 
+                <GroupBox.Header>
+                    <TextBlock Text="条纹状表格" Foreground="#595959"/>
+                </GroupBox.Header>
+                <GroupBox.Content>
+                    <DataGrid x:Name="dataGrid" Style="{StaticResource datagrid}" Margin="10">
+                        <DataGrid.Columns>
+                        <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="225" ElementStyle="{StaticResource datagridtextblock}"/>
+                        <DataGridTextColumn Header="Last Name"  Binding="{Binding LastName}" Width="225" ElementStyle="{StaticResource datagridtextblock}" />
+                        <DataGridTextColumn Header="Username"  Binding="{Binding Username}" Width="225" ElementStyle="{StaticResource datagridtextblock}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox.Content>
+            </GroupBox>
+            <GroupBox BorderBrush="#e9e9e9" BorderThickness="1" Margin="10">
+                <GroupBox.Header>
+                    <TextBlock Text="带边框的表格" Foreground="#595959"/>
+                </GroupBox.Header>
+                <GroupBox.Content>
+                <DataGrid x:Name="dataGrid1" Margin="10" Style="{StaticResource datagrid}" BorderThickness="1" BorderBrush="#dddddd" VerticalGridLinesBrush="#dddddd">
+                    <DataGrid.Columns>
+                        <DataGridTextColumn Header="First Name" Binding="{Binding FirstName}" Width="225" ElementStyle="{StaticResource datagridtextblock}"/>
+                        <DataGridTextColumn Header="Last Name"  Binding="{Binding LastName}" Width="225" ElementStyle="{StaticResource datagridtextblock}" />
+                        <DataGridTextColumn Header="Username"  Binding="{Binding Username}" Width="225" ElementStyle="{StaticResource datagridtextblock}" />
+                        </DataGrid.Columns>
+                    </DataGrid>
+                </GroupBox.Content>
+            </GroupBox>
+        </StackPanel>
+        
+    <!--</Grid>-->
+</UserControl>

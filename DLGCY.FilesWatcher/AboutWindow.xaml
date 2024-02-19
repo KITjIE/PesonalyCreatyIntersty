@@ -1,0 +1,50 @@
+﻿<Window x:Class="DLGCY.FilesWatcher.AboutWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dotnet="clr-namespace:DotNet.Utilities"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Title="关于" Height="450" Width="700">
+    <StackPanel Margin="10">
+        <StackPanel.Resources>
+            <Style TargetType="TextBlock">
+                <Setter Property="Margin" Value="0,5"></Setter>
+            </Style>
+        </StackPanel.Resources>
+
+        <TextBlock>软件名称：日志解析程序</TextBlock>
+        <TextBlock>软件作者：珠海中京EAP组</TextBlock>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock>包版本号：</TextBlock>
+            <TextBlock Text="{x:Static dotnet:AssemblyHelper.AssemblyInformationalVersion}"></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock>程序版本：</TextBlock>
+            <TextBlock><Run Text="1.0.3."/><Run Language="zh-cn" Text="240112"/></TextBlock>
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+            <TextBlock>文件版本：</TextBlock>
+            <TextBlock Text="{x:Static dotnet:AssemblyHelper.AssemblyFileVersion}"></TextBlock>
+        </StackPanel>
+
+        <StackPanel Orientation="Horizontal">
+
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+           
+        </StackPanel>
+
+        <TextBlock FontWeight="Bold" Margin="0,10,5,5">版本历史：</TextBlock>
+
+        <StackPanel Orientation="Horizontal">
+            <TextBlock FontWeight="Bold">v1.0.0：</TextBlock>
+           
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+        </StackPanel>
+        <StackPanel Orientation="Horizontal">
+        </StackPanel>
+        <Image Height="100" Width="297" Source="/zj.PNG"/>
+    </StackPanel>
+</Window>

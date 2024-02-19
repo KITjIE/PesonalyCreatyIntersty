@@ -1,0 +1,60 @@
+﻿<Application x:Class="WPFTemplate.App"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:local="clr-namespace:WPFTemplate"
+             xmlns:wpfConverters="clr-namespace:WPFTemplateLib.WpfConverters;assembly=WPFTemplateLib"
+             StartupUri="MainWindow.xaml">
+    <Application.Resources>
+        <!--资源字典-->
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="/TemplateClassLibrary;component/Template/Dictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            <!--字体-->
+            <FontFamily x:Key="FontAlibaba">/WPFTemplateLib;component/Fonts/#阿里巴巴普惠体 R</FontFamily>
+
+        <!--转换器-->
+        <wpfConverters:TrueFalseConverter x:Key="TrueFalseConverter"/>
+        <wpfConverters:IsAllTrueConverter x:Key="IsAllTrueConverter"/>
+        <wpfConverters:JoinStringsConverter x:Key="JoinStringsConverter"/>
+        <wpfConverters:DivideConverter x:Key="DivideConverter"/>
+        <wpfConverters:CollapsedConverter x:Key="CollapsedConverter"/>
+        <wpfConverters:VisibleConverter x:Key="VisibleConverter"/>
+
+        <!--Expander头部 Grid 样式-->
+        <Style x:Key="ExpanderHeaderGrid" TargetType="Grid">
+            <Setter Property="Width" Value="20"></Setter>
+        </Style>
+
+        <!--Expander头部 TextBlock 样式-->
+        <Style x:Key="ExpanderHeaderTextBlock" TargetType="TextBlock">
+            <Setter Property="TextWrapping" Value="Wrap"></Setter>
+            <Setter Property="HorizontalAlignment" Value="Center"></Setter>
+            <Setter Property="Padding" Value="2,0"></Setter>
+        </Style>
+
+        <!--Expander头部 文字竖向排列模板-->
+        <DataTemplate x:Key="DataTemplateExpanderHeader">
+            <Grid Style="{StaticResource ExpanderHeaderGrid}">
+                <TextBlock Style="{StaticResource ExpanderHeaderTextBlock}" Text="{TemplateBinding Content}"></TextBlock>
+            </Grid>
+        </DataTemplate>
+
+        <!--按钮文本自动换行内容模板-->
+        <DataTemplate x:Key="DataTemplateButtonWrap" DataType="Button">
+            <Grid>
+                <TextBlock TextWrapping="Wrap" Text="{TemplateBinding Content}"></TextBlock>
+            </Grid>
+        </DataTemplate>
+         
+            <!--主按钮样式-->
+            <Style x:Key="PrimaryButton" TargetType="Button" BasedOn="{StaticResource Primary}">
+                <Setter Property="Width" Value="130"></Setter>
+                <Setter Property="HorizontalAlignment" Value="Right"></Setter>
+                <Setter Property="Margin" Value="5,10"></Setter>
+                <Setter Property="FontSize" Value="14"></Setter>
+                <Setter Property="FontFamily" Value="{StaticResource FontAlibaba}" />
+            </Style>
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

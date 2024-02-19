@@ -1,0 +1,31 @@
+
+  [
+    {"fontName": "back","fontFlag": "\ue697" },
+    {"fontName": "cart","fontFlag": "\ue698"},
+    {"fontName": "Category", "fontFlag": "\ue699"},
+    {"fontName": "close","fontFlag": "\ue69a" },
+    {"fontName": "comments", "fontFlag": "\ue69b"},
+    {"fontName": "cry","fontFlag": "\ue69c" },
+    {"fontName": "edit", "fontFlag": "\ue69e" }, 
+    {"fontName": "edit", "fontFlag": "\ue69f"},
+    {"fontName": "form", "fontFlag": "\ue6a2" },
+    {"fontName": "help","fontFlag": "\ue6a3" },
+    {"fontName": "information","fontFlag": "\ue6a4" },
+    {"fontName": "less","fontFlag": "\ue6a5"},
+    {"fontName": "more_unfold", "fontFlag": "\ue6a6" },
+    {"fontName": "more", "fontFlag": "\ue6a7"},
+    {"fontName": "refresh","fontFlag": "\ue6aa"},
+    {"fontName": "search","fontFlag": "\ue6ac"},
+    {"fontName": "selected","fontFlag": "\ue6ad"},
+    {"fontName": "set", "fontFlag": "\ue6ae"},
+    {"fontName": "add","fontFlag": "\ue6b9"},
+    {"fontName": "atm-away","fontFlag": "\ue6e9"},
+    {"fontName": "link", "fontFlag": "\ue6f7"},
+    {"fontName": "move","fontFlag": "\ue6fd"},
+    {"fontName": "subtract","fontFlag": "\ue6fe"},
+    {"fontName": "download","fontFlag": "\ue714"},
+    {"fontName": "play","fontFlag": "\ue719" },
+    {"fontName": "video","fontFlag": "\ue820"},
+    {"fontName": "folder","fontFlag": "\ue83b"}
+  ]
+

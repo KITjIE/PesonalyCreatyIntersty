@@ -1,0 +1,135 @@
+﻿<UserControl x:Class="WpfUI.WpfComponents.Input"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfUI.WpfComponents"
+             xmlns:z_property="clr-namespace:TemplateClassLibrary.Property;assembly=TemplateClassLibrary"
+             mc:Ignorable="d">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <GroupBox BorderBrush="#e9e9e9">
+                <GroupBox.Header>
+                    <TextBlock Text="输入框组" Foreground="#595959"/>
+                </GroupBox.Header>
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <TextBox Width="630"  
+                             FontSize="20" 
+                             VerticalContentAlignment="Center" 
+                             Margin="5"
+                             Style="{DynamicResource TextBoxInputGroupA}" 
+                             z_property:TexboxProperty.IconText="&#xea15;" 
+                             z_property:TexboxProperty.Placeholder="请输入用户名" 
+                             z_property:TexboxProperty.IconFontSize="35"
+                             z_property:TexboxProperty.IconThickness="1,1,0,1"
+                             z_property:TexboxProperty.IconBorderBrush="#cccccc"
+                             z_property:TexboxProperty.IconBackground="#eeeeee"
+                             z_property:TexboxProperty.IconForeground="Black"/>
+                    <TextBox Width="630"
+                             FontSize="20"
+                             Margin="5"
+                             VerticalContentAlignment="Center"
+                             Style="{DynamicResource TextBoxInputGroupA}"
+                             z_property:TexboxProperty.IconText="&#xe9a9;"
+                             z_property:TexboxProperty.Placeholder="请输入密码"
+                             z_property:TexboxProperty.IconFontSize="35"
+                             z_property:TexboxProperty.IconThickness="1,1,0,1"
+                             z_property:TexboxProperty.IconBorderBrush="#cccccc"
+                             z_property:TexboxProperty.IconBackground="#eeeeee"
+                             z_property:TexboxProperty.IconForeground="Black"/>
+                    <TextBox Width="630"
+                             FontSize="20"
+                             Margin="5"
+                             VerticalContentAlignment="Center"
+                             Style="{DynamicResource TextBoxInputGroupB}"
+                             z_property:TexboxProperty.IconTextB=".00"
+                             z_property:TexboxProperty.IconFontSize="35"  
+                             z_property:TexboxProperty.IconThickness="0,1,1,1"
+                             z_property:TexboxProperty.IconBorderBrush="#cccccc"
+                             z_property:TexboxProperty.IconBackground="#eeeeee"
+                             z_property:TexboxProperty.IconForeground="Black"/>
+                    <TextBox Width="630"
+                             FontSize="20"
+                             VerticalContentAlignment="Center"
+                             Margin="5"
+                             Style="{DynamicResource TextBoxInputGroupC}"
+                             z_property:TexboxProperty.IconText="$"
+                             z_property:TexboxProperty.IconTextB=".00"
+                             z_property:TexboxProperty.IconFontSize="35"
+                             z_property:TexboxProperty.IconThickness="1,1,0,1"
+                             z_property:TexboxProperty.IconThicknessB="0,1,1,1"
+                             z_property:TexboxProperty.IconBackground="#eeeeee"
+                             z_property:TexboxProperty.IconForeground="Black"
+                             z_property:TexboxProperty.IconBorderBrush="#cccccc"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox BorderBrush="#e9e9e9">
+                <GroupBox.Header>
+                    <TextBlock Text="输入框组多种颜色" Foreground="#595959"/>
+                </GroupBox.Header>
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <TextBox Width="630"
+                             FontSize="20"
+                             VerticalContentAlignment="Center"
+                             Margin="5"
+                             BorderThickness="1"
+                             BorderBrush="#0e90d2"
+                             Style="{DynamicResource TextBoxInputGroupA}"
+                             z_property:TexboxProperty.IconText="&#xea15;"
+                             z_property:TexboxProperty.IconForeground="White"
+                             z_property:TexboxProperty.IconFontSize="35"
+                             z_property:TexboxProperty.IconBackground="#0e90d2"
+                             z_property:TexboxProperty.Placeholder="你的大名"/>
+                    <TextBox Width="630"
+                             FontSize="20"
+                             VerticalContentAlignment="Center"
+                             Margin="5"
+                             BorderThickness="1"
+                             BorderBrush="#3bb4f2"
+                             Style="{DynamicResource TextBoxInputGroupA}"
+                             z_property:TexboxProperty.IconText="&#xea36;"
+                             z_property:TexboxProperty.IconForeground="White"
+                             z_property:TexboxProperty.IconFontSize="35"
+                             z_property:TexboxProperty.IconBackground="#3bb4f2"
+                             z_property:TexboxProperty.Placeholder="你的银行卡号"/>
+                    <TextBox Width="630"
+                             FontSize="20"
+                             VerticalContentAlignment="Center"
+                             Margin="5"
+                             BorderThickness="1"
+                             BorderBrush="#5eb95e"
+                             Style="{DynamicResource TextBoxInputGroupA}"
+                             z_property:TexboxProperty.IconText="&#xe999;"
+                             z_property:TexboxProperty.IconForeground="White"
+                             z_property:TexboxProperty.IconFontSize="35"
+                             z_property:TexboxProperty.IconBackground="#5eb95e"
+                             z_property:TexboxProperty.Placeholder="你的银行卡密码"/>
+                    <TextBox Width="630"
+                             FontSize="20"
+                             VerticalContentAlignment="Center"
+                             Margin="5"
+                             BorderThickness="1"
+                             BorderBrush="#f37b1d"
+                             Style="{DynamicResource TextBoxInputGroupA}"
+                             z_property:TexboxProperty.IconText="&#xe947;"
+                             z_property:TexboxProperty.IconForeground="White"
+                             z_property:TexboxProperty.IconFontSize="35"
+                             z_property:TexboxProperty.IconBackground="#f37b1d"
+                             z_property:TexboxProperty.Placeholder="开户行"/>
+                    <TextBox Width="630"
+                             FontSize="20"
+                             VerticalContentAlignment="Center"
+                             Margin="5"
+                             BorderThickness="1"
+                             BorderBrush="#dd514c"
+                             Style="{DynamicResource TextBoxInputGroupA}"
+                             z_property:TexboxProperty.IconText="&#xe98e;"
+                             z_property:TexboxProperty.IconForeground="White"
+                             z_property:TexboxProperty.IconFontSize="35"
+                             z_property:TexboxProperty.IconBackground="#dd514c"
+                             z_property:TexboxProperty.Placeholder="你所在城市"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</UserControl>

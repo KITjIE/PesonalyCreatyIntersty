@@ -1,0 +1,36 @@
+﻿<UserControl x:Class="WpfUI.WpfComponents.IconList"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfUI.WpfComponents"
+             mc:Ignorable="d">
+    <Grid>
+        <!--<WrapPanel Orientation="Horizontal">-->
+        <GroupBox BorderBrush="#e9e9e9">
+            <GroupBox.Header>
+                <TextBlock Text="图标字体" Foreground="#595959"/>
+            </GroupBox.Header>
+            <ListBox x:Name="iconBox" >
+                <ListBox.Template>
+                    <ControlTemplate TargetType="{x:Type ListBox}">
+                        <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto">
+                            <WrapPanel Orientation="Horizontal" IsItemsHost="True" ScrollViewer.CanContentScroll="True"/>
+                        </ScrollViewer>
+                    </ControlTemplate>
+                </ListBox.Template>
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Vertical" Width="102" Height="140">
+                            <TextBlock Text="{Binding Path=fontFlag}" Style="{DynamicResource FontAwesome}" TextAlignment="Center" FontSize="50" Margin="15"></TextBlock>
+                            <TextBlock Text="{Binding Path=fontName}" TextAlignment="Center" ></TextBlock>
+                            <TextBlock Text="{Binding Path=useFlag}" TextAlignment="Center" Foreground="Red"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </GroupBox>
+        <!--</WrapPanel>-->
+       
+    </Grid>
+</UserControl>

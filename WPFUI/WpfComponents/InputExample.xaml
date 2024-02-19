@@ -1,0 +1,82 @@
+﻿<UserControl x:Class="WpfUI.WpfComponents.InputExample"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfUI.WpfComponents"
+             xmlns:convert="clr-namespace:TemplateClassLibrary.Converter;assembly=TemplateClassLibrary"
+             xmlns:z_property="clr-namespace:TemplateClassLibrary.Property;assembly=TemplateClassLibrary"
+             mc:Ignorable="d" >
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <GroupBox>
+                <GroupBox.Header>
+                    <TextBlock Text="基础用法"/>
+                </GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Style="{DynamicResource baseInput}" z_property:TexboxProperty.Placeholder="请输入内容" z_property:TexboxProperty.TextBoxCornerRadius="3"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox>
+                <GroupBox.Header>
+                    <TextBlock Text="禁用状态"/>
+                </GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Style="{DynamicResource baseInput}" IsEnabled="False" z_property:TexboxProperty.Placeholder="请输入内容" z_property:TexboxProperty.TextBoxCornerRadius="3"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox>
+                <GroupBox.Header>
+                    <TextBlock Text="可清空"/>
+                </GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Style="{DynamicResource clearUpInput}" z_property:TexboxProperty.Placeholder="请输入内容" z_property:TexboxProperty.TextBoxCornerRadius="3"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox>
+                <GroupBox.Header>
+                    <TextBlock Text="带icon的输入框"/>
+                </GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox Style="{DynamicResource iconInput}" z_property:TexboxProperty.Placeholder="请输入内容" z_property:TexboxProperty.TextBoxCornerRadius="3" z_property:TexboxProperty.Suffix="&#xea41;"/>
+                    <TextBox Style="{DynamicResource iconInput}" z_property:TexboxProperty.Placeholder="请输入内容" z_property:TexboxProperty.TextBoxCornerRadius="3" z_property:TexboxProperty.Prefix="&#xeadf;" Margin="5,0,0,0"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox>
+                <GroupBox.Header>
+                    <TextBlock Text="尺寸"/>
+                </GroupBox.Header>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal">
+                        <TextBox Style="{DynamicResource iconInput}" z_property:TexboxProperty.Placeholder="请输入内容" z_property:TexboxProperty.TextBoxCornerRadius="3" z_property:TexboxProperty.Suffix="&#xea41;" z_property:TexboxProperty.Size="large"/>
+                        <TextBox Style="{DynamicResource iconInput}" z_property:TexboxProperty.Placeholder="请输入内容" z_property:TexboxProperty.TextBoxCornerRadius="3" z_property:TexboxProperty.Suffix="&#xea41;" z_property:TexboxProperty.Size="medium" Margin="5,0,0,0" />
+                        <TextBox Style="{DynamicResource iconInput}" z_property:TexboxProperty.Placeholder="请输入内容" z_property:TexboxProperty.TextBoxCornerRadius="3" z_property:TexboxProperty.Suffix="&#xea41;" z_property:TexboxProperty.Size="small" Margin="5,0,0,0"/>
+                        <TextBox Style="{DynamicResource iconInput}" z_property:TexboxProperty.Placeholder="请输入内容" z_property:TexboxProperty.TextBoxCornerRadius="3" z_property:TexboxProperty.Suffix="&#xea41;" z_property:TexboxProperty.Size="mini" Margin="5,0,0,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="0,10,0,0">
+                        <TextBox Style="{DynamicResource iconInput}" z_property:TexboxProperty.Placeholder="请输入内容" z_property:TexboxProperty.TextBoxCornerRadius="3" z_property:TexboxProperty.Prefix="&#xeadf;" z_property:TexboxProperty.Size="large"/>
+                        <TextBox Style="{DynamicResource iconInput}" z_property:TexboxProperty.Placeholder="请输入内容" z_property:TexboxProperty.TextBoxCornerRadius="3" z_property:TexboxProperty.Prefix="&#xeadf;" z_property:TexboxProperty.Size="medium" Margin="5,0,0,0" />
+                        <TextBox Style="{DynamicResource iconInput}" z_property:TexboxProperty.Placeholder="请输入内容" z_property:TexboxProperty.TextBoxCornerRadius="3" z_property:TexboxProperty.Prefix="&#xeadf;" z_property:TexboxProperty.Size="small" Margin="5,0,0,0"/>
+                        <TextBox Style="{DynamicResource iconInput}" z_property:TexboxProperty.Placeholder="请输入内容" z_property:TexboxProperty.TextBoxCornerRadius="3" z_property:TexboxProperty.Prefix="&#xeadf;" z_property:TexboxProperty.Size="mini" Margin="5,0,0,0"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox>
+                <GroupBox.Header>
+                    <TextBlock Text="输入长度限制"/>
+                </GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <TextBox MaxLength="10" Style="{DynamicResource limitLengthInput}" z_property:TexboxProperty.Placeholder="请输入内容" z_property:TexboxProperty.TextBoxCornerRadius="3"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox>
+                <GroupBox.Header>
+                    <TextBlock Text="密码框"/>
+                </GroupBox.Header>
+                <StackPanel Orientation="Horizontal">
+                    <PasswordBox Style="{DynamicResource passwordBox}" z_property:TexboxProperty.Placeholder="请输入密码" z_property:TexboxProperty.TextBoxCornerRadius="3"/>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</UserControl>

@@ -1,0 +1,15 @@
+D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\DLGCY.FilesWatcher\bin\Release\publish\win-x64\DLGCY.FilesWatcher.pdb
+D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\DLGCY.FilesWatcher\bin\Release\publish\win-x64\App.config
+D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\DLGCY.FilesWatcher\bin\Release\publish\win-x64\监控.ico
+D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\DLGCY.FilesWatcher\bin\Release\publish\win-x64\zj.PNG
+D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\DLGCY.FilesWatcher\bin\Release\publish\win-x64\DLGCY.FilesWatcher.dll.config
+D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\DLGCY.FilesWatcher\bin\Release\publish\win-x64\D3DCompiler_47_cor3.dll
+D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\DLGCY.FilesWatcher\bin\Release\publish\win-x64\PenImc_cor3.dll
+D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\DLGCY.FilesWatcher\bin\Release\publish\win-x64\PresentationNative_cor3.dll
+D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\DLGCY.FilesWatcher\bin\Release\publish\win-x64\vcruntime140_cor3.dll
+D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\DLGCY.FilesWatcher\bin\Release\publish\win-x64\wpfgfx_cor3.dll
+D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\DLGCY.FilesWatcher\bin\Release\publish\win-x64\Microsoft.Data.SqlClient.SNI.dll
+D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\DLGCY.FilesWatcher\bin\Release\publish\win-x64\WPFTemplateLib.pdb
+D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\DLGCY.FilesWatcher\bin\Release\publish\win-x64\TemplateClassLibrary.pdb
+D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\DLGCY.FilesWatcher\bin\Release\publish\win-x64\TemplateClassLibrary.dll.config
+D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\DLGCY.FilesWatcher\bin\Release\publish\win-x64\DLGCY.FilesWatcher.exe

@@ -1,0 +1,39 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <!--<TargetFrameworks>netstandard2.0;netstandard2.1</TargetFrameworks>-->
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <OutputType>Library</OutputType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWindowsForms>true</UseWindowsForms>
+    <UseWPF>true</UseWPF>
+    <Platforms>AnyCPU;x86</Platforms>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Remove="TemplateClassLibrary.csproj.old" />
+  </ItemGroup>
+  <!--<ItemGroup>
+    <Reference Include="PresentationFramework.Aero2" />
+  </ItemGroup>-->
+  <ItemGroup>
+    <PackageReference Include="FreeSql.Provider.Oracle" Version="3.2.810" />
+    <PackageReference Include="FreeSql.Provider.SqlServer" Version="3.2.810" />
+    <PackageReference Include="log4net" Version="2.0.15" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="ClassComponent\DateTimeControl\DateTimePicker.bmp" />
+    <Content Include="IconFonts\demo.css" />
+    <Content Include="IconFonts\demo_fontclass.html" />
+    <Content Include="IconFonts\demo_symbol.html" />
+    <Content Include="IconFonts\demo_unicode.html" />
+    <Content Include="IconFonts\iconfont.css" />
+    <Content Include="IconFonts\iconfont.js" />
+    <Content Include="IconFonts\iconfont.svg" />
+    <Resource Include="images\date.png" />
+    <Resource Include="images\loading.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="IconFonts\iconfont.ttf" />
+  </ItemGroup>
+</Project>

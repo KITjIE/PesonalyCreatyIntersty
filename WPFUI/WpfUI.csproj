@@ -1,0 +1,46 @@
+﻿<Project Sdk="Microsoft.NET.Sdk.WindowsDesktop">
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <OutputType>WinExe</OutputType>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+    <UseWPF>true</UseWPF>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Remove="packages\**" />
+    <Compile Remove="TemplateClassLibrary\**" />
+    <EmbeddedResource Remove="packages\**" />
+    <EmbeddedResource Remove="TemplateClassLibrary\**" />
+    <None Remove="packages\**" />
+    <None Remove="TemplateClassLibrary\**" />
+    <Page Remove="packages\**" />
+    <Page Remove="TemplateClassLibrary\**" />
+  </ItemGroup>
+  <!--<ItemGroup>
+    <Reference Include="PresentationFramework.Aero2" />
+  </ItemGroup>-->
+  <ItemGroup>
+    <ProjectReference Include="TemplateClassLibrary\TemplateClassLibrary.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="iTextSharp.LGPLv2.Core" Version="1.7.0" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
+    <PackageReference Include="Newtonsoft.Json" Version="12.0.2" />
+    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="5.0.0" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Converter\GetLength.cs" />
+    <Compile Remove="UserControl1.xaml.cs" />
+    <None Remove=".gitignore" />
+    <None Remove="IconFonts\icon.json" />
+    <None Remove="WpfUI.csproj.old" />
+    <None Remove="WpfUI.v12.suo" />
+    <Page Remove="Template\Dictionary.xaml" />
+    <Page Remove="UserControl1.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="IconFonts\icon.json">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+</Project>

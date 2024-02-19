@@ -1,0 +1,235 @@
+﻿<Window
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:i="clr-namespace:System.Windows.Interactivity;assembly=System.Windows.Interactivity"
+        xmlns:ei="http://schemas.microsoft.com/expression/2010/interactions"
+        xmlns:userControls="clr-namespace:WPFTemplateLib.UserControls;assembly=WPFTemplateLib"
+
+        xmlns:Loading="clr-namespace:TemplateClassLibrary.ClassComponent.Loading;assembly=TemplateClassLibrary" x:Class="DLGCY.FilesWatcher.MainWindow"
+
+        mc:Ignorable="d"
+        Title="日志解析程序" Height="Auto" Width="800" WindowStartupLocation="CenterScreen"
+        FontFamily="{StaticResource FontAlibaba}">
+    <Grid x:Name="MGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="15*"/>
+            <ColumnDefinition Width="21*"/>
+            <ColumnDefinition Width="40*"/>
+            <ColumnDefinition Width="414*"/>
+            <ColumnDefinition Width="310*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="20"/>
+        </Grid.RowDefinitions>
+
+        <Expander IsExpanded="True" Header="配置区" Grid.ColumnSpan="5">
+            <Expander.Resources>
+                <Style TargetType="{x:Type Label}">
+                    <Setter Property="Width" Value="80"/>
+                    <Setter Property="Height" Value="25"/>
+                </Style>
+
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Width" Value="200"/>
+                    <Setter Property="Height" Value="20"/>
+                </Style>
+            </Expander.Resources>
+
+            <StackPanel Orientation="Horizontal" Margin="10" Background="#FF81BFA1">
+                <StackPanel.Resources>
+                    <Style TargetType="{x:Type Expander}">
+                        <Setter Property="ExpandDirection" Value="Right"/>
+                        <Setter Property="IsExpanded" Value="False"/>
+                        <Setter Property="HeaderTemplate" Value="{DynamicResource DataTemplateExpanderHeader}"/>
+                    </Style>
+
+                    <Style x:Key="ExpanderContentGrid" TargetType="{x:Type Grid}">
+                        <Setter Property="Width" Value="Auto"/>
+                        <Setter Property="Background" Value="CadetBlue"/>
+                    </Style>
+
+                    <Style x:Key="ExpanderContentTextBlock" TargetType="{x:Type TextBlock}" BasedOn="{StaticResource ExpanderHeaderTextBlock}"/>
+
+                    <Style x:Key="ExpanderContentButtonV" TargetType="{x:Type Button}" BasedOn="{StaticResource Primary}">
+                        <Setter Property="Width" Value="25"/>
+                        <Setter Property="Height" Value="110"/>
+                        <Setter Property="Margin" Value="10"/>
+                        <Setter Property="FontSize" Value="14"/>
+                        <Setter Property="FontFamily" Value="{StaticResource FontAlibaba}"/>
+                    </Style>
+
+                    <Style x:Key="ExpanderContentLabel" TargetType="{x:Type TextBlock}">
+                        <Setter Property="Width" Value="20"/>
+                        <Setter Property="Margin" Value="10"/>
+                        <Setter Property="TextWrapping" Value="Wrap"/>
+                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="TextAlignment" Value="Center"/>
+                    </Style>
+
+                </StackPanel.Resources>
+
+                <Grid x:Name="TGrid" Style="{StaticResource ExpanderContentGrid}" Height="168" Width="568">
+                    <StackPanel Orientation="Horizontal">
+                        <!--<TextBlock Style="{StaticResource ExpanderContentLabel}" Text=">>请按需配置>>"></TextBlock>-->
+
+                        <StackPanel Orientation="Horizontal" Height="65" Width="430" Margin="5,1,5,100">
+                            <Label Content="解析路径："/>
+                            <TextBox Width="200" Margin="0,0,10,0" Text="{Binding Configs.FolderPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+                                         ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}" IsReadOnly="True"/>
+                            <Button Style="{StaticResource PrimaryButton}" Command="{Binding ChooseFolderCommand}" Content="选择文件夹"/>
+                        </StackPanel>
+                        <Button x:Name="ChangeBtn" Style="{StaticResource ExpanderContentButtonV}" Command="{Binding ChangeConfigCommand}" Content="修改配置" Margin="5,10,10,10"/>
+                        <Button Style="{StaticResource ExpanderContentButtonV}" Command="{Binding SaveConfigCommand}" Content="保存配置"/>
+                        <Button Style="{StaticResource ExpanderContentButtonV}" Command="{Binding LoadConfigCommand}" Content="重载配置"/>
+                    </StackPanel>
+                    <StackPanel Margin="0,0,0,-5">
+                        <Label Content="转移路径:" Height="26" Width="80" Margin="0,80,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
+                        <TextBox TextWrapping="Wrap" Width="346" Text="{Binding Configs.URLPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Configs.EditMode}"
+                 ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}" HorizontalAlignment="Left" Margin="85,10,0,0" />
+                        <Label Content="URL:" Height="26" Width="80" Margin="10,-20,10,0" HorizontalAlignment="Left" />
+                        <TextBox Text="{Binding Configs.FinalPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Configs.EditMode}"
+                 ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}"  Height="20" Width="200" Margin="85,-90,10,10" HorizontalAlignment="Left"/>
+                    </StackPanel>
+                </Grid>
+
+                <StackPanel Height="166" VerticalAlignment="Top" Width="249">
+                    <StackPanel Height="31" Orientation="Horizontal" Width="208" HorizontalAlignment="Left">
+                        <Label Content="解析模式" Foreground="#FF12110F" FontWeight="Bold" Width="70" FontSize="13"/>
+                        <TextBox TextWrapping="Wrap" Text="{Binding Configs.SupervisMode}" Width="120" IsEnabled="{Binding Configs.EditMode}"/>
+                    </StackPanel>
+                    <StackPanel Height="31" Orientation="Horizontal" Width="208" HorizontalAlignment="Left">
+                        <Label Content="建立电脑" Foreground="#FF1625A2" FontWeight="Bold" Width="70" FontSize="13"/>
+                        <TextBox TextWrapping="Wrap" Width="120" Text="{Binding Configs.Computer}" IsEnabled="{Binding Configs.EditMode}"/>
+                    </StackPanel>
+                    <StackPanel Height="31" Orientation="Horizontal" Width="208" HorizontalAlignment="Left">
+                        <Label Content="建立用户" Foreground="#FF352CA7" FontWeight="Bold" Width="70" FontSize="13"/>
+                        <TextBox TextWrapping="Wrap" Width="120" Text="{Binding Configs.BuildUser}" IsEnabled="{Binding Configs.EditMode}"/>
+                    </StackPanel>
+                    <StackPanel Height="31" Orientation="Horizontal" Width="208" HorizontalAlignment="Left">
+                        <Label Content="产品型号" Foreground="#FF352CA7" FontWeight="Bold" Width="70" FontSize="13"/>
+                        <TextBox TextWrapping="Wrap" Width="120" Text="{Binding Configs.PorductModel}" IsEnabled="{Binding Configs.EditMode}" />
+                    </StackPanel>
+                    <StackPanel Height="31" Orientation="Horizontal" Width="208" HorizontalAlignment="Left">
+                        <Label Content="机器型号" Foreground="#FF352CA7" FontWeight="Bold" Width="71" FontSize="13"/>
+                        <TextBox TextWrapping="Wrap" Width="120" Text="{Binding Configs.MachineModel}" IsEnabled="{Binding Configs.EditMode}"/>
+                    </StackPanel>
+                </StackPanel>
+            </StackPanel>
+        </Expander>
+        <Button Command="{Binding AboutCommand}" Width="28" Height="26" Style="{StaticResource Default}" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="4" Margin="0,5,10,0" Content="关于" />
+
+        <Grid Grid.Row="1" Grid.ColumnSpan="5" Margin="0,0,0,20" Grid.RowSpan="2">
+            <Grid.Resources>
+                <Style TargetType="{x:Type TextBox}">
+                    <Setter Property="Height" Value="20"/>
+                </Style>
+
+                <Style TargetType="{x:Type Button}">
+                    <Setter Property="Height" Value="20"/>
+                </Style>
+            </Grid.Resources>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto"/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Grid Grid.Row="1" Margin="10">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <!--消息框-->
+                <TextBox x:Name="TBInfo" Grid.Column="0" Height="Auto" TextWrapping="Wrap" AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Text="{Binding Info}">
+                    <i:Interaction.Triggers>
+                        <ei:DataTrigger Binding="{Binding Text.Length, ElementName=TBInfo}" Comparison="NotEqual" Value="0">
+                            <i:Interaction.Behaviors>
+                                <ei:ConditionBehavior>
+                                    <ei:ConditionalExpression>
+                                        <ei:ComparisonCondition LeftOperand="{Binding IsChecked, ElementName=CBIsAutoScroll}" Operator="Equal" RightOperand="True"/>
+                                    </ei:ConditionalExpression>
+                                </ei:ConditionBehavior>
+                            </i:Interaction.Behaviors>
+
+                            <ei:ChangePropertyAction TargetName="TBInfo" PropertyName="CaretIndex" Value="{Binding Text.Length, ElementName=TBInfo}"/>
+                            <ei:CallMethodAction MethodName="ScrollToEnd"/>
+                        </ei:DataTrigger>
+                    </i:Interaction.Triggers>
+                </TextBox>
+
+                <Expander Grid.Column="1" Header="操作区" HeaderTemplate="{DynamicResource DataTemplateExpanderHeader}" ExpandDirection="Left" IsExpanded="True">
+                    <ScrollViewer Margin="3" CanContentScroll="True">
+                        <StackPanel>
+                        <StackPanel.Resources>
+                            <Style TargetType="{x:Type TextBox}">
+                                <Setter Property="Width" Value="200"/>
+                                <Setter Property="Height" Value="20"/>
+                            </Style>
+                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource PrimaryButton}"/>
+                            <Style x:Key="SP" TargetType="{x:Type StackPanel}">
+                                <Setter Property="Orientation" Value="Horizontal"/>
+                                <Setter Property="Height" Value="25"/>
+                                <Setter Property="Margin" Value="5"/>
+                            </Style>
+                            <Style TargetType="{x:Type Label}">
+                                <Setter Property="Width" Value="80"/>
+                                <Setter Property="Margin" Value="5,0"/>
+                            </Style>
+                            <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource CheckBoxBasic}">
+                                <Setter Property="VerticalAlignment" Value="Center"/>
+                            </Style>
+                        </StackPanel.Resources>
+
+                        <StackPanel Style="{StaticResource SP}">
+                            <Label Content="是否自动滚动消息框？" Width="130"/>
+                            <CheckBox x:Name="CBIsAutoScroll" IsChecked="{Binding Configs.IsAutoScroll, Converter={StaticResource TrueFalseConverter}, Mode=TwoWay}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource SP}">
+                            <Label Content="消息是否自动减半？" Width="130"/>
+                            <CheckBox IsChecked="{Binding Configs.IsAutoHalve, Converter={StaticResource TrueFalseConverter}, Mode=TwoWay}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource SP}">
+                            <Label Content="消息减半阈值：" Width="90"/>
+                            <TextBox Width="60" Text="{Binding Configs.AutoHalveThresholdValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}"/>
+                        </StackPanel>
+                        <Button Command="{Binding ClearInfoCommand}" HorizontalAlignment="Center" Content="清空消息"/>
+
+                        <StackPanel Style="{StaticResource SP}">
+                            <Label Content="是否显示完全路径？" Width="130"/>
+                            <CheckBox IsChecked="{Binding Configs.IsShowFullPath, Converter={StaticResource TrueFalseConverter}, Mode=TwoWay}" VerticalAlignment="Center"/>
+                        </StackPanel>
+                        <StackPanel Style="{StaticResource SP}">
+                            <Label Content="是否监控子文件夹？" Width="130"/>
+                            <CheckBox IsChecked="{Binding Configs.IsMonitorSubDir, Converter={StaticResource TrueFalseConverter}, Mode=TwoWay}" VerticalAlignment="Center" ToolTip="切换后请重新监控"/>
+                        </StackPanel>
+
+                        <StackPanel Style="{StaticResource SP}">
+                            <Label Content="是否正在监控？" Width="130"/>
+                            <CheckBox IsChecked="{Binding IsMonitoring, Converter={StaticResource TrueFalseConverter}, Mode=OneWay}" VerticalAlignment="Center" IsEnabled="False"/>
+                        </StackPanel>
+                        <Button Command="{Binding StartWatchCommand}" HorizontalAlignment="Center" Background="#FF48E910" Content="自动解析【启动】"/>
+                        <Button Command="{Binding StopWatchCommand}" HorizontalAlignment="Center" Background="#FFE94210" Content="自动解析【停止】"/>
+                        <Button Command="{Binding HandWatchCommand}" HorizontalAlignment="Center" Content="手动上传文件"/>
+                        <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Height="27">
+                            <Label Content="已上传：" Width="63" FontWeight="Bold"/>
+                            <TextBox TextWrapping="Wrap" Text="{Binding Configs.AnalysCount}" Width="80" IsReadOnly="True"/>
+                        </StackPanel>
+                    </StackPanel>
+                    </ScrollViewer>
+                </Expander>
+            </Grid>
+        </Grid>
+
+        <!--<StatusBar Grid.Row="2" Grid.ColumnSpan="5">
+            <TextBlock Text="{Binding Status}"/>
+        </StatusBar>-->
+
+        <userControls:UC_ConfirmBox Grid.RowSpan="3" DataContext="{Binding DialogVm}" Visibility="Collapsed" IsShowDialog="{Binding IsShowDialog}" DialogWidth="500" DialogHeight="400" Grid.ColumnSpan="5"/>
+    </Grid>
+
+</Window>

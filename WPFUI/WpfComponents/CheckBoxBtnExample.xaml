@@ -1,0 +1,90 @@
+﻿<UserControl x:Class="WpfUI.WpfComponents.CheckBoxBtnExample"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfUI.WpfComponents"
+             xmlns:z_property="clr-namespace:TemplateClassLibrary.Property;assembly=TemplateClassLibrary"
+             mc:Ignorable="d">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <GroupBox>
+                <GroupBox.Header>
+                    <TextBlock Text="基础用法"></TextBlock>
+                </GroupBox.Header>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <CheckBox Content="备选项" Style="{DynamicResource CheckBoxBasic}" Margin="5"/>
+                    <CheckBox Content="上海" Style="{DynamicResource CheckBoxBasic}" Margin="5"/>
+                    <CheckBox Content="北京" Style="{DynamicResource CheckBoxBasic}" Margin="5"/>
+                    <CheckBox Content="广州" Style="{DynamicResource CheckBoxBasic}" Margin="5"/>
+                    <CheckBox Content="深圳" Style="{DynamicResource CheckBoxBasic}" Margin="5"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox>
+                <GroupBox.Header>
+                    <TextBlock Text="禁用状态"></TextBlock>
+                </GroupBox.Header>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <CheckBox Content="备选项1" Style="{DynamicResource CheckBoxBasic}" Margin="5" IsEnabled="False"/>
+                    <CheckBox Content="备选项" Style="{DynamicResource CheckBoxBasic}" Margin="5" IsEnabled="False"/>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox>
+                <GroupBox.Header>
+                    <TextBlock Text="按钮样式多选组合"/>
+                </GroupBox.Header>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox Content="上海" Style="{DynamicResource CheckBoxCombine}" z_property:ButtonProperty.ButtonCornerRadius="5,0,0,5"/>
+                        <CheckBox Content="北京" Style="{DynamicResource CheckBoxCombine}" Margin="-1,0,0,0"/>
+                        <CheckBox Content="广州" Style="{DynamicResource CheckBoxCombine}" Margin="-1,0,0,0"/>
+                        <CheckBox Content="深圳" Style="{DynamicResource CheckBoxCombine}" Margin="-1,0,0,0" z_property:ButtonProperty.ButtonCornerRadius="0,5,5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox Content="上海" Style="{DynamicResource CheckBoxCombine}" z_property:ButtonProperty.ButtonCornerRadius="5,0,0,5" z_property:CheckBoxProperty.Size="medium"/>
+                        <CheckBox Content="北京" Style="{DynamicResource CheckBoxCombine}" Margin="-1,0,0,0" z_property:CheckBoxProperty.Size="medium"/>
+                        <CheckBox Content="广州" Style="{DynamicResource CheckBoxCombine}" Margin="-1,0,0,0" z_property:CheckBoxProperty.Size="medium"/>
+                        <CheckBox Content="深圳" Style="{DynamicResource CheckBoxCombine}" Margin="-1,0,0,0" z_property:ButtonProperty.ButtonCornerRadius="0,5,5,0" z_property:CheckBoxProperty.Size="medium"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox Content="上海" Style="{DynamicResource CheckBoxCombine}" z_property:ButtonProperty.ButtonCornerRadius="5,0,0,5" z_property:CheckBoxProperty.Size="small"/>
+                        <CheckBox Content="北京" Style="{DynamicResource CheckBoxCombine}" Margin="-1,0,0,0" z_property:CheckBoxProperty.Size="small"/>
+                        <CheckBox Content="广州" Style="{DynamicResource CheckBoxCombine}" Margin="-1,0,0,0" z_property:CheckBoxProperty.Size="small"/>
+                        <CheckBox Content="深圳" Style="{DynamicResource CheckBoxCombine}" Margin="-1,0,0,0" z_property:ButtonProperty.ButtonCornerRadius="0,5,5,0" z_property:CheckBoxProperty.Size="small"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox Content="上海" IsEnabled="False" Style="{DynamicResource CheckBoxCombine}" z_property:ButtonProperty.ButtonCornerRadius="5,0,0,5" z_property:CheckBoxProperty.Size="mini"/>
+                        <CheckBox Content="北京" IsEnabled="False" Style="{DynamicResource CheckBoxCombine}" Margin="-1,0,0,0" z_property:CheckBoxProperty.Size="mini"/>
+                        <CheckBox Content="广州" IsEnabled="False" Style="{DynamicResource CheckBoxCombine}" Margin="-1,0,0,0" z_property:CheckBoxProperty.Size="mini"/>
+                        <CheckBox Content="深圳" IsEnabled="False" Style="{DynamicResource CheckBoxCombine}" Margin="-1,0,0,0" z_property:ButtonProperty.ButtonCornerRadius="0,5,5,0" z_property:CheckBoxProperty.Size="mini"/>
+                    </StackPanel>
+                </StackPanel>
+               
+            </GroupBox>
+
+            <GroupBox>
+                <GroupBox.Header>
+                    <TextBlock Text="带有边框"/>
+                </GroupBox.Header>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox Content="备选项1" Style="{DynamicResource CheckBoxFrame}" Margin="5" z_property:ButtonProperty.ButtonCornerRadius="5"/>
+                        <CheckBox Content="备选项2" Style="{DynamicResource CheckBoxFrame}" Margin="5" z_property:ButtonProperty.ButtonCornerRadius="5"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox Content="备选项3" Style="{DynamicResource CheckBoxFrame}" Margin="5" z_property:ButtonProperty.ButtonCornerRadius="5" z_property:CheckBoxProperty.FrameSize="medium"/>
+                        <CheckBox Content="备选项4" Style="{DynamicResource CheckBoxFrame}" Margin="5" z_property:ButtonProperty.ButtonCornerRadius="5" z_property:CheckBoxProperty.FrameSize="medium"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox Content="备选项5" Style="{DynamicResource CheckBoxFrame}" Margin="5" z_property:ButtonProperty.ButtonCornerRadius="5" z_property:CheckBoxProperty.FrameSize="small"/>
+                        <CheckBox Content="备选项6" Style="{DynamicResource CheckBoxFrame}" Margin="5" z_property:ButtonProperty.ButtonCornerRadius="5" z_property:CheckBoxProperty.FrameSize="small"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <CheckBox Content="备选项7" Style="{DynamicResource CheckBoxFrame}" IsEnabled="False" Margin="5" z_property:ButtonProperty.ButtonCornerRadius="5" z_property:CheckBoxProperty.FrameSize="mini"/>
+                        <CheckBox Content="备选项8" Style="{DynamicResource CheckBoxFrame}" IsEnabled="False" Margin="5" z_property:ButtonProperty.ButtonCornerRadius="5" z_property:CheckBoxProperty.FrameSize="mini"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+    </Grid>
+</UserControl>

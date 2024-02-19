@@ -1,0 +1,276 @@
+{
+  "format": 1,
+  "restore": {
+    "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher-1\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj": {}
+  },
+  "projects": {
+    "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher-1\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj": {
+      "version": "1.0.3",
+      "restore": {
+        "projectUniqueName": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher-1\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj",
+        "projectName": "DLGCY.FilesWatcher",
+        "projectPath": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher-1\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj",
+        "packagesPath": "C:\\Users\\fuspguij\\.nuget\\packages\\",
+        "outputPath": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher-1\\DLGCY.FilesWatcher\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\fuspguij\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net6.0-windows10.0.22000.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net6.0-windows10.0.22000": {
+            "targetAlias": "net6.0-windows10.0.22000.0",
+            "projectReferences": {
+              "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher-1\\WPFTemplateLib\\WPFTemplateLib.csproj": {
+                "projectPath": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher-1\\WPFTemplateLib\\WPFTemplateLib.csproj"
+              },
+              "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher-1\\WPFUI\\TemplateClassLibrary\\TemplateClassLibrary.csproj": {
+                "projectPath": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher-1\\WPFUI\\TemplateClassLibrary\\TemplateClassLibrary.csproj"
+              }
+            }
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net6.0-windows10.0.22000": {
+          "targetAlias": "net6.0-windows10.0.22000.0",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
+            },
+            "PropertyChanged.Fody": {
+              "target": "Package",
+              "version": "[3.2.9, )"
+            },
+            "log4net": {
+              "target": "Package",
+              "version": "[2.0.15, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.Windows.SDK.NET.Ref",
+              "version": "[10.0.22000.31, 10.0.22000.31]"
+            }
+          ],
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.Windows.SDK.NET.Ref": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WPF": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher-1\\WPFTemplateLib\\WPFTemplateLib.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher-1\\WPFTemplateLib\\WPFTemplateLib.csproj",
+        "projectName": "WPFTemplateLib",
+        "projectPath": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher-1\\WPFTemplateLib\\WPFTemplateLib.csproj",
+        "packagesPath": "C:\\Users\\fuspguij\\.nuget\\packages\\",
+        "outputPath": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher-1\\WPFTemplateLib\\obj\\",
+        "projectStyle": "PackageReference",
+        "crossTargeting": true,
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\fuspguij\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net472",
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          },
+          "net472": {
+            "targetAlias": "net472",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
+            },
+            "PropertyChanged.Fody": {
+              "target": "Package",
+              "version": "[3.2.9, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App.WPF": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+        },
+        "net472": {
+          "targetAlias": "net472",
+          "dependencies": {
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[12.0.3, )"
+            },
+            "PropertyChanged.Fody": {
+              "target": "Package",
+              "version": "[3.2.9, )"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher-1\\WPFUI\\TemplateClassLibrary\\TemplateClassLibrary.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher-1\\WPFUI\\TemplateClassLibrary\\TemplateClassLibrary.csproj",
+        "projectName": "TemplateClassLibrary",
+        "projectPath": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher-1\\WPFUI\\TemplateClassLibrary\\TemplateClassLibrary.csproj",
+        "packagesPath": "C:\\Users\\fuspguij\\.nuget\\packages\\",
+        "outputPath": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher-1\\WPFUI\\TemplateClassLibrary\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\fuspguij\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "targetAlias": "netcoreapp3.1",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "FreeSql.Provider.Oracle": {
+              "target": "Package",
+              "version": "[3.2.810, )"
+            },
+            "FreeSql.Provider.SqlServer": {
+              "target": "Package",
+              "version": "[3.2.810, )"
+            },
+            "Microsoft.CSharp": {
+              "target": "Package",
+              "version": "[4.7.0, )"
+            },
+            "System.Data.DataSetExtensions": {
+              "target": "Package",
+              "version": "[4.5.0, )"
+            },
+            "log4net": {
+              "target": "Package",
+              "version": "[2.0.15, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48",
+            "net481"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            },
+            "Microsoft.WindowsDesktop.App": {
+              "privateAssets": "none"
+            }
+          },
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.101\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,89 @@
+﻿<UserControl x:Class="WpfUI.WpfComponents.RadioBtnExample"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:WpfUI.WpfComponents"
+             xmlns:z_property="clr-namespace:TemplateClassLibrary.Property;assembly=TemplateClassLibrary"
+             mc:Ignorable="d">
+    <Grid>
+        <StackPanel Orientation="Vertical">
+            <GroupBox BorderBrush="#e9e9e9">
+                <GroupBox.Header>
+                    <TextBlock Text="基础用法"/>
+                </GroupBox.Header>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <RadioButton Content="备选项" Style="{DynamicResource RadioButtonStyleBasics}"/>
+                    <RadioButton Content="备选项" Style="{DynamicResource RadioButtonStyleBasics}" Margin="10,0,0,0"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox BorderBrush="#e9e9e9">
+                <GroupBox.Header>
+                    <TextBlock Text="禁用状态"/>
+                </GroupBox.Header>
+                <StackPanel Orientation="Horizontal" Margin="5">
+                    <RadioButton Content="备选项" Style="{DynamicResource RadioButtonStyleBasics}" IsEnabled="False"/>
+                    <RadioButton Content="备选项" Style="{DynamicResource RadioButtonStyleBasics}" IsEnabled="False" Margin="10,0,0,0"/>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox BorderBrush="#e9e9e9">
+                <GroupBox.Header>
+                    <TextBlock Text="按钮样式单选组合"/>
+                </GroupBox.Header>
+                <StackPanel Orientation="Vertical">
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <RadioButton Content="北京" Style="{DynamicResource RadioButtonCombin}" z_property:ButtonProperty.ButtonCornerRadius="5,0,0,5"/>
+                        <RadioButton Content="上海" Style="{DynamicResource RadioButtonCombin}" Margin="-1,0,0,0"/>
+                        <RadioButton Content="广州" Style="{DynamicResource RadioButtonCombin}" Margin="-1,0,0,0"/>
+                        <RadioButton Content="深圳" Style="{DynamicResource RadioButtonCombin}" Margin="-1,0,0,0" z_property:ButtonProperty.ButtonCornerRadius="0,5,5,0"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <RadioButton Content="北京" Style="{DynamicResource RadioButtonCombin}" z_property:ButtonProperty.ButtonCornerRadius="5,0,0,5" z_property:RadioButtonProperty.Size="medium"/>
+                        <RadioButton Content="上海" Style="{DynamicResource RadioButtonCombin}" Margin="-1,0,0,0" z_property:RadioButtonProperty.Size="medium"/>
+                        <RadioButton Content="广州" Style="{DynamicResource RadioButtonCombin}" Margin="-1,0,0,0" z_property:RadioButtonProperty.Size="medium"/>
+                        <RadioButton Content="深圳" Style="{DynamicResource RadioButtonCombin}" Margin="-1,0,0,0" z_property:ButtonProperty.ButtonCornerRadius="0,5,5,0" z_property:RadioButtonProperty.Size="medium"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <RadioButton Content="北京" Style="{DynamicResource RadioButtonCombin}" z_property:ButtonProperty.ButtonCornerRadius="5,0,0,5" z_property:RadioButtonProperty.Size="small"/>
+                        <RadioButton Content="上海" Style="{DynamicResource RadioButtonCombin}" Margin="-1,0,0,0" z_property:RadioButtonProperty.Size="small"/>
+                        <RadioButton Content="广州" Style="{DynamicResource RadioButtonCombin}" Margin="-1,0,0,0" z_property:RadioButtonProperty.Size="small"/>
+                        <RadioButton Content="深圳" Style="{DynamicResource RadioButtonCombin}" Margin="-1,0,0,0" z_property:ButtonProperty.ButtonCornerRadius="0,5,5,0" z_property:RadioButtonProperty.Size="small"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal" Margin="5">
+                        <RadioButton Content="北京" Style="{DynamicResource RadioButtonCombin}" IsEnabled="False" z_property:ButtonProperty.ButtonCornerRadius="5,0,0,5" z_property:RadioButtonProperty.Size="mini"/>
+                        <RadioButton Content="上海" Style="{DynamicResource RadioButtonCombin}" IsEnabled="False" Margin="-1,0,0,0" z_property:RadioButtonProperty.Size="mini"/>
+                        <RadioButton Content="广州" Style="{DynamicResource RadioButtonCombin}" IsEnabled="False" Margin="-1,0,0,0" z_property:RadioButtonProperty.Size="mini"/>
+                        <RadioButton Content="深圳" Style="{DynamicResource RadioButtonCombin}" IsEnabled="False" Margin="-1,0,0,0" z_property:ButtonProperty.ButtonCornerRadius="0,5,5,0" z_property:RadioButtonProperty.Size="mini"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+
+            <GroupBox BorderBrush="#e9e9e9">
+                <GroupBox.Header>
+                    <TextBlock Text="带边框"/>
+                </GroupBox.Header>
+                <StackPanel Orientation="Vertical" Margin="5">
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Content="备选项1" Style="{DynamicResource RadioButtonBorder}" Margin="5"/>
+                        <RadioButton Content="备选项2" Style="{DynamicResource RadioButtonBorder}" Margin="5"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Content="备选项3" Style="{DynamicResource RadioButtonBorder}" Margin="5" z_property:RadioButtonProperty.FrameSize="medium"/>
+                        <RadioButton Content="备选项4" Style="{DynamicResource RadioButtonBorder}" Margin="5" z_property:RadioButtonProperty.FrameSize="medium"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Content="备选项3" Style="{DynamicResource RadioButtonBorder}" Margin="5" z_property:RadioButtonProperty.FrameSize="small"/>
+                        <RadioButton Content="备选项4" Style="{DynamicResource RadioButtonBorder}" Margin="5" z_property:RadioButtonProperty.FrameSize="small"/>
+                    </StackPanel>
+                    <StackPanel Orientation="Horizontal">
+                        <RadioButton Content="备选项3" Style="{DynamicResource RadioButtonBorder}" IsEnabled="False" Margin="5" z_property:RadioButtonProperty.FrameSize="mini"/>
+                        <RadioButton Content="备选项4" Style="{DynamicResource RadioButtonBorder}" IsEnabled="False" Margin="5" z_property:RadioButtonProperty.FrameSize="mini"/>
+                    </StackPanel>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+
+    </Grid>
+</UserControl>

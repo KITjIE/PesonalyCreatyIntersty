@@ -1,0 +1,55 @@
+﻿<UserControl x:Class="WPFTemplateLib.UserControls.UC_CustomInfo"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:wpfConverters="clr-namespace:WPFTemplateLib.WpfConverters"
+             d:DesignHeight="600"
+             d:DesignWidth="880"
+             mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <wpfConverters:VisibleConverter x:Key="VisibleConverter"></wpfConverters:VisibleConverter>
+            <wpfConverters:CollapsedConverter x:Key="CollapsedConverter"></wpfConverters:CollapsedConverter>
+
+            <Style x:Key="InfoTitle" TargetType="TextBlock">
+                <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                <Setter Property="TextAlignment" Value="Center"></Setter>
+                <Setter Property="FontSize" Value="24"></Setter>
+                <Setter Property="Foreground" Value="#888888"></Setter>
+                <Setter Property="Margin" Value="0,0,0,20"></Setter>
+                <Setter Property="Visibility" Value="{Binding IsShowTitle, Converter={StaticResource VisibleConverter}}"></Setter>
+            </Style>
+
+            <Style TargetType="ContentControl">
+                <Setter Property="MinHeight" Value="150"></Setter>
+                <Setter Property="Width" Value="Auto"></Setter>
+                <Setter Property="HorizontalAlignment" Value="Stretch"></Setter>
+                <Setter Property="VerticalAlignment" Value="Center"></Setter>
+                <Setter Property="HorizontalContentAlignment" Value="Stretch"></Setter>
+                <Setter Property="VerticalContentAlignment" Value="Center"></Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+
+        <TextBlock Grid.Row="0" Grid.Column="0" Style="{StaticResource InfoTitle}" Text="{Binding TitleLeft, FallbackValue=左侧标题}" />
+        <TextBlock Grid.Row="0" Grid.Column="1" Style="{StaticResource InfoTitle}" Text="{Binding TitleRight, FallbackValue=右侧标题}" Visibility="{Binding IsOnlyOneColumn, Converter={StaticResource CollapsedConverter}}"/>
+
+        <ContentControl Grid.Row="1" Grid.Column="0" Content="{Binding LeftContent}"/>
+        <ContentControl Grid.Row="1" Grid.Column="1" Content="{Binding RightContent}" Visibility="{Binding IsOnlyOneColumn, Converter={StaticResource CollapsedConverter}}"/>
+
+        <TextBlock Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Style="{StaticResource InfoTitle}" Text="{Binding TextBottom, FallbackValue=底部文字}" Visibility="{Binding IsShowBottom, Converter={StaticResource VisibleConverter}}"/>
+    </Grid>
+</UserControl>
