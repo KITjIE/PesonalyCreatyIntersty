@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher\\WPFTemplateLib\\WPFTemplateLib.csproj": {}
+    "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyA\\WPFTemplateLib\\WPFTemplateLib.csproj": {}
   },
   "projects": {
-    "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher\\WPFTemplateLib\\WPFTemplateLib.csproj": {
+    "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyA\\WPFTemplateLib\\WPFTemplateLib.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher\\WPFTemplateLib\\WPFTemplateLib.csproj",
+        "projectUniqueName": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyA\\WPFTemplateLib\\WPFTemplateLib.csproj",
         "projectName": "WPFTemplateLib",
-        "projectPath": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher\\WPFTemplateLib\\WPFTemplateLib.csproj",
+        "projectPath": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyA\\WPFTemplateLib\\WPFTemplateLib.csproj",
         "packagesPath": "C:\\Users\\fuspguij\\.nuget\\packages\\",
-        "outputPath": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher\\WPFTemplateLib\\obj\\",
+        "outputPath": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyA\\WPFTemplateLib\\obj\\",
         "projectStyle": "PackageReference",
         "crossTargeting": true,
         "fallbackFolders": [

@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\DLGCY.FilesWatcher\obj\x86\Debug\
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyA\DLGCY.FilesWatcher\obj\x86\Debug\
 DLGCY.FilesWatcher
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\DLGCY.FilesWatcher\App.xaml
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyA\DLGCY.FilesWatcher\App.xaml
 2-1671400824
 3126382161
 18-1882228938
-224787637895
+224494936619
 AboutWindow.xaml;MainWindow.xaml;
 
-False
+True
 

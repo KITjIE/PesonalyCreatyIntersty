@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "ckwKdJ2lPwZe7bp15X7scAp8pkPX1NE4QRekOCxyjKGTL1Xe9Nxkttd6ySNBgQEQY+nKczS8jcLUEkhV0rhxdg==",
+  "dgSpecHash": "sZhQKApQ6Q5n299YGXhY8BbOcNkSrEzkuRJAIP48OT9ZYeIlh7GQkwEum0wT++PsL2BRpj3LnUQF0eWImlzO6A==",
   "success": true,
-  "projectFilePath": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher\\WPFTemplateLib\\WPFTemplateLib.csproj",
+  "projectFilePath": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyA\\WPFTemplateLib\\WPFTemplateLib.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\fuspguij\\.nuget\\packages\\fody\\6.2.4\\fody.6.2.4.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",

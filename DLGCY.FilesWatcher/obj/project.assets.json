@@ -6293,11 +6293,11 @@
   "project": {
     "version": "1.0.3",
     "restore": {
-      "projectUniqueName": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj",
+      "projectUniqueName": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyA\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj",
       "projectName": "DLGCY.FilesWatcher",
-      "projectPath": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj",
+      "projectPath": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyA\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj",
       "packagesPath": "C:\\Users\\fuspguij\\.nuget\\packages\\",
-      "outputPath": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher\\obj\\",
+      "outputPath": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyA\\DLGCY.FilesWatcher\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
@@ -6318,11 +6318,11 @@
         "net6.0-windows10.0.22000": {
           "targetAlias": "net6.0-windows10.0.22000.0",
           "projectReferences": {
-            "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher\\WPFTemplateLib\\WPFTemplateLib.csproj": {
-              "projectPath": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher\\WPFTemplateLib\\WPFTemplateLib.csproj"
+            "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyA\\WPFTemplateLib\\WPFTemplateLib.csproj": {
+              "projectPath": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyA\\WPFTemplateLib\\WPFTemplateLib.csproj"
             },
-            "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher\\WPFUI\\TemplateClassLibrary\\TemplateClassLibrary.csproj": {
-              "projectPath": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher\\WPFUI\\TemplateClassLibrary\\TemplateClassLibrary.csproj"
+            "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyA\\WPFUI\\TemplateClassLibrary\\TemplateClassLibrary.csproj": {
+              "projectPath": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyA\\WPFUI\\TemplateClassLibrary\\TemplateClassLibrary.csproj"
             }
           }
         }

@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "8XJEDRCruyvG5sNTT4JZHiBPMnSESsoqmNLn3iEu4CjyJovZQ/rvvrLwak4vai7PtG+9pXMO+uAZok7dQjdpwQ==",
+  "dgSpecHash": "MCpX6h1Kvfuy3pPT7X5RmesLUjxlHPEZYScRnyVYk0vs7jn4oa0WCMezJmLRfpBhWKGpzzayJ+LQ7CyZk1P7Yg==",
   "success": true,
-  "projectFilePath": "D:\\Users\\fuspguij\\Source\\Repos\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj",
+  "projectFilePath": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyA\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\fuspguij\\.nuget\\packages\\fody\\6.2.4\\fody.6.2.4.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\freesql\\3.2.810\\freesql.3.2.810.nupkg.sha512",
