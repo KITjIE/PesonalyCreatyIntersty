@@ -9,7 +9,7 @@
 
 [地址：https://dotnet.microsoft.com/download](https://dotnet.microsoft.com/download)
 
-如果正常运行则无需下载。选择 .NET Core Runtime
+如果正常运行则无需下载。选择 .NET 6.0 Core Runtime
 
 #### 参与贡献
 
