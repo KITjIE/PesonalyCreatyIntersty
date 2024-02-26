@@ -86,8 +86,7 @@ namespace DLGCY.FilesWatcher.ViewModels
 
         public MainWindowViewModel()
         {
-
-            //FileName_HansAnalys();
+            //测试
             Console.SetOut(new ConsoleWriter(ShowInfo));
             SetCommandMethod();
             IsMonitoring = true;
@@ -100,6 +99,7 @@ namespace DLGCY.FilesWatcher.ViewModels
             Configs.AnalysCount = 0;
             //AddFreeSql();
             //fsql.CodeFirst.SyncStructure(typeof(YS_TestModel));
+            
 
         }
 
