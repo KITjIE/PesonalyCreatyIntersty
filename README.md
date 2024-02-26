@@ -3,7 +3,7 @@
 #### 介绍
 
 文件夹监控器
-介绍：《[利用 C# 中的 FileSystemWatcher 制作一个文件夹监控小工具](http://dlgcy.com/files-watcher/)》
+介绍：[利用 C# 中的 FileSystemWatcher 制作一个文件夹监控小工具]
 
 #### 运行环境下载
 
