@@ -52,7 +52,7 @@ namespace WPFTemplateLib.Styles {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/WPFTemplateLib;V1.0.0.0;component/styles/dictionarytextbox.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/WPFTemplateLib;component/styles/dictionarytextbox.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\Styles\DictionaryTextBox.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

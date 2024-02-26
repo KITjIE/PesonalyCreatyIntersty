@@ -7,7 +7,6 @@
              xmlns:wpfConverters="clr-namespace:WPFTemplateLib.WpfConverters"
              mc:Ignorable="d" 
              d:DesignHeight="500" d:DesignWidth="600">
-
     <UserControl.Resources>
         <wpfConverters:VisibleConverter x:Key="VisibleConverter"></wpfConverters:VisibleConverter>
         <wpfConverters:CollapsedConverter x:Key="CollapsedConverter"></wpfConverters:CollapsedConverter>
@@ -51,7 +50,11 @@
             </ScrollViewer>
 
             <StackPanel Grid.Row="3" Visibility="{Binding IsShowButton, Converter={StaticResource VisibleConverter}, FallbackValue=Visible}" Orientation="Horizontal" FlowDirection="RightToLeft" VerticalAlignment="Center" Margin="0, 10">
-                <Button x:Name="BtnConfirm" Command="{Binding ConfirmCommand}" Content="{Binding DialogConfirmBtnText, TargetNullValue='确认', FallbackValue='确认'}" FontSize="16" Background="SteelBlue" Foreground="White" Margin="10, 0" Width="120"></Button>
+                <Button x:Name="BtnConfirm" Command="{Binding ConfirmCommand}" Content="{Binding DialogConfirmBtnText, TargetNullValue='确认', FallbackValue='确认'}" FontSize="16" Background="SteelBlue" Foreground="White" Margin="10, 0" Width="120">
+                    <Button.InputBindings>
+                        <KeyBinding Key="Enter" Command="{Binding ConfirmCommand}"/>
+                    </Button.InputBindings>
+                </Button>
                 <Button x:Name="BtnCancel" Command="{Binding CancelCommand}" Content="{Binding DialogCancelBtnText, TargetNullValue='取消', FallbackValue='取消'}" FontSize="16" Background="SteelBlue" Foreground="White" Margin="10, 0" Width="120"></Button>
             </StackPanel>
         </Grid>

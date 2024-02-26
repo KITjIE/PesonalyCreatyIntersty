@@ -4,7 +4,7 @@
 library
 C#
 .cs
-D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\WPFTemplateLib\obj\x86\Release\netcoreapp3.1\
+D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher-A\WPFTemplateLib\obj\x86\Release\netcoreapp3.1\
 WPFTemplateLib
 none
 false
@@ -16,5 +16,5 @@ TRACE;RELEASE;NETCOREAPP;NETCOREAPP3_1;
 194-1719546500
 Styles\DictionaryBorder.xaml;Styles\DictionaryTextBox.xaml;UserControls\UC_ConfirmBox.xaml;UserControls\UC_CustomInfo.xaml;UserControls\UC_Wait.xaml;
 
-False
+True
 

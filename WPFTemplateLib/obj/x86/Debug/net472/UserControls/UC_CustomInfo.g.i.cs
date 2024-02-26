@@ -53,7 +53,7 @@ namespace WPFTemplateLib.UserControls {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/WPFTemplateLib;V1.0.0.0;component/usercontrols/uc_custominfo.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/WPFTemplateLib;component/usercontrols/uc_custominfo.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\..\..\UserControls\UC_CustomInfo.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

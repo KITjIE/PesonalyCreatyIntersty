@@ -65,5 +65,17 @@ namespace WPFTemplate
         /// 库存组织
         /// </summary>
         public string InvOrgId { get; set; } = string.Empty;
+        /// <summary>
+        /// 过站结果
+        /// </summary>
+        public string UploadResult { get; set; } = string.Empty;
+        /// <summary>
+        /// 产品条码
+        /// </summary>
+        public string ProductBarcode { get; set; } = string.Empty;
+        /// <summary>
+        /// MES返回报错信息
+        /// </summary>
+        public string MESErrorInfo { get; set; } = string.Empty;
     }
 }

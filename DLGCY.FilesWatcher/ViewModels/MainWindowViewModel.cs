@@ -1,25 +1,25 @@
-﻿using System; 
-using System.Collections.Generic; 
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.Http; 
-using System.Text; 
-using System.Threading.Tasks; 
+using System.Net.Http;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Forms;
-using System.Windows.Input; 
+using System.Windows.Input;
 using System.Windows.Media;
 using DLGCY.FilesWatcher.Helper;
 using DotNet.Utilities.ConsoleHelper;
 using FreeSql;
 using Newtonsoft.Json;
 using PropertyChanged;
-using TemplateClassLibrary; 
+using TemplateClassLibrary;
 using WPFTemplate;
 using WPFTemplate.ViewModels;
 using WPFTemplateLib.UserControls;
 using WPFTemplateLib.WpfHelpers;
-using static DLGCY.FilesWatcher.Helper.ApiClient; 
+using static DLGCY.FilesWatcher.Helper.ApiClient;
 using File = System.IO.File;
 
 namespace DLGCY.FilesWatcher.ViewModels
@@ -28,6 +28,7 @@ namespace DLGCY.FilesWatcher.ViewModels
     public class MainWindowViewModel : BindableBase
     {
         #region Bindable
+        public string MESInfo { get; set; }
         private static IFreeSql fsql;
         private ConfigItems _configs;
         public ConfigItems Configs
@@ -86,7 +87,8 @@ namespace DLGCY.FilesWatcher.ViewModels
 
         public MainWindowViewModel()
         {
-            //测试
+
+            //FileName_HansAnalys();
             Console.SetOut(new ConsoleWriter(ShowInfo));
             SetCommandMethod();
             IsMonitoring = true;
@@ -99,7 +101,6 @@ namespace DLGCY.FilesWatcher.ViewModels
             Configs.AnalysCount = 0;
             //AddFreeSql();
             //fsql.CodeFirst.SyncStructure(typeof(YS_TestModel));
-            
 
         }
 
@@ -480,7 +481,7 @@ namespace DLGCY.FilesWatcher.ViewModels
 
         private void FileSystemWatcher_Created(object sender, FileSystemEventArgs e)
         {
-
+            if (e.Name == "NetworkConnect.txt") { return; }
             try
             {
                 if (Configs.SupervisMode != "文件解析模式B")
@@ -493,10 +494,30 @@ namespace DLGCY.FilesWatcher.ViewModels
                     switch (fileSuffixName)
                     {
                         case "csv":
-                            FileCSVName_Analys(System.IO.Path.GetFileNameWithoutExtension(GetPath(e)));
+                            if (!FileCSVName_Analys(Path.GetFileNameWithoutExtension(GetPath(e))))
+                            {
+                                // 在 UI 线程上调度创建和显示 FullScreenPopupWindow
+                                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                                {
+                                    // 创建 FullScreenPopupWindow 实例
+                                    MsgWindow msgWindow = new MsgWindow(Configs);
+                                    // 显示窗口
+                                    msgWindow.ShowDialog();
+                                });
+                            };
                             return;
                         case "txt":
-                            FileTXTName_Analys(System.IO.Path.GetFileNameWithoutExtension(GetPath(e)));
+                            if (!FileTXTName_Analys(Path.GetFileNameWithoutExtension(GetPath(e))))
+                            {
+                                // 在 UI 线程上调度创建和显示 FullScreenPopupWindow
+                                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                                {
+                                    // 创建 FullScreenPopupWindow 实例
+                                    MsgWindow msgWindow = new MsgWindow(Configs);
+                                    // 显示窗口
+                                    msgWindow.ShowDialog();
+                                });
+                            }
                             return;
                         default:
                             break;
@@ -785,7 +806,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                     // 如果不存在，则创建文件夹路径
                     Directory.CreateDirectory(destFilePath);
                 }
-               // string sourceFile = System.IO.Path.Combine(sourceFilePath, System.IO.Path.GetFileName(files));
+                // string sourceFile = System.IO.Path.Combine(sourceFilePath, System.IO.Path.GetFileName(files));
                 string destinationFile = System.IO.Path.Combine(destFilePath, System.IO.Path.GetFileName(files));
 
                 if (File.Exists(destinationFile))
@@ -819,14 +840,34 @@ namespace DLGCY.FilesWatcher.ViewModels
                         {
                             using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                             {
-                                FileCSVName_Analys(fileNameWithoutExtension);
+                                if (!FileCSVName_Analys(fileNameWithoutExtension))
+                                {
+                                    // 在 UI 线程上调度创建和显示 FullScreenPopupWindow
+                                    System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                                    {
+                                        // 创建 FullScreenPopupWindow 实例
+                                        MsgWindow msgWindow = new MsgWindow(Configs);
+                                        // 显示窗口
+                                        msgWindow.ShowDialog();
+                                    });
+                                }
                             }
                         }
                         else if (fileSuffixName == "txt")
                         {
                             using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                             {
-                                FileTXTName_Analys(fileNameWithoutExtension);
+                                if (!FileTXTName_Analys(fileNameWithoutExtension))
+                                {
+                                    // 在 UI 线程上调度创建和显示 FullScreenPopupWindow
+                                    System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                                    {
+                                        // 创建 FullScreenPopupWindow 实例
+                                        MsgWindow msgWindow = new MsgWindow(Configs);
+                                        // 显示窗口
+                                        msgWindow.ShowDialog();
+                                    });
+                                }
                             }
                         }
                         // 强制释放文件资源
@@ -842,15 +883,19 @@ namespace DLGCY.FilesWatcher.ViewModels
             }
         }
 
-        public void FileCSVName_Analys(string fileNameWithoutExtension)
+        public bool FileCSVName_Analys(string fileNameWithoutExtension)
         {
+            Configs.ProductBarcode = "";
+            Configs.MESErrorInfo = "";
+            Configs.UploadResult = "";
             try
             {
 
-                if (fileNameWithoutExtension.Length < 35)
+                if (fileNameWithoutExtension.Length < 20)
                 {
                     Console.WriteLine($"【文件名格式错误,解析失败！！！】");
-                    return;
+                    Configs.MESErrorInfo = "文件名格式错误,解析失败！";
+                    //return false;
                 }
                 // 使用正则表达式匹配两个下划线之间的文本
                 string[] parts = fileNameWithoutExtension.Split('_');
@@ -995,38 +1040,56 @@ namespace DLGCY.FilesWatcher.ViewModels
                     if (apiResponsePastation.Success)
                     {
                         LogHelper.Debug($"【电子过站接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponsePastation.Success}】--{apiResponsePastation.Message}");
-                        Configs.AnalysCount++;
+                        Configs.ProductBarcode = electrRecords.BarCode;
+                        Configs.UploadResult = "成功";
                     }
                     else
                     {
                         LogHelper.Error($"【电子过站接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponsePastation.Success}】--{apiResponsePastation.Message}");
+                        Configs.ProductBarcode = electrRecords.BarCode;
+                        Configs.MESErrorInfo = apiResponsePastation.Message;
+                        Configs.UploadResult = "失败";
+
                     }
                     #endregion
                     if (apiResponsePastation.Success && apiResponse1.Success)
                     {
                         Configs.AnalysCount++;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
                 else
                 {
                     Console.WriteLine("文件名解析错误！");
+                    Configs.MESErrorInfo = "文件名解析错误！";
+                    return false;
                 }
             }
 
             catch (Exception ex)
             {
                 Console.WriteLine($"解析模式B，解析错误！{ex.Message}");
+                return true;
             }
         }
 
-        public void FileTXTName_Analys(string fileNameWithoutExtension)
+
+        public bool FileTXTName_Analys(string fileNameWithoutExtension)
         {
+            Configs.ProductBarcode = "";
+            Configs.UploadResult = "";
+            Configs.MESErrorInfo = "";
             try
             {
-                if (fileNameWithoutExtension.Length < 22)
+                if (fileNameWithoutExtension.Length < 18)
                 {
                     Console.WriteLine($"【文件名格式错误,解析失败！！！】");
-                    return;
+                    Configs.MESErrorInfo = "文件名格式错误,解析失败！";
+                    //return false;
                 }
                 // 使用正则表达式匹配两个下划线之间的文本
                 string[] parts = fileNameWithoutExtension.Split('_');
@@ -1117,7 +1180,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                         TestResult = result[4] == "PASS" ? true : false,
                         TimeStamp = DateTime.Now,
                         PartDetectionInfos = new List<PartDetectionInfo>
-                                {
+                               {
                                     new PartDetectionInfo
                                     {
                                         BothSideCode = result[0],
@@ -1166,32 +1229,45 @@ namespace DLGCY.FilesWatcher.ViewModels
                     if (apiResponsePastation.Success)
                     {
                         LogHelper.Debug($"【电子过站接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponsePastation.Success}】--{apiResponsePastation.Message}");
-                        Configs.AnalysCount++;
+                        Configs.ProductBarcode = electrRecords.BarCode;
+                        Configs.UploadResult = "成功";
                     }
                     else
                     {
                         LogHelper.Error($"【电子过站接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponsePastation.Success}】--{apiResponsePastation.Message}");
+                        Configs.ProductBarcode = electrRecords.BarCode;
+                        Configs.MESErrorInfo = apiResponsePastation.Message;
+                        Configs.UploadResult = "失败"; 
                     }
                     #endregion
                     if (apiResponsePastation.Success && apiResponse1.Success)
                     {
                         Configs.AnalysCount++;
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
                     }
                 }
                 else
                 {
                     Console.WriteLine("文件名解析错误！");
+                    Configs.MESErrorInfo = "文件名解析错误！";
+                    return false;
                 }
 
             }
             catch (Exception ex)
             {
                 Console.WriteLine($"文件名解析模式，解析错误！{ex.Message}");
+                Configs.MESErrorInfo = "文件名解析错误！";
+                return true;
             }
         }
         public void FileTXT_Analys(string filePath)
         {
-            if (filePath.Length < 45)
+            if (filePath.Length < 35)
             {
                 Console.WriteLine($"【文件名格式错误,解析失败！！！】");
                 return;

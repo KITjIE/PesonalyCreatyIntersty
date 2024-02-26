@@ -3,4 +3,14 @@
   <PropertyGroup>
     <_LastSelectedProfileId>D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\DLGCY.FilesWatcher\Properties\PublishProfiles\FolderProfile.pubxml</_LastSelectedProfileId>
   </PropertyGroup>
+  <ItemGroup>
+    <Compile Update="MsgWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <Page Update="MsgWindow.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+  </ItemGroup>
 </Project>

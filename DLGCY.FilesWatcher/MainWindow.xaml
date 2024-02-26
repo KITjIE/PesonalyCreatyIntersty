@@ -11,7 +11,7 @@
 
         mc:Ignorable="d"
         Title="日志解析程序" Height="Auto" Width="800" WindowStartupLocation="CenterScreen"
-        FontFamily="{StaticResource FontAlibaba}">
+    FontFamily="{StaticResource FontAlibaba}">
     <Grid x:Name="MGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="15*"/>
@@ -72,31 +72,57 @@
 
                 </StackPanel.Resources>
 
-                <Grid x:Name="TGrid" Style="{StaticResource ExpanderContentGrid}" Height="168" Width="568">
+                <Grid x:Name="TGrid" Style="{StaticResource ExpanderContentGrid}" Height="182" Width="568">
                     <StackPanel Orientation="Horizontal">
                         <!--<TextBlock Style="{StaticResource ExpanderContentLabel}" Text=">>请按需配置>>"></TextBlock>-->
 
-                        <StackPanel Orientation="Horizontal" Height="65" Width="430" Margin="5,1,5,100">
-                            <Label Content="解析路径："/>
-                            <TextBox Width="200" Margin="0,0,10,0" Text="{Binding Configs.FolderPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
-                                         ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}" IsReadOnly="True"/>
-                            <Button Style="{StaticResource PrimaryButton}" Command="{Binding ChooseFolderCommand}" Content="选择文件夹"/>
+                        <StackPanel  Width="437" >
+                            <StackPanel Height="50" Width="434" Orientation="Horizontal">
+                                <Label Content="解析路径：" VerticalAlignment="Top" Margin="0,12,0,10" FontSize="14" Height="31"/>
+                                <TextBox Text="{Binding Configs.FolderPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" 
+      ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}" IsReadOnly="True" Grid.Column="3" Height="22"/>
+                                <Button Style="{StaticResource PrimaryButton}" Command="{Binding ChooseFolderCommand}" Content="选择文件夹" Grid.Column="3" Height="26" />
+                            </StackPanel>
+                            <StackPanel Height="32" Width="434" Orientation="Horizontal">
+                                <Label Content="转移路径:" Height="26" Width="80" FontSize="14" />
+                                <TextBox Text="{Binding Configs.FinalPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Configs.EditMode}"
+                                ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}" Width="346" Height="22"/>
+                            </StackPanel>
+                            <StackPanel Height="29" Width="434" Orientation="Horizontal">
+                                <Label Content="URL:" Width="80" FontSize="14"/>
+                                <TextBox TextWrapping="Wrap" Width="346" Text="{Binding Configs.URLPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Configs.EditMode}"
+                                 ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}" Grid.Column="3" Grid.ColumnSpan="2" />
+                            </StackPanel>
+                            <StackPanel Height="69" Width="434" RenderTransformOrigin="0.5,0.5">
+
+                                <Label Content="过站结果:" Width="106" Grid.ColumnSpan="3" FontSize="20" Grid.Column="1" Height="36" Margin="0,0,0,30" HorizontalAlignment="Left" />
+                                <TextBlock  Text="{Binding Configs.ProductBarcode }" HorizontalAlignment="Left"  TextWrapping="Wrap" VerticalAlignment="Top" Grid.Column="1" FontWeight="Bold" FontSize="18" Width="288" Foreground="White" Grid.ColumnSpan="3" Margin="15,-30,0,30"/>
+                                <Border BorderThickness="1" HorizontalAlignment="Right" Width="120" Height="60" Margin="0,-120,25,0">
+                                    <TextBlock Text="{Binding Configs.UploadResult}" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="55" Foreground="#FFF9F9F9">
+                                        <TextBlock.Style>
+                                            <Style TargetType="TextBlock">
+                                                <Style.Triggers>
+                                                    <DataTrigger Binding="{Binding Configs.UploadResult}" Value="成功">
+                                                        <Setter Property="Background" Value="Green" />
+                                                    </DataTrigger>
+                                                    <DataTrigger Binding="{Binding Configs.UploadResult}" Value="失败">
+                                                        <Setter Property="Background" Value="Red" />
+                                                    </DataTrigger>
+                                                </Style.Triggers>
+                                            </Style>
+                                        </TextBlock.Style>
+                                    </TextBlock>
+                                </Border>
+                            </StackPanel>
                         </StackPanel>
+
                         <Button x:Name="ChangeBtn" Style="{StaticResource ExpanderContentButtonV}" Command="{Binding ChangeConfigCommand}" Content="修改配置" Margin="5,10,10,10"/>
                         <Button Style="{StaticResource ExpanderContentButtonV}" Command="{Binding SaveConfigCommand}" Content="保存配置"/>
                         <Button Style="{StaticResource ExpanderContentButtonV}" Command="{Binding LoadConfigCommand}" Content="重载配置"/>
                     </StackPanel>
-                    <StackPanel Margin="0,0,0,-5">
-                        <Label Content="转移路径:" Height="26" Width="80" Margin="0,80,0,0" HorizontalAlignment="Left" VerticalAlignment="Bottom" />
-                        <TextBox TextWrapping="Wrap" Width="346" Text="{Binding Configs.URLPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Configs.EditMode}"
-                 ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}" HorizontalAlignment="Left" Margin="85,10,0,0" />
-                        <Label Content="URL:" Height="26" Width="80" Margin="10,-20,10,0" HorizontalAlignment="Left" />
-                        <TextBox Text="{Binding Configs.FinalPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Configs.EditMode}"
-                 ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}"  Height="20" Width="200" Margin="85,-90,10,10" HorizontalAlignment="Left"/>
-                    </StackPanel>
-                </Grid>
 
-                <StackPanel Height="166" VerticalAlignment="Top" Width="249">
+                </Grid>
+                <StackPanel Height="180" VerticalAlignment="Top" Width="217">
                     <StackPanel Height="31" Orientation="Horizontal" Width="208" HorizontalAlignment="Left">
                         <Label Content="解析模式" Foreground="#FF12110F" FontWeight="Bold" Width="70" FontSize="13"/>
                         <TextBox TextWrapping="Wrap" Text="{Binding Configs.SupervisMode}" Width="120" IsEnabled="{Binding Configs.EditMode}"/>
@@ -165,61 +191,61 @@
                 <Expander Grid.Column="1" Header="操作区" HeaderTemplate="{DynamicResource DataTemplateExpanderHeader}" ExpandDirection="Left" IsExpanded="True">
                     <ScrollViewer Margin="3" CanContentScroll="True">
                         <StackPanel>
-                        <StackPanel.Resources>
-                            <Style TargetType="{x:Type TextBox}">
-                                <Setter Property="Width" Value="200"/>
-                                <Setter Property="Height" Value="20"/>
-                            </Style>
-                            <Style TargetType="{x:Type Button}" BasedOn="{StaticResource PrimaryButton}"/>
-                            <Style x:Key="SP" TargetType="{x:Type StackPanel}">
-                                <Setter Property="Orientation" Value="Horizontal"/>
-                                <Setter Property="Height" Value="25"/>
-                                <Setter Property="Margin" Value="5"/>
-                            </Style>
-                            <Style TargetType="{x:Type Label}">
-                                <Setter Property="Width" Value="80"/>
-                                <Setter Property="Margin" Value="5,0"/>
-                            </Style>
-                            <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource CheckBoxBasic}">
-                                <Setter Property="VerticalAlignment" Value="Center"/>
-                            </Style>
-                        </StackPanel.Resources>
+                            <StackPanel.Resources>
+                                <Style TargetType="{x:Type TextBox}">
+                                    <Setter Property="Width" Value="200"/>
+                                    <Setter Property="Height" Value="20"/>
+                                </Style>
+                                <Style TargetType="{x:Type Button}" BasedOn="{StaticResource PrimaryButton}"/>
+                                <Style x:Key="SP" TargetType="{x:Type StackPanel}">
+                                    <Setter Property="Orientation" Value="Horizontal"/>
+                                    <Setter Property="Height" Value="25"/>
+                                    <Setter Property="Margin" Value="5"/>
+                                </Style>
+                                <Style TargetType="{x:Type Label}">
+                                    <Setter Property="Width" Value="80"/>
+                                    <Setter Property="Margin" Value="5,0"/>
+                                </Style>
+                                <Style TargetType="{x:Type CheckBox}" BasedOn="{StaticResource CheckBoxBasic}">
+                                    <Setter Property="VerticalAlignment" Value="Center"/>
+                                </Style>
+                            </StackPanel.Resources>
 
-                        <StackPanel Style="{StaticResource SP}">
-                            <Label Content="是否自动滚动消息框？" Width="130"/>
-                            <CheckBox x:Name="CBIsAutoScroll" IsChecked="{Binding Configs.IsAutoScroll, Converter={StaticResource TrueFalseConverter}, Mode=TwoWay}" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Style="{StaticResource SP}">
-                            <Label Content="消息是否自动减半？" Width="130"/>
-                            <CheckBox IsChecked="{Binding Configs.IsAutoHalve, Converter={StaticResource TrueFalseConverter}, Mode=TwoWay}" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Style="{StaticResource SP}">
-                            <Label Content="消息减半阈值：" Width="90"/>
-                            <TextBox Width="60" Text="{Binding Configs.AutoHalveThresholdValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}"/>
-                        </StackPanel>
-                        <Button Command="{Binding ClearInfoCommand}" HorizontalAlignment="Center" Content="清空消息"/>
+                            <StackPanel Style="{StaticResource SP}">
+                                <Label Content="是否自动滚动消息框？" Width="130"/>
+                                <CheckBox x:Name="CBIsAutoScroll" IsChecked="{Binding Configs.IsAutoScroll, Converter={StaticResource TrueFalseConverter}, Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource SP}">
+                                <Label Content="消息是否自动减半？" Width="130"/>
+                                <CheckBox IsChecked="{Binding Configs.IsAutoHalve, Converter={StaticResource TrueFalseConverter}, Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource SP}">
+                                <Label Content="消息减半阈值：" Width="90"/>
+                                <TextBox Width="60" Text="{Binding Configs.AutoHalveThresholdValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}"/>
+                            </StackPanel>
+                            <Button Command="{Binding ClearInfoCommand}" HorizontalAlignment="Center" Content="清空消息"/>
 
-                        <StackPanel Style="{StaticResource SP}">
-                            <Label Content="是否显示完全路径？" Width="130"/>
-                            <CheckBox IsChecked="{Binding Configs.IsShowFullPath, Converter={StaticResource TrueFalseConverter}, Mode=TwoWay}" VerticalAlignment="Center"/>
-                        </StackPanel>
-                        <StackPanel Style="{StaticResource SP}">
-                            <Label Content="是否监控子文件夹？" Width="130"/>
-                            <CheckBox IsChecked="{Binding Configs.IsMonitorSubDir, Converter={StaticResource TrueFalseConverter}, Mode=TwoWay}" VerticalAlignment="Center" ToolTip="切换后请重新监控"/>
-                        </StackPanel>
+                            <StackPanel Style="{StaticResource SP}">
+                                <Label Content="是否显示完全路径？" Width="130"/>
+                                <CheckBox IsChecked="{Binding Configs.IsShowFullPath, Converter={StaticResource TrueFalseConverter}, Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource SP}">
+                                <Label Content="是否监控子文件夹？" Width="130"/>
+                                <CheckBox IsChecked="{Binding Configs.IsMonitorSubDir, Converter={StaticResource TrueFalseConverter}, Mode=TwoWay}" VerticalAlignment="Center" ToolTip="切换后请重新监控"/>
+                            </StackPanel>
 
-                        <StackPanel Style="{StaticResource SP}">
-                            <Label Content="是否正在监控？" Width="130"/>
-                            <CheckBox IsChecked="{Binding IsMonitoring, Converter={StaticResource TrueFalseConverter}, Mode=OneWay}" VerticalAlignment="Center" IsEnabled="False"/>
+                            <StackPanel Style="{StaticResource SP}">
+                                <Label Content="是否正在监控？" Width="130"/>
+                                <CheckBox IsChecked="{Binding IsMonitoring, Converter={StaticResource TrueFalseConverter}, Mode=OneWay}" VerticalAlignment="Center" IsEnabled="False"/>
+                            </StackPanel>
+                            <Button Command="{Binding StartWatchCommand}" HorizontalAlignment="Center" Background="#FF48E910" Content="自动解析【启动】"/>
+                            <Button Command="{Binding StopWatchCommand}" HorizontalAlignment="Center" Background="#FFE94210" Content="自动解析【停止】"/>
+                            <Button Command="{Binding HandWatchCommand}" HorizontalAlignment="Center" Content="手动上传文件"/>
+                            <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Height="27">
+                                <Label Content="已上传：" Width="63" FontWeight="Bold"/>
+                                <TextBox TextWrapping="Wrap" Text="{Binding Configs.AnalysCount}" Width="80" IsReadOnly="True"/>
+                            </StackPanel>
                         </StackPanel>
-                        <Button Command="{Binding StartWatchCommand}" HorizontalAlignment="Center" Background="#FF48E910" Content="自动解析【启动】"/>
-                        <Button Command="{Binding StopWatchCommand}" HorizontalAlignment="Center" Background="#FFE94210" Content="自动解析【停止】"/>
-                        <Button Command="{Binding HandWatchCommand}" HorizontalAlignment="Center" Content="手动上传文件"/>
-                        <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Height="27">
-                            <Label Content="已上传：" Width="63" FontWeight="Bold"/>
-                            <TextBox TextWrapping="Wrap" Text="{Binding Configs.AnalysCount}" Width="80" IsReadOnly="True"/>
-                        </StackPanel>
-                    </StackPanel>
                     </ScrollViewer>
                 </Expander>
             </Grid>
@@ -230,6 +256,10 @@
         </StatusBar>-->
 
         <userControls:UC_ConfirmBox Grid.RowSpan="3" DataContext="{Binding DialogVm}" Visibility="Collapsed" IsShowDialog="{Binding IsShowDialog}" DialogWidth="500" DialogHeight="400" Grid.ColumnSpan="5"/>
+
+
+
+
     </Grid>
 
 </Window>
