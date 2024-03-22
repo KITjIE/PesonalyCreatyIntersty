@@ -9,12 +9,10 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
-using DLGCY.FilesWatcher.Helper;
+using System.Windows.Media; 
 using DotNet.Utilities.ConsoleHelper;
 using FreeSql;
-using Newtonsoft.Json;
-using NPOI.HPSF;
+using Newtonsoft.Json; 
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using PropertyChanged;
@@ -797,7 +795,7 @@ namespace DLGCY.FilesWatcher.ViewModels
             }
             catch (Exception ex)
             {
-                //MessageBox.Show($"An error occurred: {ex.Message}");
+                LogHelper.Error($"上传【AOI数据接口】异常：{ex.Message}");
             }
         }
         #region 判断是文件还是文件夹
@@ -974,139 +972,11 @@ namespace DLGCY.FilesWatcher.ViewModels
                     {
                         result[3] = "FAIL";
                     }
-                    #region 上传电子档案接口
-
-                    YS_ElectrRecords electrRecords = new()
-                    {
-                        BarCode = result[2],
-                        TestResult = result[3],
-                        TestTime = Timeresult,
-                        TestComputer = Configs.Computer,
-                        Tester = Configs.BuildUser,
-                        ProductModel = Configs.PorductModel,
-                        MachineNumber = Configs.MachineModel,
-                        ProductOjectName = Configs.PorductModel,
-                        IsOK = result[3] == "PASS" ? true : false,
-                        ElectricalDetailDownInfos = new List<ElectricalDetailDownInfo>
-                        {
-                            new ElectricalDetailDownInfo
-                            {
-                                SetupComputer = Configs.Computer,
-                                TestTime = Timeresult,
-                                BarCode = result[2],
-                                Testers = Configs.BuildUser,
-                                TestResult = result[3],
-                                TestFileName = fileNameWithoutExtension,
-                            }
-                        }
-                    };
-
-                    var apiParameters = new List<ApiParameter>();
-                    apiParameters.Add(new ApiParameter()
-                    {
-                        Value = electrRecords
-                    });
-
-
-                    RequestContext Context1 = new RequestContext()
-                    {
-                        Ticket = "Zu5wt35NMs4OvENNGUwRgfLxE3PLwBxMJp8hFAbeXYGuUzC4cC8CreHCD2qD48QfynpOD3nvzB8=",
-                        InvOrgId = 2,
-                    };
-
-                    ApiRequest apiRequest1 = new ApiRequest();
-                    apiRequest1.ApiType = "ScadaApiController";
-                    apiRequest1.Method = "WipElectricalDown";
-                    apiRequest1.Parameters = apiParameters;
-                    apiRequest1.Context = Context1;
-
-                    //调用接口
-                    MESRespon apiResponse1 = ApiClient.PostResponse<MESRespon>(
-                    Configs.URLPath, "", JsonConvert.SerializeObject(apiRequest1));
-
-                    if (apiResponse1.Success)
-                    {
-                        LogHelper.Debug($"【电子档案接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponse1.Success}】--{apiResponse1.Message}");
-                    }
-                    else
-                    {
-                        LogHelper.Error($"【电子档案接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponse1.Success}】--{apiResponse1.Message}");
-                    }
-                    #endregion
-
-                    #region 上传电测过站接口
-
-
-                    Value valuePastation = new Value
-                    {
-                        Qty = 1,
-                        DeviceId = Configs.MachineModel,
-                        Barcode = result[2],
-                        TestResult = result[3] == "PASS" ? true : false,
-                        TimeStamp = DateTime.Now,
-                        PartDetectionInfos = new List<PartDetectionInfo>
-                                {
-                                    new PartDetectionInfo
-                                    {
-                                        BothSideCode = result[2],
-                                        CreateDate =Timeresult ,
-                                        TestResult = result[3]=="PASS"? true:false,
-                                        Barcode =  result[2],
-                                        FaultCode =result[3]=="PASS"? "":"短路",
-                                        RevisedFaultCode = null,
-                                        ImageUrl = null
-                                    }
-                                },
-                        ImageInfos = new List<ImageInfo>
-                                {
-                                    new ImageInfo
-                                    {
-                                        ImageUrl = null,
-                                        ImageIndex = 0,
-                                        TotalImage = 0,
-                                        UploadResult = false
-                                    }
-                                }
-                    };
-
-
-                    var apiPastation = new List<ApiParameter>();
-                    apiPastation.Add(new ApiParameter()
-                    {
-                        Value = valuePastation
-                    });
-
-                    RequestContext ContextPastation = new RequestContext()
-                    {
-                        Ticket = "Zu5wt35NMs4OvENNGUwRgfLxE3PLwBxMJp8hFAbeXYGuUzC4cC8CreHCD2qD48QfynpOD3nvzB8=",
-                        InvOrgId = 2,
-                    };
-                    ApiRequest apiRequesPastation = new ApiRequest();
-                    apiRequesPastation.ApiType = "ScadaApiController";
-                    apiRequesPastation.Method = "SMTWipMove";
-                    apiRequesPastation.Parameters = apiPastation;
-                    apiRequesPastation.Context = ContextPastation;
-
-                    //调用接口
-                    MESRespon apiResponsePastation = ApiClient.PostResponse<MESRespon>(
-                    Configs.URLPath, "", JsonConvert.SerializeObject(apiRequesPastation));
-
-                    if (apiResponsePastation.Success)
-                    {
-                        LogHelper.Debug($"【电子过站接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponsePastation.Success}】--{apiResponsePastation.Message}");
-                        Configs.ProductBarcode = electrRecords.BarCode;
-                        Configs.UploadResult = "成功";
-                    }
-                    else
-                    {
-                        LogHelper.Error($"【电子过站接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponsePastation.Success}】--{apiResponsePastation.Message}");
-                        Configs.ProductBarcode = electrRecords.BarCode;
-                        Configs.MESErrorInfo = apiResponsePastation.Message;
-                        Configs.UploadResult = "失败";
-
-                    }
-                    #endregion
-                    if (apiResponsePastation.Success && apiResponse1.Success)
+                    // 上传电子档案接口
+                    bool apiResponse1 = Post_ElectricalRecord(result[2], result[3], Timeresult, fileNameWithoutExtension);
+                    // 上传电测过站接口
+                    bool apiResponse2 = Post_ElectricalPastation(result[2], result[3], Timeresult); 
+                    if (apiResponse1 && apiResponse2)
                     {
                         Configs.AnalysCount++;
                         return true;
@@ -1171,134 +1041,11 @@ namespace DLGCY.FilesWatcher.ViewModels
                     {
                         result[4] = "FAIL";
                     }
-                    #region 上传电子档案接口
-                    YS_ElectrRecords electrRecords = new()
-                    {
-                        BarCode = result[0],
-                        TestResult = result[4],
-                        TestTime = Timeresult,
-                        TestComputer = Configs.Computer,
-                        Tester = Configs.BuildUser,
-                        ProductModel = Configs.PorductModel,
-                        MachineNumber = Configs.MachineModel,
-                        IsOK = result[4] == "PASS" ? true : false,
-                        ElectricalDetailDownInfos = new List<ElectricalDetailDownInfo>
-                        {
-                            new ElectricalDetailDownInfo
-                            {
-                                SetupComputer = Configs.Computer,
-                                TestTime = Timeresult,
-                                BarCode = result[0],
-                                Testers = Configs.BuildUser,
-                                TestResult = result[4],
-                                TestFileName = fileNameWithoutExtension,
-                            }
-                        }
-                    };
-
-                    var apiParameters = new List<ApiParameter>();
-                    apiParameters.Add(new ApiParameter()
-                    {
-                        Value = electrRecords
-                    });
-
-                    ApiRequest apiRequest1 = new ApiRequest();
-                    apiRequest1.ApiType = "ScadaApiController";
-                    apiRequest1.Method = "WipElectricalDown";
-                    apiRequest1.Parameters = apiParameters;
-
-                    RequestContext Context1 = new RequestContext()
-                    {
-                        Ticket = "Zu5wt35NMs4OvENNGUwRgfLxE3PLwBxMJp8hFAbeXYGuUzC4cC8CreHCD2qD48QfynpOD3nvzB8=",
-                        InvOrgId = 2,
-                    };
-                    apiRequest1.Context = Context1;
-
-                    //调用接口
-                    MESRespon apiResponse1 = ApiClient.PostResponse<MESRespon>(
-                    Configs.URLPath, "", JsonConvert.SerializeObject(apiRequest1));
-                    if (apiResponse1.Success)
-                    {
-                        LogHelper.Debug($"【电子档案接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponse1.Success}】--{apiResponse1.Message}");
-                    }
-                    else
-                    {
-                        LogHelper.Error($"【电子档案接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponse1.Success}】--{apiResponse1.Message}");
-                    }
-                    #endregion
-
-                    #region 上传电测过站接口
-
-
-                    Value valuePastation = new Value
-                    {
-                        Qty = 1,
-                        DeviceId = Configs.MachineModel,
-                        Barcode = result[0],
-                        TestResult = result[4] == "PASS" ? true : false,
-                        TimeStamp = DateTime.Now,
-                        PartDetectionInfos = new List<PartDetectionInfo>
-                               {
-                                    new PartDetectionInfo
-                                    {
-                                        BothSideCode = result[0],
-                                        CreateDate =Timeresult,
-                                        TestResult = result[4]=="PASS"? true:false,
-                                        Barcode =  result[0],
-                                        FaultCode =result[4]=="PASS"? "":"短路",
-                                        RevisedFaultCode = null,
-                                        ImageUrl = null
-                                    }
-                                },
-                        ImageInfos = new List<ImageInfo>
-                                {
-                                    new ImageInfo
-                                    {
-                                        ImageUrl = null,
-                                        ImageIndex = 0,
-                                        TotalImage = 0,
-                                        UploadResult = false
-                                    }
-                                }
-                    };
-
-
-                    var apiPastation = new List<ApiParameter>();
-                    apiPastation.Add(new ApiParameter()
-                    {
-                        Value = valuePastation
-                    });
-
-                    RequestContext ContextPastation = new RequestContext()
-                    {
-                        Ticket = "Zu5wt35NMs4OvENNGUwRgfLxE3PLwBxMJp8hFAbeXYGuUzC4cC8CreHCD2qD48QfynpOD3nvzB8=",
-                        InvOrgId = 2,
-                    };
-                    ApiRequest apiRequesPastation = new ApiRequest();
-                    apiRequesPastation.ApiType = "ScadaApiController";
-                    apiRequesPastation.Method = "SMTWipMove";
-                    apiRequesPastation.Parameters = apiPastation;
-                    apiRequesPastation.Context = ContextPastation;
-
-                    //调用接口
-                    MESRespon apiResponsePastation = ApiClient.PostResponse<MESRespon>(
-                    Configs.URLPath, "", JsonConvert.SerializeObject(apiRequesPastation));
-
-                    if (apiResponsePastation.Success)
-                    {
-                        LogHelper.Debug($"【电子过站接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponsePastation.Success}】--{apiResponsePastation.Message}");
-                        Configs.ProductBarcode = electrRecords.BarCode;
-                        Configs.UploadResult = "成功";
-                    }
-                    else
-                    {
-                        LogHelper.Error($"【电子过站接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponsePastation.Success}】--{apiResponsePastation.Message}");
-                        Configs.ProductBarcode = electrRecords.BarCode;
-                        Configs.MESErrorInfo = apiResponsePastation.Message;
-                        Configs.UploadResult = "失败";
-                    }
-                    #endregion
-                    if (apiResponsePastation.Success && apiResponse1.Success)
+                    // 上传电子档案接口
+                    bool apiResponse1 = Post_ElectricalRecord(result[0], result[4], Timeresult, fileNameWithoutExtension);
+                    // 上传电测过站接口
+                    bool apiResponse2 = Post_ElectricalPastation(result[0], result[4], Timeresult); 
+                    if (apiResponse1 && apiResponse2)
                     {
                         Configs.AnalysCount++;
                         return true;
@@ -1332,134 +1079,9 @@ namespace DLGCY.FilesWatcher.ViewModels
             {
                 Result = "FAIL";
             }
-            #region 上传电子档案接口
-            YS_ElectrRecords electrRecords = new()
-            {
-                BarCode = fileName,
-                TestResult = Result,
-                TestTime = DateTime_,
-                TestComputer = Configs.Computer,
-                Tester = Configs.BuildUser,
-                ProductModel = Configs.PorductModel,
-                MachineNumber = Configs.MachineModel,
-                IsOK = Result == "PASS" ? true : false,
-                ElectricalDetailDownInfos = new List<ElectricalDetailDownInfo>
-                        {
-                            new ElectricalDetailDownInfo
-                            {
-                                SetupComputer = Configs.Computer,
-                                TestTime = DateTime_,
-                                BarCode = fileName,
-                                Testers = Configs.BuildUser,
-                                TestResult = Result,
-                                TestFileName = filePath,
-                            }
-                        }
-            };
-
-            var apiParameters = new List<ApiParameter>();
-            apiParameters.Add(new ApiParameter()
-            {
-                Value = electrRecords
-            });
-
-            ApiRequest apiRequest1 = new ApiRequest();
-            apiRequest1.ApiType = "ScadaApiController";
-            apiRequest1.Method = "WipElectricalDown";
-            apiRequest1.Parameters = apiParameters;
-
-            RequestContext Context1 = new RequestContext()
-            {
-                Ticket = "Zu5wt35NMs4OvENNGUwRgfLxE3PLwBxMJp8hFAbeXYGuUzC4cC8CreHCD2qD48QfynpOD3nvzB8=",
-                InvOrgId = 2,
-            };
-            apiRequest1.Context = Context1;
-
-            //调用接口
-            MESRespon apiResponse1 = ApiClient.PostResponse<MESRespon>(
-            Configs.URLPath, "", JsonConvert.SerializeObject(apiRequest1));
-            if (apiResponse1.Success)
-            {
-                LogHelper.Debug($"【电子档案接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponse1.Success}】--{apiResponse1.Message}");
-            }
-            else
-            {
-                LogHelper.Error($"【电子档案接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponse1.Success}】--{apiResponse1.Message}");
-            }
-            #endregion
-
-            #region 上传电测过站接口
-
-
-            Value valuePastation = new Value
-            {
-                Qty = 1,
-                DeviceId = Configs.MachineModel,
-                Barcode = fileName,
-                TestResult = Result == "PASS" ? true : false,
-                TimeStamp = DateTime.Now,
-                PartDetectionInfos = new List<PartDetectionInfo>
-                               {
-                                    new PartDetectionInfo
-                                    {
-                                        BothSideCode =fileName,
-                                        CreateDate =DateTime_,
-                                        TestResult = Result=="PASS"? true:false,
-                                        Barcode =  fileName,
-                                        FaultCode =Result=="PASS"? "":"短路",
-                                        RevisedFaultCode = null,
-                                        ImageUrl = null
-                                    }
-                                },
-                ImageInfos = new List<ImageInfo>
-                                {
-                                    new ImageInfo
-                                    {
-                                        ImageUrl = null,
-                                        ImageIndex = 0,
-                                        TotalImage = 0,
-                                        UploadResult = false
-                                    }
-                                }
-            };
-
-
-            var apiPastation = new List<ApiParameter>();
-            apiPastation.Add(new ApiParameter()
-            {
-                Value = valuePastation
-            });
-
-            RequestContext ContextPastation = new RequestContext()
-            {
-                Ticket = "Zu5wt35NMs4OvENNGUwRgfLxE3PLwBxMJp8hFAbeXYGuUzC4cC8CreHCD2qD48QfynpOD3nvzB8=",
-                InvOrgId = 2,
-            };
-            ApiRequest apiRequesPastation = new ApiRequest();
-            apiRequesPastation.ApiType = "ScadaApiController";
-            apiRequesPastation.Method = "SMTWipMove";
-            apiRequesPastation.Parameters = apiPastation;
-            apiRequesPastation.Context = ContextPastation;
-
-            //调用接口
-            MESRespon apiResponsePastation = ApiClient.PostResponse<MESRespon>(
-            Configs.URLPath, "", JsonConvert.SerializeObject(apiRequesPastation));
-
-            if (apiResponsePastation.Success)
-            {
-                LogHelper.Debug($"【电子过站接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponsePastation.Success}】--{apiResponsePastation.Message}");
-                Configs.ProductBarcode = electrRecords.BarCode;
-                Configs.UploadResult = "成功";
-            }
-            else
-            {
-                LogHelper.Error($"【电子过站接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponsePastation.Success}】--{apiResponsePastation.Message}");
-                Configs.ProductBarcode = electrRecords.BarCode;
-                Configs.MESErrorInfo = apiResponsePastation.Message;
-                Configs.UploadResult = "失败";
-            }
-            #endregion
-            if (apiResponsePastation.Success && apiResponse1.Success)
+            bool apiResponse1 = Post_ElectricalRecord(fileName, Result, DateTime_, filePath);
+            bool apiResponse2 = Post_ElectricalPastation(fileName, Result, DateTime_);
+            if (apiResponse1 && apiResponse2)
             {
                 Configs.AnalysCount++;
                 return true;
@@ -1565,6 +1187,175 @@ namespace DLGCY.FilesWatcher.ViewModels
             Console.WriteLine("Excel 文件读取完成！");
 
         }
+
+        /// <summary>
+        /// 上传电子档案接口
+        /// </summary>
+        /// <param name="BarCode"></param>
+        /// <param name="result"></param>
+        /// <param name="testTime"></param>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        public bool Post_ElectricalRecord(string BarCode, string result, string testTime, string filePath)
+        {
+            try
+            {
+                // 对象
+                YS_ElectrRecords electrRecords = new YS_ElectrRecords
+                {
+                    BarCode = BarCode,
+                    TestResult = result,
+                    TestTime = testTime,
+                    TestComputer = Configs.Computer,
+                    Tester = Configs.BuildUser,
+                    ProductModel = Configs.PorductModel,
+                    MachineNumber = Configs.MachineModel,
+                    IsOK = result == "PASS",
+                    ElectricalDetailDownInfos = new List<ElectricalDetailDownInfo>
+                    {
+                        new ElectricalDetailDownInfo
+                        {
+                            SetupComputer = Configs.Computer,
+                            TestTime = testTime,
+                            BarCode = BarCode,
+                            Testers = Configs.BuildUser,
+                            TestResult = result,
+                            TestFileName = filePath,
+                        }
+                    }
+                };
+
+                // 构造API请求参数
+                var apiParameters = new List<ApiParameter>
+                {
+                new ApiParameter { Value = electrRecords }
+                };
+
+                // 构造API请求对象
+                ApiRequest apiRequest = new ApiRequest
+                {
+                    ApiType = "ScadaApiController",
+                    Method = "WipElectricalDown",
+                    Parameters = apiParameters,
+                    Context = new RequestContext
+                    {
+                        Ticket = "Zu5wt35NMs4OvENNGUwRgfLxE3PLwBxMJp8hFAbeXYGuUzC4cC8CreHCD2qD48QfynpOD3nvzB8=",
+                        InvOrgId = 2
+                    }
+                };
+
+                // 发送API请求
+                MESRespon apiResponse = PostResponse<MESRespon>(Configs.URLPath, "", JsonConvert.SerializeObject(apiRequest));
+
+                // 处理API响应
+                if (apiResponse.Success)
+                {
+                    LogHelper.Debug($"【电子档案接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponse.Success}】--{apiResponse.Message}");
+                }
+                else
+                {
+                    LogHelper.Error($"【电子档案接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponse.Success}】--{apiResponse.Message}");
+                }
+
+                return apiResponse.Success;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error($"处理电子档案时出错：{ex.Message}");
+                return false;
+            }
+        }
+
+        /// <summary>
+        /// 上传电测过站接口
+        /// </summary>
+        /// <param name="BarCode"></param>
+        /// <param name="result"></param>
+        /// <param name="testTime"></param>
+        /// <returns></returns>
+        public bool Post_ElectricalPastation(string BarCode, string result, string testTime)
+        {
+            try
+            {
+                // 构造值对象
+                Value valuePastation = new Value
+                {
+                    Qty = 1,
+                    DeviceId = Configs.MachineModel,
+                    Barcode = BarCode,
+                    TestResult = result == "PASS",
+                    TimeStamp = DateTime.Now,
+                    PartDetectionInfos = new List<PartDetectionInfo>
+                    {
+                        new PartDetectionInfo
+                        {
+                            BothSideCode = BarCode,
+                            CreateDate = testTime,
+                            TestResult = result == "PASS",
+                            Barcode = BarCode,
+                            FaultCode = result == "PASS" ? "" : "短路",
+                            RevisedFaultCode = null,
+                            ImageUrl = null
+                        }
+                    },
+                    ImageInfos = new List<ImageInfo>
+                    {
+                       new ImageInfo
+                       {
+                           ImageUrl = null,
+                           ImageIndex = 0,
+                           TotalImage = 0,
+                           UploadResult = false
+                       }
+                    }
+                };
+
+                // 构造API请求参数
+                var apiParameters = new List<ApiParameter>
+                {
+                  new ApiParameter { Value = valuePastation }
+                };
+
+                // 构造API请求对象
+                ApiRequest apiRequestPastation = new ApiRequest
+                {
+                    ApiType = "ScadaApiController",
+                    Method = "SMTWipMove",
+                    Parameters = apiParameters,
+                    Context = new RequestContext
+                    {
+                        Ticket = "Zu5wt35NMs4OvENNGUwRgfLxE3PLwBxMJp8hFAbeXYGuUzC4cC8CreHCD2qD48QfynpOD3nvzB8=",
+                        InvOrgId = 2
+                    }
+                };
+
+                // 发送API请求
+                MESRespon apiResponsePastation = PostResponse<MESRespon>(Configs.URLPath, "", JsonConvert.SerializeObject(apiRequestPastation));
+
+                // 处理API响应
+                if (apiResponsePastation.Success)
+                {
+                    LogHelper.Debug($"【电子过站接口】设备编码：{Configs.MachineModel};条码：{BarCode};MES结果：【{apiResponsePastation.Success}】--{apiResponsePastation.Message}");
+                    Configs.MESErrorInfo = apiResponsePastation.Message;
+                    Configs.UploadResult = "成功"; 
+                }
+                else
+                {
+                    LogHelper.Error($"【电子过站接口】设备编码：{Configs.MachineModel};条码：{BarCode};MES结果：【{apiResponsePastation.Success}】--{apiResponsePastation.Message}");
+                    Configs.ProductBarcode = BarCode;
+                    Configs.MESErrorInfo = apiResponsePastation.Message;
+                    Configs.UploadResult = "失败"; 
+                }
+
+                return apiResponsePastation.Success;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error($"处理电子过站时出错：{ex.Message}");
+                return false;
+            }
+        }
+
         public static bool AddFreeSql()
         {
             try
