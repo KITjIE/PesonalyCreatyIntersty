@@ -4,7 +4,7 @@
 library
 C#
 .cs
-D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher-1\WPFTemplateLib\obj\Release\net472\
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\WPFTemplateLib\obj\Release\net472\
 WPFTemplateLib
 none
 false
@@ -13,8 +13,8 @@ TRACE;RELEASE;NETFRAMEWORK;NET472;
 5-1056941294
 
 441994912935
-21-891104113
+21-986393642
 Styles\DictionaryBorder.xaml;Styles\DictionaryTextBox.xaml;UserControls\UC_ConfirmBox.xaml;UserControls\UC_CustomInfo.xaml;UserControls\UC_Wait.xaml;
 
-True
+False
 

@@ -4,7 +4,7 @@
 library
 C#
 .cs
-D:\Users\fuspguij\Source\Repos\DLGCY.FilesWatcher\WPFTemplateLib\obj\Debug\netcoreapp3.1\
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\WPFTemplateLib\obj\Debug\netcoreapp3.1\
 WPFTemplateLib
 none
 false
@@ -13,7 +13,7 @@ TRACE;DEBUG;NETCOREAPP;NETCOREAPP3_1;
 5-1056941294
 
 441387678635
-1941365404910
+194-1719546500
 Styles\DictionaryBorder.xaml;Styles\DictionaryTextBox.xaml;UserControls\UC_ConfirmBox.xaml;UserControls\UC_CustomInfo.xaml;UserControls\UC_Wait.xaml;
 
 False

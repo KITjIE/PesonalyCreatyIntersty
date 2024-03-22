@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -13,6 +14,9 @@ using DLGCY.FilesWatcher.Helper;
 using DotNet.Utilities.ConsoleHelper;
 using FreeSql;
 using Newtonsoft.Json;
+using NPOI.HPSF;
+using NPOI.SS.UserModel;
+using NPOI.XSSF.UserModel;
 using PropertyChanged;
 using TemplateClassLibrary;
 using WPFTemplate;
@@ -87,7 +91,6 @@ namespace DLGCY.FilesWatcher.ViewModels
 
         public MainWindowViewModel()
         {
-
             //FileName_HansAnalys();
             Console.SetOut(new ConsoleWriter(ShowInfo));
             SetCommandMethod();
@@ -220,7 +223,6 @@ namespace DLGCY.FilesWatcher.ViewModels
                 {
                     IsOnlyOneColumn = true,
                     TitleLeft = "请输入密码",
-                    //IsShowTitle = false,
                     IsShowBottom = false,
                 };
 
@@ -484,17 +486,49 @@ namespace DLGCY.FilesWatcher.ViewModels
             if (e.Name == "NetworkConnect.txt") { return; }
             try
             {
-                if (Configs.SupervisMode != "文件解析模式B")
+                if (Configs.SupervisMode == "文件解析模式A")
                 {
-                    FileTXT_Analys(GetPath(e));
+                    if (e.Name.Contains(".txt"))
+                    {
+                        if (true)
+                        {
+
+                        }
+                        FileTXT_Analys(GetPath(e));
+                    }
                 }
-                else
+                if (Configs.SupervisMode == "文件解析模式C")
+                {
+                    if (e.Name.Contains(".txt"))
+                    {
+                        if (!FileTXTName_SonFile(GetPath(e), System.IO.Path.GetFileNameWithoutExtension(GetPath(e))))
+                        {
+
+                            // 在 UI 线程上调度创建和显示 FullScreenPopupWindow
+                            System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                            {
+                                // 创建 FullScreenPopupWindow 实例
+                                MsgWindow msgWindow = new MsgWindow(Configs);
+                                // 显示窗口
+                                msgWindow.ShowDialog();
+                            });
+                        }
+                    }
+                }
+                if (Configs.SupervisMode == "文件解析模式D")
+                {
+                    if (e.Name.Contains(".xls") || e.FullPath.Contains(".csv"))
+                    {
+                        FileCSV_Analys(GetPath(e));
+                    }
+                }
+                if (Configs.SupervisMode == "文件解析模式B")
                 {
                     string fileSuffixName = GetPath(e).Substring(GetPath(e).LastIndexOf('.') + 1);//获取文件的后缀名
                     switch (fileSuffixName)
                     {
                         case "csv":
-                            if (!FileCSVName_Analys(Path.GetFileNameWithoutExtension(GetPath(e))))
+                            if (!FileCSVName_Analys(System.IO.Path.GetFileNameWithoutExtension(GetPath(e))))
                             {
                                 // 在 UI 线程上调度创建和显示 FullScreenPopupWindow
                                 System.Windows.Application.Current.Dispatcher.Invoke(() =>
@@ -507,7 +541,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                             };
                             return;
                         case "txt":
-                            if (!FileTXTName_Analys(Path.GetFileNameWithoutExtension(GetPath(e))))
+                            if (!FileTXTName_Analys(System.IO.Path.GetFileNameWithoutExtension(GetPath(e))))
                             {
                                 // 在 UI 线程上调度创建和显示 FullScreenPopupWindow
                                 System.Windows.Application.Current.Dispatcher.Invoke(() =>
@@ -524,6 +558,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                     }
 
                 }
+
             }
             catch (Exception ex)
             {
@@ -736,7 +771,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                         Context = new Context
                         {
                             Ticket = "Ar35u6PEo5msFA+fBGV7XZO4gct5EbjAnN/LlOfoi97Trzl99Tlk2IGJSiVxi/Qpm8vvKtvpbdM=",
-                            InvOrgId = 6
+                            InvOrgId = 1
                         }
                     };
 
@@ -885,20 +920,39 @@ namespace DLGCY.FilesWatcher.ViewModels
 
         public bool FileCSVName_Analys(string fileNameWithoutExtension)
         {
+            string fileName = fileNameWithoutExtension;
             Configs.ProductBarcode = "";
             Configs.MESErrorInfo = "";
             Configs.UploadResult = "";
             try
             {
+                if (fileNameWithoutExtension.Contains("BarCode"))
+                {
+                    Console.WriteLine($"【文件名格式错误,解析失败！！！】");
+                    return true;
+                }
+                int underscoreCount = fileName.Split('_').Length - 1;
+                if (underscoreCount > 5)
+                {
+                    // 找到第三个下划线的索引
+                    int thirdUnderscoreIndex = fileName.IndexOf('_', fileName.IndexOf('_') + 1);
 
-                if (fileNameWithoutExtension.Length < 20)
+                    // 如果找到了第三个下划线
+                    if (thirdUnderscoreIndex != -1)
+                    {
+                        // 使用 Substring 方法截取从第三个下划线之后到字符串末尾的部分
+                        fileName = fileName.Substring(thirdUnderscoreIndex + 1);
+                    }
+                }
+                if (fileName.Length < 20)
                 {
                     Console.WriteLine($"【文件名格式错误,解析失败！！！】");
                     Configs.MESErrorInfo = "文件名格式错误,解析失败！";
-                    //return false;
+                    return true;
                 }
+
                 // 使用正则表达式匹配两个下划线之间的文本
-                string[] parts = fileNameWithoutExtension.Split('_');
+                string[] parts = fileName.Split('_');
                 string[] result = parts.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
                 // 将日期字符串和时间字符串转换为DateTime对象
                 DateTime dateObj = DateTime.ParseExact(result[0], "yyyyMMdd", null);
@@ -1087,9 +1141,13 @@ namespace DLGCY.FilesWatcher.ViewModels
             {
                 if (fileNameWithoutExtension.Length < 18)
                 {
-                    Console.WriteLine($"【文件名格式错误,解析失败！！！】");
-                    Configs.MESErrorInfo = "文件名格式错误,解析失败！";
-                    //return false;
+                    //Console.WriteLine($"【文件名格式错误,解析失败！！！】");
+                    //Configs.MESErrorInfo = "文件名格式错误,解析失败！";
+                    //return true;
+                }
+                if (fileNameWithoutExtension.Length < 28)
+                {
+
                 }
                 // 使用正则表达式匹配两个下划线之间的文本
                 string[] parts = fileNameWithoutExtension.Split('_');
@@ -1237,7 +1295,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                         LogHelper.Error($"【电子过站接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponsePastation.Success}】--{apiResponsePastation.Message}");
                         Configs.ProductBarcode = electrRecords.BarCode;
                         Configs.MESErrorInfo = apiResponsePastation.Message;
-                        Configs.UploadResult = "失败"; 
+                        Configs.UploadResult = "失败";
                     }
                     #endregion
                     if (apiResponsePastation.Success && apiResponse1.Success)
@@ -1265,9 +1323,155 @@ namespace DLGCY.FilesWatcher.ViewModels
                 return true;
             }
         }
+        public bool FileTXTName_SonFile(string filePath, string fileName)
+        {
+            string filePath_ = filePath;
+            string Result = "PASS";
+            string DateTime_ = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            if (filePath_.Contains("FAIL"))
+            {
+                Result = "FAIL";
+            }
+            #region 上传电子档案接口
+            YS_ElectrRecords electrRecords = new()
+            {
+                BarCode = fileName,
+                TestResult = Result,
+                TestTime = DateTime_,
+                TestComputer = Configs.Computer,
+                Tester = Configs.BuildUser,
+                ProductModel = Configs.PorductModel,
+                MachineNumber = Configs.MachineModel,
+                IsOK = Result == "PASS" ? true : false,
+                ElectricalDetailDownInfos = new List<ElectricalDetailDownInfo>
+                        {
+                            new ElectricalDetailDownInfo
+                            {
+                                SetupComputer = Configs.Computer,
+                                TestTime = DateTime_,
+                                BarCode = fileName,
+                                Testers = Configs.BuildUser,
+                                TestResult = Result,
+                                TestFileName = filePath,
+                            }
+                        }
+            };
+
+            var apiParameters = new List<ApiParameter>();
+            apiParameters.Add(new ApiParameter()
+            {
+                Value = electrRecords
+            });
+
+            ApiRequest apiRequest1 = new ApiRequest();
+            apiRequest1.ApiType = "ScadaApiController";
+            apiRequest1.Method = "WipElectricalDown";
+            apiRequest1.Parameters = apiParameters;
+
+            RequestContext Context1 = new RequestContext()
+            {
+                Ticket = "Zu5wt35NMs4OvENNGUwRgfLxE3PLwBxMJp8hFAbeXYGuUzC4cC8CreHCD2qD48QfynpOD3nvzB8=",
+                InvOrgId = 2,
+            };
+            apiRequest1.Context = Context1;
+
+            //调用接口
+            MESRespon apiResponse1 = ApiClient.PostResponse<MESRespon>(
+            Configs.URLPath, "", JsonConvert.SerializeObject(apiRequest1));
+            if (apiResponse1.Success)
+            {
+                LogHelper.Debug($"【电子档案接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponse1.Success}】--{apiResponse1.Message}");
+            }
+            else
+            {
+                LogHelper.Error($"【电子档案接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponse1.Success}】--{apiResponse1.Message}");
+            }
+            #endregion
+
+            #region 上传电测过站接口
+
+
+            Value valuePastation = new Value
+            {
+                Qty = 1,
+                DeviceId = Configs.MachineModel,
+                Barcode = fileName,
+                TestResult = Result == "PASS" ? true : false,
+                TimeStamp = DateTime.Now,
+                PartDetectionInfos = new List<PartDetectionInfo>
+                               {
+                                    new PartDetectionInfo
+                                    {
+                                        BothSideCode =fileName,
+                                        CreateDate =DateTime_,
+                                        TestResult = Result=="PASS"? true:false,
+                                        Barcode =  fileName,
+                                        FaultCode =Result=="PASS"? "":"短路",
+                                        RevisedFaultCode = null,
+                                        ImageUrl = null
+                                    }
+                                },
+                ImageInfos = new List<ImageInfo>
+                                {
+                                    new ImageInfo
+                                    {
+                                        ImageUrl = null,
+                                        ImageIndex = 0,
+                                        TotalImage = 0,
+                                        UploadResult = false
+                                    }
+                                }
+            };
+
+
+            var apiPastation = new List<ApiParameter>();
+            apiPastation.Add(new ApiParameter()
+            {
+                Value = valuePastation
+            });
+
+            RequestContext ContextPastation = new RequestContext()
+            {
+                Ticket = "Zu5wt35NMs4OvENNGUwRgfLxE3PLwBxMJp8hFAbeXYGuUzC4cC8CreHCD2qD48QfynpOD3nvzB8=",
+                InvOrgId = 2,
+            };
+            ApiRequest apiRequesPastation = new ApiRequest();
+            apiRequesPastation.ApiType = "ScadaApiController";
+            apiRequesPastation.Method = "SMTWipMove";
+            apiRequesPastation.Parameters = apiPastation;
+            apiRequesPastation.Context = ContextPastation;
+
+            //调用接口
+            MESRespon apiResponsePastation = ApiClient.PostResponse<MESRespon>(
+            Configs.URLPath, "", JsonConvert.SerializeObject(apiRequesPastation));
+
+            if (apiResponsePastation.Success)
+            {
+                LogHelper.Debug($"【电子过站接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponsePastation.Success}】--{apiResponsePastation.Message}");
+                Configs.ProductBarcode = electrRecords.BarCode;
+                Configs.UploadResult = "成功";
+            }
+            else
+            {
+                LogHelper.Error($"【电子过站接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponsePastation.Success}】--{apiResponsePastation.Message}");
+                Configs.ProductBarcode = electrRecords.BarCode;
+                Configs.MESErrorInfo = apiResponsePastation.Message;
+                Configs.UploadResult = "失败";
+            }
+            #endregion
+            if (apiResponsePastation.Success && apiResponse1.Success)
+            {
+                Configs.AnalysCount++;
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
         public void FileTXT_Analys(string filePath)
         {
-            if (filePath.Length < 35)
+            if (filePath.Length < 20)
             {
                 Console.WriteLine($"【文件名格式错误,解析失败！！！】");
                 return;
@@ -1303,14 +1507,73 @@ namespace DLGCY.FilesWatcher.ViewModels
                 }
             }
         }
+        public void FileCSV_Analys(string filePath)
+        {
+            string? path = filePath;
+            DataTable excelasTable = new DataTable();
+            if (!File.Exists(path))
+            {
+                Console.WriteLine("Excel 文件不存在！");
+                return;
+            }
+            // 读取 Excel 文件
+            using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            {
+                IWorkbook workbook = new XSSFWorkbook(fs);
+                ISheet sheet = workbook.GetSheetAt(0);
 
+                // 读取第一行作为表头
+                IRow headerRow = sheet.GetRow(0);
+                List<string> headers = new List<string>();
+                for (int i = 0; i < headerRow.LastCellNum; i++)
+                {
+                    ICell cell = headerRow.GetCell(i);
+                    headers.Add(cell.StringCellValue);
+                }
+
+                // 创建列表
+                List<HuaJingAlarms> alarms = new List<HuaJingAlarms>();
+
+                // 从第二行开始读取数据
+                for (int row = 1; row <= sheet.LastRowNum; row++)
+                {
+                    IRow currentRow = sheet.GetRow(row);
+
+                    // 如果当前行为空，则跳过
+                    if (currentRow == null)
+                        continue;
+
+                    // 创建对象并添加到列表中
+                    string module = currentRow.GetCell(0) != null ? currentRow.GetCell(0).StringCellValue : "";
+                    string address = currentRow.GetCell(1) != null ? currentRow.GetCell(1).StringCellValue : "";
+                    string account = currentRow.GetCell(2) != null ? currentRow.GetCell(2).StringCellValue : "";
+
+                    HuaJingAlarms moduleInfo = new HuaJingAlarms(module, address, account);
+                    alarms.Add(moduleInfo);
+                }
+
+                // 输出表头
+                Console.WriteLine($"表头：{string.Join(", ", headers)}");
+
+                // 输出每个 ModuleInfo 对象的信息
+                foreach (var moduleInfo in alarms)
+                {
+                    Console.WriteLine($"Module: {moduleInfo.Module}, Address: {moduleInfo.Address}, Account: {moduleInfo.Account}");
+                }
+            }
+
+            Console.WriteLine("Excel 文件读取完成！");
+
+        }
         public static bool AddFreeSql()
         {
             try
             {
                 // 尝试建立数据库连接
                 fsql = new FreeSqlBuilder()
-                .UseConnectionString(FreeSql.DataType.SqlServer, @"Data Source=192.168.5.250;User Id=sa;Password=Abc1234%;Initial Catalog=SLSYS_YSMES;Encrypt=True;TrustServerCertificate=True;Pooling=true;Min Pool Size=1")
+                .UseConnectionString(FreeSql.DataType.SqlServer,
+                @"Data Source=192.168.5.250;User Id=sa;Password=Abc1234%;Initial Catalog=SLSYS_YSMES;Encrypt=True;
+                TrustServerCertificate=True;Pooling=true;Min Pool Size=1")
                 .UseAutoSyncStructure(false)
                 .UseNoneCommandParameter(true)
                 .UseMonitorCommand(cmd => Console.WriteLine(cmd.CommandText))
