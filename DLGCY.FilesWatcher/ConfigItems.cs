@@ -31,7 +31,7 @@ namespace WPFTemplate
         /// <summary>
         /// 是否可编辑
         /// </summary>
-        public bool EditMode { get; set; } = false;
+        public bool EditMode { get; set; } = true;
 
         /// <summary>
         /// 解析完成地址

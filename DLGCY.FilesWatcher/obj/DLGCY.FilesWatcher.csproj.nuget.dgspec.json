@@ -56,6 +56,10 @@
         "net6.0-windows10.0.22000": {
           "targetAlias": "net6.0-windows10.0.22000.0",
           "dependencies": {
+            "MvvmLightLibs": {
+              "target": "Package",
+              "version": "[5.4.1.1, )"
+            },
             "NPOI": {
               "target": "Package",
               "version": "[2.6.2, )"

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Forms;
 using DLGCY.FilesWatcher.ViewModels; 
 
@@ -114,7 +115,19 @@ namespace DLGCY.FilesWatcher
 
             base.OnStateChanged(e);
         }
-        #endregion 
+        #endregion
+        //private void ComboBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        //{
+        //    System.Windows.Controls.ComboBox comboBox = sender as System.Windows.Controls.ComboBox;
+        //    if (comboBox != null && comboBox.SelectedItem != null)
+        //    {
+        //        // 获取所选项的内容
+        //        string selectedItemContent = (comboBox.SelectedItem as ComboBoxItem)?.Content.ToString();
+
+        //        // 更新Configs.URLPath的值为所选项的内容
+        //        WindowConfig.Instance.SupervisMode = selectedItemContent;
+        //    }
+        //}
     }
 }
 

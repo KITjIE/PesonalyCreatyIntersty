@@ -22,6 +22,7 @@ using WPFTemplate.ViewModels;
 using WPFTemplateLib.UserControls;
 using WPFTemplateLib.WpfHelpers;
 using static DLGCY.FilesWatcher.Helper.ApiClient;
+using static Org.BouncyCastle.Math.EC.ECCurve;
 using File = System.IO.File;
 
 namespace DLGCY.FilesWatcher.ViewModels
@@ -33,6 +34,7 @@ namespace DLGCY.FilesWatcher.ViewModels
         public string MESInfo { get; set; }
         private static IFreeSql fsql;
         private ConfigItems _configs;
+        public VMTempTest vMTempTest { get; set; }
         public ConfigItems Configs
         {
             get
@@ -47,6 +49,7 @@ namespace DLGCY.FilesWatcher.ViewModels
 
             set => _configs = value;
         }
+        
 
         private string _Info = "";
         /// <summary>
@@ -102,7 +105,7 @@ namespace DLGCY.FilesWatcher.ViewModels
             Configs.AnalysCount = 0;
             //AddFreeSql();
             //fsql.CodeFirst.SyncStructure(typeof(YS_TestModel));
-
+            vMTempTest = new VMTempTest(Configs);
         }
 
         ~MainWindowViewModel()
@@ -189,6 +192,12 @@ namespace DLGCY.FilesWatcher.ViewModels
         {
             SaveConfigCommand ??= new RelayCommand(o => true, async o =>
             {
+                Configs.SupervisMode = vMTempTest.CombboxItem.Text;
+                if (vMTempTest.CombboxItem.Text==null)
+                {
+                    await ConfirmBoxHelper.ShowMessage(DialogVm, $"未选择“解析模式”");
+                    return;
+                }
                 if (ConfigManager.SaveConfig(Configs))
                 {
                     await ConfirmBoxHelper.ShowMessage(DialogVm, "保存配置成功");
@@ -240,7 +249,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                     DataContext = inputVM,
                 };
 
-                await ConfirmBoxHelper.ShowConfirm(DialogVm, "", async () =>
+                await ConfirmBoxHelper.ShowConfirm(DialogVm, "", () =>
                 {
                     if (inputVM.Text == "abc+123")
                     {
@@ -404,7 +413,7 @@ namespace DLGCY.FilesWatcher.ViewModels
             });
             HandWatchCommand ??= new RelayCommand(o => true, o =>
             {
-                if (Configs.SupervisMode == "文件解析模式B")
+                 if (Configs.SupervisMode == "文件解析模式B")
                 {
                     FileTXTName_HansAnalys();
                 }
@@ -413,6 +422,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                     OpenFileDialog_Handle();
 
                 }
+
             });
             StartWatchCommand ??= new RelayCommand(o => !string.IsNullOrWhiteSpace(Configs.FolderPath), o =>
             {
