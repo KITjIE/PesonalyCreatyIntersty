@@ -37,6 +37,11 @@ namespace WPFTemplate
         /// 解析完成地址
         /// </summary>
         public string FinalPath { get; set; } = @"D:\FinalPath";
+
+        /// <summary>
+        /// 解析失败地址（网络问题）
+        /// </summary>
+        public string ErrorPath { get; set; } = @"D:\ErrorPath";
         /// <summary>
         /// 解析完成计数
         /// </summary>

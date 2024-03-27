@@ -125,7 +125,7 @@
                 <StackPanel Height="180" VerticalAlignment="Top" Width="217">
                     <StackPanel Height="42" Width="208" HorizontalAlignment="Left">
                         <DockPanel x:Name="Combbox" Margin="0 10 0 0" HorizontalAlignment="Left" >
-                        <Label Content="解析模式" Foreground="#FF12110F" FontWeight="Bold" Width="65" FontSize="13"/>
+                            <Label Content="解析模式" Foreground="#FF12110F" FontWeight="Bold" Width="65" FontSize="13" />
                         <ComboBox Style="{DynamicResource PrimaryBox}" MinWidth="80" Height="22" Margin="5" Background="#FF108EE9" Width="119" 
                         ItemsSource="{Binding vMTempTest.CombboxList}"  SelectedItem="{Binding vMTempTest.CombboxItem}" 
                         DisplayMemberPath="Text" SelectedValuePath="Key" IsEnabled="{Binding Configs.EditMode}"></ComboBox>

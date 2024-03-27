@@ -1,9 +1,0 @@
-
-【记录时间】2024-01-25 10:32:03,074
-【描述】Debug插入数据库成功--二维码：F04665603AF005316AA00;机器型号：;测试结果：PASS
-
-【记录时间】2024-01-25 10:38:21,405
-【描述】数据库连接: 【主库】Status unavailable, waiting for recovery. A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
-
-【记录时间】2024-01-25 10:42:02,207
-【描述】数据库连接错误: 【主库】Status unavailable, waiting for recovery. A network-related or instance-specific error occurred while establishing a connection to SQL Server. The server was not found or was not accessible. Verify that the instance name is correct and that SQL Server is configured to allow remote connections. (provider: Named Pipes Provider, error: 40 - Could not open a connection to SQL Server)
