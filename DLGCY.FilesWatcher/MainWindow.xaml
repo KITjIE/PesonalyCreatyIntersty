@@ -245,6 +245,7 @@
                             </StackPanel>
                             <Button Command="{Binding StartWatchCommand}" HorizontalAlignment="Center" Background="#FF48E910" Content="自动解析【启动】"/>
                             <Button Command="{Binding StopWatchCommand}" HorizontalAlignment="Center" Background="#FFE94210" Content="自动解析【停止】"/>
+                            <Button Command="{Binding WaitCommand}" HorizontalAlignment="Center" Background="#FF9810E9" Content="测试"/>
                             <Button Command="{Binding HandWatchCommand}" HorizontalAlignment="Center" Content="手动上传文件"/>
                             <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Height="27">
                                 <Label Content="已上传：" Width="63" FontWeight="Bold"/>

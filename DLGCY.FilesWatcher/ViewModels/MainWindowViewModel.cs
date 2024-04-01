@@ -13,6 +13,7 @@ using System.Windows.Media;
 using DotNet.Utilities.ConsoleHelper;
 using FreeSql;
 using Newtonsoft.Json;
+using NPOI.HSSF.UserModel;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using PropertyChanged;
@@ -388,7 +389,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                     DataContext = inputVM,
                 };
 
-                await ConfirmBoxHelper.ShowConfirm(DialogVm, "", async () =>
+                await ConfirmBoxHelper.ShowConfirm(DialogVm, "", () =>
                 {
                     Console.WriteLine($"宽度-{inputVM.InputWidth},高度-{inputVM.InputHeight},编号-{inputVM.InputNo}");
                 }, ShowInfo, isShowText: false);
@@ -396,12 +397,29 @@ namespace DLGCY.FilesWatcher.ViewModels
 
             WaitCommand ??= new RelayCommand(o => true, async o =>
             {
-                await ConfirmBoxHelper.ShowWait(DialogVm, "正在执行业务操作...", async () =>
+                //await ConfirmBoxHelper.ShowWait(DialogVm, "正在执行业务操作...", async () =>
+                //{
+                //    await Task.Delay(1000 * 10);
+                //    Console.WriteLine("操作完成");
+                //});
+
+
+
+                // 要写入的文件路径
+                string filePath = @"D:\test\结果.xls";
+                // 如果文件不存在，创建新文件并添加文件头
+                if (!File.Exists(filePath))
                 {
-                    await Task.Delay(1000 * 10);
-                    Console.WriteLine("操作完成");
-                });
+                    InitializeExcel(filePath);
+                }
+                // 打开文件流
+                using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite))
+                {
+                    WriteToExcelFile(fileStream, "2024-04-01", "12:00:00", "报警内容示例");
+                }
             });
+
+
             #endregion
             ChooseFolderCommand ??= new RelayCommand(o => true, o =>
             {
@@ -417,7 +435,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                 {
                     OpenFileDialog_Handle();
                 }
-                if (Configs.SupervisMode == "文件解析模式B"|| Configs.SupervisMode == "文件解析模式C")
+                if (Configs.SupervisMode == "文件解析模式B" || Configs.SupervisMode == "文件解析模式C")
                 {
                     FileTXTName_HansAnalys();
                 }
@@ -476,7 +494,6 @@ namespace DLGCY.FilesWatcher.ViewModels
             _FileSystemWatcher.Renamed += FileSystemWatcher_Renamed;
             _FileSystemWatcher.Deleted += FileSystemWatcher_Deleted;
             _FileSystemWatcher.Changed += FileSystemWatcher_Changed;
-
             //开始监控
             _FileSystemWatcher.EnableRaisingEvents = true;
 
@@ -485,7 +502,23 @@ namespace DLGCY.FilesWatcher.ViewModels
 
         private void FileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
         {
-            Console.WriteLine($"【{GetPathType(e.FullPath)}更改】{GetPath(e)}");
+            try
+            {
+                Console.WriteLine($"【{GetPathType(e.FullPath)}更改】{GetPath(e)}");
+                if (!e.Name.StartsWith("~$"))
+                {
+                    if (e.Name.Contains(".xls") || e.FullPath.Contains(".csv"))
+                    {
+                        FileCSV_Analys(GetPath(e));
+                    }
+                }
+
+            }
+            catch (Exception ex)
+            {
+
+            }
+
         }
 
         private void FileSystemWatcher_Created(object sender, FileSystemEventArgs e)
@@ -504,20 +537,20 @@ namespace DLGCY.FilesWatcher.ViewModels
                 {
                     if (e.Name.Contains(".txt"))
                     {
-                        if (!FileTXTName_SonFile(Path.GetFileNameWithoutExtension(GetPath(e)),GetPath(e)))
+                        if (!FileTXTName_SonFile(Path.GetFileNameWithoutExtension(GetPath(e)), GetPath(e)))
                         {
                             ShowErrorWin();
                         }
                     }
                     if (e.Name.Contains(".csv"))
                     {
-                        if (!FileTXTName_FrontFile(Path.GetFileNameWithoutExtension(GetPath(e)),GetPath(e)))
+                        if (!FileTXTName_FrontFile(Path.GetFileNameWithoutExtension(GetPath(e)), GetPath(e)))
                         {
                             ShowErrorWin();
                         }
                     }
                 }
-                if (Configs.SupervisMode == "文件解析模式D")
+                if (Configs.SupervisMode == "文件解析模式DD")
                 {
                     if (e.Name.Contains(".xls") || e.FullPath.Contains(".csv"))
                     {
@@ -584,8 +617,6 @@ namespace DLGCY.FilesWatcher.ViewModels
             return e.Name;
         }
 
-
-        /// <summary>
         /// 获取原先路径的显示字符串
         /// </summary>
         private string GetOldPath(RenamedEventArgs e)
@@ -702,7 +733,7 @@ namespace DLGCY.FilesWatcher.ViewModels
             }
         }
 
-        public void FileTXTName_HansAnalys( )
+        public void FileTXTName_HansAnalys()
         {
             try
             {
@@ -713,9 +744,9 @@ namespace DLGCY.FilesWatcher.ViewModels
                 {
                     foreach (string filePath in openFileDialog_B.FileNames)
                     {
-                        string fileName  = Path.GetFileNameWithoutExtension(filePath);
+                        string fileName = Path.GetFileNameWithoutExtension(filePath);
                         string fileSuffixName = filePath.Substring(filePath.LastIndexOf('.') + 1);//获取文件的后缀名
-                        if (fileSuffixName == "csv"&& Configs.SupervisMode == "文件解析模式B")
+                        if (fileSuffixName == "csv" && Configs.SupervisMode == "文件解析模式B")
                         {
                             using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                             {
@@ -968,7 +999,7 @@ namespace DLGCY.FilesWatcher.ViewModels
         /// <param name="filePath"></param>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public bool FileTXTName_FrontFile(string fileName,string filePath)
+        public bool FileTXTName_FrontFile(string fileName, string filePath)
         {
             Configs.ProductBarcode = "";
             Configs.UploadResult = "";
@@ -1082,62 +1113,143 @@ namespace DLGCY.FilesWatcher.ViewModels
         }
         public void FileCSV_Analys(string filePath)
         {
-            string? path = filePath;
-            DataTable excelasTable = new DataTable();
-            if (!File.Exists(path))
+            try
             {
-                Console.WriteLine("Excel 文件不存在！");
-                return;
+                string path = filePath;
+                DataTable excelasTable = new DataTable();
+                if (!File.Exists(path))
+                {
+                    Console.WriteLine("Excel 文件不存在！");
+                    return;
+                }
+
+                // 获取文件中的实际行数
+                int originalRowCount;
+                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    IWorkbook workbook = new HSSFWorkbook(fs); // 使用 HSSFWorkbook 来处理 .xls 格式文件
+                    ISheet sheet = workbook.GetSheetAt(0);
+                    originalRowCount = sheet.PhysicalNumberOfRows;
+                }
+
+                // 读取 Excel 文件
+                using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+                {
+                    IWorkbook workbook = new HSSFWorkbook(fs); // 使用 HSSFWorkbook 来处理 .xls 格式文件
+                    ISheet sheet = workbook.GetSheetAt(0);
+
+                    // 检查是否有新增内容
+                    if (sheet.PhysicalNumberOfRows == originalRowCount)
+                    {
+                        Console.WriteLine("Excel 文件没有新增内容，无需解析！");
+                        return;
+                    }
+
+                    // 读取第一行作为表头
+                    IRow headerRow = sheet.GetRow(0);
+                    List<string> headers = new List<string>();
+                    for (int i = 0; i < headerRow.LastCellNum; i++)
+                    {
+                        ICell cell = headerRow.GetCell(i);
+                        headers.Add(cell.StringCellValue);
+                    }
+
+                    // 创建列表
+                    List<HuaJingAlarms> alarms = new List<HuaJingAlarms>();
+
+                    // 从第二行开始读取数据
+                    for (int row = 1; row < sheet.PhysicalNumberOfRows; row++)
+                    {
+                        IRow currentRow = sheet.GetRow(row);
+
+                        // 如果当前行为空，则跳过
+                        if (currentRow == null)
+                            continue;
+
+                        // 创建对象并添加到列表中
+                        string module = currentRow.GetCell(0) != null ? currentRow.GetCell(0).StringCellValue : "";
+                        string address = currentRow.GetCell(1) != null ? currentRow.GetCell(1).StringCellValue : "";
+                        string account = currentRow.GetCell(2) != null ? currentRow.GetCell(2).StringCellValue : "";
+
+                        HuaJingAlarms moduleInfo = new HuaJingAlarms(module, address, account);
+                        alarms.Add(moduleInfo);
+                    }
+
+                    // 输出表头
+                    Console.WriteLine($"表头：{string.Join(", ", headers)}");
+
+                    // 输出每个 ModuleInfo 对象的信息
+                    foreach (var moduleInfo in alarms)
+                    {
+                        Console.WriteLine($"Module: {moduleInfo.Module}, Address: {moduleInfo.Address}, Account: {moduleInfo.Account}");
+                    }
+                }
+
+                Console.WriteLine("Excel 文件读取完成！");
             }
-            // 读取 Excel 文件
-            using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
+            catch (Exception e)
             {
-                IWorkbook workbook = new XSSFWorkbook(fs);
-                ISheet sheet = workbook.GetSheetAt(0);
-
-                // 读取第一行作为表头
-                IRow headerRow = sheet.GetRow(0);
-                List<string> headers = new List<string>();
-                for (int i = 0; i < headerRow.LastCellNum; i++)
-                {
-                    ICell cell = headerRow.GetCell(i);
-                    headers.Add(cell.StringCellValue);
-                }
-
-                // 创建列表
-                List<HuaJingAlarms> alarms = new List<HuaJingAlarms>();
-
-                // 从第二行开始读取数据
-                for (int row = 1; row <= sheet.LastRowNum; row++)
-                {
-                    IRow currentRow = sheet.GetRow(row);
-
-                    // 如果当前行为空，则跳过
-                    if (currentRow == null)
-                        continue;
-
-                    // 创建对象并添加到列表中
-                    string module = currentRow.GetCell(0) != null ? currentRow.GetCell(0).StringCellValue : "";
-                    string address = currentRow.GetCell(1) != null ? currentRow.GetCell(1).StringCellValue : "";
-                    string account = currentRow.GetCell(2) != null ? currentRow.GetCell(2).StringCellValue : "";
-
-                    HuaJingAlarms moduleInfo = new HuaJingAlarms(module, address, account);
-                    alarms.Add(moduleInfo);
-                }
-
-                // 输出表头
-                Console.WriteLine($"表头：{string.Join(", ", headers)}");
-
-                // 输出每个 ModuleInfo 对象的信息
-                foreach (var moduleInfo in alarms)
-                {
-                    Console.WriteLine($"Module: {moduleInfo.Module}, Address: {moduleInfo.Address}, Account: {moduleInfo.Account}");
-                }
+                Console.WriteLine($"Excel 文件读取错误: {e.Message}");
             }
-
-            Console.WriteLine("Excel 文件读取完成！");
-
         }
+
+
+
+        //此处是将list集合写入excel表，Supply也是自己定义的类，每一个字段对应需要写入excel表的每一列的数据
+        //一次最多能写65535行数据，超过需将list集合拆分，分多次写入
+        #region 写入excel
+        static void WriteToExcelFile(Stream fileStream, string date, string time, string alarmContent)
+        {
+            // 读取现有的Excel文档
+            HSSFWorkbook workbook = new HSSFWorkbook(fileStream);
+            ISheet sheet = workbook.GetSheetAt(0);
+
+            // 获取当前行数
+            int lastRowNum = sheet.LastRowNum;
+
+            // 创建新行并写入数据
+            IRow newRow = sheet.CreateRow(lastRowNum + 1);
+            newRow.CreateCell(0).SetCellValue(date);
+            newRow.CreateCell(1).SetCellValue(time);
+            newRow.CreateCell(2).SetCellValue(alarmContent);
+
+            // 将文档写入到内存流中
+            using (MemoryStream memoryStream = new MemoryStream())
+            {
+                workbook.Write(memoryStream);
+
+                // 将内存流中的内容写入到文件
+                using (FileStream file = new FileStream(((FileStream)fileStream).Name, FileMode.Create))
+                {
+                    byte[] content = memoryStream.ToArray();
+                    file.Write(content, 0, content.Length);
+                }
+            }
+        }
+        static void InitializeExcel(string filePath)
+        {
+            // 创建一个新的Excel文档
+            HSSFWorkbook workbook = new HSSFWorkbook();
+            ISheet sheet = workbook.CreateSheet("Sheet1");
+
+            // 创建文件头行
+            IRow headerRow = sheet.CreateRow(0);
+            headerRow.CreateCell(0).SetCellValue("日期");
+            headerRow.CreateCell(1).SetCellValue("时间");
+            headerRow.CreateCell(2).SetCellValue("报警内容");
+
+            // 将文档写入到文件
+            using (FileStream file = new FileStream(filePath, FileMode.Create))
+            {
+                workbook.Write(file);
+            }
+        }
+
+
+        #endregion
+
+
+
 
         /// <summary>
         /// 上传电子档案接口
@@ -1509,6 +1621,9 @@ namespace DLGCY.FilesWatcher.ViewModels
             }
 
         }
+
+
+
     }
 }
 
