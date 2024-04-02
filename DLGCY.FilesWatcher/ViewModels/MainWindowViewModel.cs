@@ -14,10 +14,12 @@ using DotNet.Utilities.ConsoleHelper;
 using FreeSql;
 using Newtonsoft.Json;
 using NPOI.HSSF.UserModel;
+using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using PropertyChanged;
 using TemplateClassLibrary;
+using Windows.UI.Composition;
 using WPFTemplate;
 using WPFTemplate.ViewModels;
 using WPFTemplateLib.UserControls;
@@ -412,10 +414,17 @@ namespace DLGCY.FilesWatcher.ViewModels
                 {
                     InitializeExcel(filePath);
                 }
+                List<HuaJingAlarms> alarms = new List<HuaJingAlarms>
+                {
+                    new HuaJingAlarms(DateTime.Now.ToString(),DateTime.Now.ToString(),"报警文本示例1"),
+                    new HuaJingAlarms(DateTime.Now.AddDays(1).ToString(),DateTime.Now.AddDays(1).ToString(),"报警文本示例2"),
+                    new HuaJingAlarms(DateTime.Now.AddDays(2).ToString(),DateTime.Now.AddDays(2).ToString(),"报警文本示例3")
+
+                };
                 // 打开文件流
                 using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite))
                 {
-                    WriteToExcelFile(fileStream, "2024-04-01", "12:00:00", "报警内容示例");
+                    WriteToExcelFile(fileStream, alarms);
                 }
             });
 
@@ -504,6 +513,7 @@ namespace DLGCY.FilesWatcher.ViewModels
         {
             try
             {
+
                 Console.WriteLine($"【{GetPathType(e.FullPath)}更改】{GetPath(e)}");
                 if (!e.Name.StartsWith("~$"))
                 {
@@ -1124,12 +1134,22 @@ namespace DLGCY.FilesWatcher.ViewModels
                 }
 
                 // 获取文件中的实际行数
-                int originalRowCount;
+                int currentRowCount;
                 using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
                     IWorkbook workbook = new HSSFWorkbook(fs); // 使用 HSSFWorkbook 来处理 .xls 格式文件
                     ISheet sheet = workbook.GetSheetAt(0);
-                    originalRowCount = sheet.PhysicalNumberOfRows;
+                    currentRowCount = sheet.PhysicalNumberOfRows;
+                }
+
+                // 获取上次记录的行数
+                int originalRowCount = Configs.ExcelLastRow;
+
+                // 检查是否有新增内容
+                if (originalRowCount == currentRowCount)
+                {
+                    Console.WriteLine("Excel 文件没有新增内容，无需解析！");
+                    return;
                 }
 
                 // 读取 Excel 文件
@@ -1137,13 +1157,6 @@ namespace DLGCY.FilesWatcher.ViewModels
                 {
                     IWorkbook workbook = new HSSFWorkbook(fs); // 使用 HSSFWorkbook 来处理 .xls 格式文件
                     ISheet sheet = workbook.GetSheetAt(0);
-
-                    // 检查是否有新增内容
-                    if (sheet.PhysicalNumberOfRows == originalRowCount)
-                    {
-                        Console.WriteLine("Excel 文件没有新增内容，无需解析！");
-                        return;
-                    }
 
                     // 读取第一行作为表头
                     IRow headerRow = sheet.GetRow(0);
@@ -1157,8 +1170,8 @@ namespace DLGCY.FilesWatcher.ViewModels
                     // 创建列表
                     List<HuaJingAlarms> alarms = new List<HuaJingAlarms>();
 
-                    // 从第二行开始读取数据
-                    for (int row = 1; row < sheet.PhysicalNumberOfRows; row++)
+                    // 从上次读取的行数之后开始读取数据
+                    for (int row = originalRowCount; row < currentRowCount; row++)
                     {
                         IRow currentRow = sheet.GetRow(row);
 
@@ -1174,6 +1187,9 @@ namespace DLGCY.FilesWatcher.ViewModels
                         HuaJingAlarms moduleInfo = new HuaJingAlarms(module, address, account);
                         alarms.Add(moduleInfo);
                     }
+
+                    // 更新 Configs.ExcelLastRow
+                    Configs.ExcelLastRow = currentRowCount;
 
                     // 输出表头
                     Console.WriteLine($"表头：{string.Join(", ", headers)}");
@@ -1195,10 +1211,11 @@ namespace DLGCY.FilesWatcher.ViewModels
 
 
 
+
         //此处是将list集合写入excel表，Supply也是自己定义的类，每一个字段对应需要写入excel表的每一列的数据
         //一次最多能写65535行数据，超过需将list集合拆分，分多次写入
         #region 写入excel
-        static void WriteToExcelFile(Stream fileStream, string date, string time, string alarmContent)
+        static void WriteToExcelFile(Stream fileStream, List<HuaJingAlarms> huaJingAlarms)
         {
             // 读取现有的Excel文档
             HSSFWorkbook workbook = new HSSFWorkbook(fileStream);
@@ -1206,12 +1223,15 @@ namespace DLGCY.FilesWatcher.ViewModels
 
             // 获取当前行数
             int lastRowNum = sheet.LastRowNum;
-
-            // 创建新行并写入数据
-            IRow newRow = sheet.CreateRow(lastRowNum + 1);
-            newRow.CreateCell(0).SetCellValue(date);
-            newRow.CreateCell(1).SetCellValue(time);
-            newRow.CreateCell(2).SetCellValue(alarmContent);
+            foreach (var huaJingAlarm in huaJingAlarms)
+            {
+                lastRowNum++;
+                // 创建新行并写入数据
+                IRow newRow = sheet.CreateRow(lastRowNum);
+                newRow.CreateCell(0).SetCellValue(huaJingAlarm.Module);
+                newRow.CreateCell(1).SetCellValue(huaJingAlarm.Address);
+                newRow.CreateCell(2).SetCellValue(huaJingAlarm.Account);
+            }
 
             // 将文档写入到内存流中
             using (MemoryStream memoryStream = new MemoryStream())

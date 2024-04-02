@@ -7,16 +7,16 @@
       "RelativeMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|solutionrelative:dlgcy.fileswatcher\\viewmodels\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
+      "AbsoluteMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\dlgcy.fileswatcher\\configitems.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|solutionrelative:dlgcy.fileswatcher\\configitems.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\dlgcy.fileswatcher\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|solutionrelative:dlgcy.fileswatcher\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\dlgcy.fileswatcher\\viewmodels\\windowconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|solutionrelative:dlgcy.fileswatcher\\viewmodels\\windowconfig.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\dlgcy.fileswatcher\\configitems.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|solutionrelative:dlgcy.fileswatcher\\configitems.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -56,26 +56,27 @@
               "RelativeDocumentMoniker": "DLGCY.FilesWatcher\\ViewModels\\MainWindowViewModel.cs",
               "ToolTip": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\ViewModels\\MainWindowViewModel.cs",
               "RelativeToolTip": "DLGCY.FilesWatcher\\ViewModels\\MainWindowViewModel.cs",
-              "ViewState": "AQIAAOkDAAAAAAAAAAArwGMEAAARAAAA",
+              "ViewState": "AQIAAMEEAAAAAAAAAAAAAMwEAAAcAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-03-21T09:15:02.167Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 1,
               "Title": "ConfigItems.cs",
               "DocumentMoniker": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\ConfigItems.cs",
               "RelativeDocumentMoniker": "DLGCY.FilesWatcher\\ConfigItems.cs",
               "ToolTip": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\ConfigItems.cs",
               "RelativeToolTip": "DLGCY.FilesWatcher\\ConfigItems.cs",
-              "ViewState": "AQIAADsAAAAAAAAAAIA9wEoAAAAWAAAA",
+              "ViewState": "AQIAAEgAAAAAAAAAAAAWwFcAAAAfAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-03-26T06:18:18.809Z"
+              "WhenOpened": "2024-03-26T06:18:18.809Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 3,
               "Title": "WindowConfig.cs",
               "DocumentMoniker": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\ViewModels\\WindowConfig.cs",
               "RelativeDocumentMoniker": "DLGCY.FilesWatcher\\ViewModels\\WindowConfig.cs",
@@ -87,7 +88,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\MainWindow.xaml",
               "RelativeDocumentMoniker": "DLGCY.FilesWatcher\\MainWindow.xaml",

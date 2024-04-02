@@ -82,5 +82,9 @@ namespace WPFTemplate
         /// MES返回报错信息
         /// </summary>
         public string MESErrorInfo { get; set; } = string.Empty;
+        /// <summary>
+        /// Excel读取最后一行
+        /// </summary>
+        public int ExcelLastRow { get; set; } = 0;
     }
 }
