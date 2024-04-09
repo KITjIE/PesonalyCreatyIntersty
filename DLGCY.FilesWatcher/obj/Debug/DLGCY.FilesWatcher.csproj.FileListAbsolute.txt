@@ -311,3 +311,5 @@ D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\�
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\文件夹监控器\runtimes\win7-arm\native\libuv.dll
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\文件夹监控器\runtimes\win7-x64\native\libuv.dll
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\文件夹监控器\runtimes\win7-x86\native\libuv.dll
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\Debug\AnalysWindow.g.cs
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\Debug\AnalysWindow.baml

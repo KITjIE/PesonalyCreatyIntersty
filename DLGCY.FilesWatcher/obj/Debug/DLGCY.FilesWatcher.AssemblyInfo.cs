@@ -15,7 +15,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("文件变动监控器")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.3.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.3+9c7c8ffda36822aca845052972cec3ea5c8839a7")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.3+a41d8faf0cca7b46176f42a8289526c61d54b14c")]
 [assembly: System.Reflection.AssemblyProductAttribute("DLGCY.FilesWatcher")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DLGCY.FilesWatcher")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.3.*")]

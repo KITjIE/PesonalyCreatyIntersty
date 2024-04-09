@@ -41,7 +41,7 @@ namespace WPFTemplate
         /// <summary>
         /// 解析失败地址（网络问题）
         /// </summary>
-        public string ErrorPath { get; set; } = @"D:\ErrorPath";
+        public string ErrorPath { get; set; } = @"C:\ErrorPath";
         /// <summary>
         /// 解析完成计数
         /// </summary>

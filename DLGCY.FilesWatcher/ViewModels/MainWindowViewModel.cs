@@ -141,7 +141,10 @@ namespace DLGCY.FilesWatcher.ViewModels
         /// 关于弹窗命令
         /// </summary>
         public ICommand AboutCommand { get; set; }
-
+        /// <summary>
+        /// 解析模式弹窗命令
+        /// </summary>
+        public ICommand AnalysCommand { get; set; }
         /// <summary>
         /// 弹窗演示命令
         /// </summary>
@@ -270,7 +273,10 @@ namespace DLGCY.FilesWatcher.ViewModels
             {
                 new AboutWindow().ShowDialog();
             });
-
+            AnalysCommand ??= new RelayCommand(o => true, o =>
+            {
+                new AnalysWindow().ShowDialog();
+            });
             DialogCommand ??= new RelayCommand(o => true, async o =>
             {
                 await ConfirmBoxHelper.ShowMessage(DialogVm, "操作前通知", 6);
@@ -513,15 +519,17 @@ namespace DLGCY.FilesWatcher.ViewModels
         {
             try
             {
+                #region excel解析
 
-                Console.WriteLine($"【{GetPathType(e.FullPath)}更改】{GetPath(e)}");
-                if (!e.Name.StartsWith("~$"))
-                {
-                    if (e.Name.Contains(".xls") || e.FullPath.Contains(".csv"))
-                    {
-                        FileCSV_Analys(GetPath(e));
-                    }
-                }
+                //Console.WriteLine($"【{GetPathType(e.FullPath)}更改】{GetPath(e)}");
+                //if (!e.Name.StartsWith("~$"))
+                //{
+                //    if (e.Name.Contains(".xls") || e.FullPath.Contains(".csv"))
+                //    {
+                //        FileCSV_Analys(GetPath(e));
+                //    }
+                //}
+                #endregion
 
             }
             catch (Exception ex)
@@ -547,18 +555,29 @@ namespace DLGCY.FilesWatcher.ViewModels
                 {
                     if (e.Name.Contains(".txt"))
                     {
-                        if (!FileTXTName_SonFile(Path.GetFileNameWithoutExtension(GetPath(e)), GetPath(e)))
-                        {
-                            ShowErrorWin();
-                        }
+                        //if (!FileTXTName_SonFile(Path.GetFileNameWithoutExtension(GetPath(e)), GetPath(e)))
+                        //{
+                        //    ShowErrorWin();
+                        //}
                     }
                     if (e.Name.Contains(".csv"))
                     {
-                        if (!FileTXTName_FrontFile(Path.GetFileNameWithoutExtension(GetPath(e)), GetPath(e)))
-                        {
-                            ShowErrorWin();
-                        }
+                        //if (!FileTXTName_FrontFile(Path.GetFileNameWithoutExtension(GetPath(e)), GetPath(e)))
+                        //{
+                        //    ShowErrorWin();
+                        //}
                     }
+                }
+                if (Configs.SupervisMode == "文件解析模式D")
+                {
+                    //if (e.Name.Contains(".txt"))
+                    //{
+                    //    if (!FileTXTName_SonFile(Path.GetFileNameWithoutExtension(GetPath(e)), GetPath(e)))
+                    //    {
+                    //        ShowErrorWin();
+                    //    }
+                    //}
+
                 }
                 if (Configs.SupervisMode == "文件解析模式DD")
                 {
@@ -780,20 +799,20 @@ namespace DLGCY.FilesWatcher.ViewModels
                         {
                             using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                             {
-                                if (!FileTXTName_FrontFile(fileName, filePath))
-                                {
-                                    ShowErrorWin();
-                                }
+                                //if (!FileTXTName_FrontFile(fileName, filePath))
+                                //{
+                                //    ShowErrorWin();
+                                //}
                             }
                         }
                         if (fileSuffixName == "txt" && Configs.SupervisMode == "文件解析模式C")
                         {
                             using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                             {
-                                if (!FileTXTName_SonFile(fileName, filePath))
-                                {
-                                    ShowErrorWin();
-                                }
+                                //if (!FileTXTName_SonFile(fileName, filePath))
+                                //{
+                                //    ShowErrorWin();
+                                //}
                             }
                         }
                         // 强制释放文件资源
@@ -809,8 +828,14 @@ namespace DLGCY.FilesWatcher.ViewModels
             }
         }
         /// <summary>
-        /// （模式B）文件格式：Y01111111111111B00_PASS_SYNA_20240326_165100_65.csv // V216006A020155_五楼LCM自动2号_20240319_035050_Y00000000_PASS_F2.csv
-        /// | V216006A020155_五楼LCM自动2号_20240320_032742_Y011111111100_FAIL_F2.csv
+        /// （模式B）文件格式：
+        /// ① Y01111111111111B00_PASS_SYNA_20240326_165100_65.csv
+        /// ② V216006A020155_五楼LCM自动2号_20240319_035050_Y00000000_PASS_F2.csv
+        ///    V216006A020155_五楼LCM自动2号_20240320_032742_Y011111111100_FAIL_F2.csv
+        /// ③ OK/HD125_GT9916T_No0_01167_30635_Y44-9733331A9D40405003897_20240408_134405_OK.csv
+        ///    NG/HD125_GT9916T_No0_01167_30635_Y44-9733331A9D40405003897_20240408_134405_NG.csv
+        /// ④ Y0000000_FAIL_0_1_3_38_36_30_31_27_32_2_37_SYNA_20240326_165100_66.csv
+        /// ⑤ 20231205_002245_Y04736103C30000431B00_FAIL.csv
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="filePath"></param>
@@ -821,60 +846,116 @@ namespace DLGCY.FilesWatcher.ViewModels
             Configs.ProductBarcode = "";
             Configs.MESErrorInfo = "";
             Configs.UploadResult = "";
+            string result_ = null;
+            string BarCode_ = null;
+            string Timeresult = null;
             try
             {
-                if (fileName_.Contains("BarCode"))
-                {
-                    Console.WriteLine($"【文件名格式错误,解析失败！！！】");
-                    return true;
-                }
-                int underscoreCount = fileName_.Split('_').Length - 1;
-                if (underscoreCount > 5)
-                {
-                    // 找到第三个下划线的索引
-                    int thirdUnderscoreIndex = fileName_.IndexOf('_', fileName_.IndexOf('_') + 1);
-
-                    // 如果找到了第三个下划线
-                    if (thirdUnderscoreIndex != -1)
-                    {
-                        // 使用 Substring 方法截取从第三个下划线之后到字符串末尾的部分
-                        fileName_ = fileName_.Substring(thirdUnderscoreIndex + 1);
-                    }
-                }
+                string[] parts = null;
+                string[] result = null;
                 if (fileName_.Length < 20)
                 {
                     Console.WriteLine($"【文件名格式错误,解析失败！！！】");
                     Configs.MESErrorInfo = "文件名格式错误,解析失败！";
                     return true;
                 }
-
-                // 使用正则表达式匹配两个下划线之间的文本
-                string[] parts = fileName_.Split('_');
-                string[] result = parts.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-                // 将日期字符串和时间字符串转换为DateTime对象
-                DateTime dateObj = DateTime.ParseExact(result[0], "yyyyMMdd", null);
-                DateTime timeObj = DateTime.ParseExact(result[1], "HHmmss", null);
-
-                // 合并日期和时间
-                DateTime combinedDateTime = new DateTime(dateObj.Year, dateObj.Month, dateObj.Day, timeObj.Hour, timeObj.Minute, timeObj.Second);
-
-                // 格式化输出
-                string Timeresult = combinedDateTime.ToString("yyyy-MM-dd HH:mm:ss");
-                // 输出提取的信息
-                if (result.Length >= 3)
+                if (fileName_.Contains("BarCode"))
                 {
-                    if (result[3].Contains("PASS"))
+                    Console.WriteLine($"【文件名格式错误,解析失败！！！】");
+                    return true;
+                }
+                int underscoreCount = fileName_.Split('_').Length - 1;
+                //①Y01111111111111B00_PASS_SYNA_20240326_165100_65.csv
+                if (underscoreCount == 5 && !(fileName_.Contains("OK") || fileName_.Contains("NG")))
+                {
+                    // 使用正则表达式匹配两个下划线之间的文本
+                    parts = fileName_.Split('_');
+                    result = parts.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                    BarCode_ = result[0];
+                    if (result[1].Contains("PASS"))
                     {
-                        result[3] = "PASS";
+                        result_ = "PASS";
                     }
                     else
                     {
-                        result[3] = "FAIL";
+                        result_ = "FAIL";
                     }
+                    Timeresult = TimeChange(result[3], result[4]); // 将日期字符串和时间字符串转换为DateTime对象
+                }
+                //②V216006A020155_五楼LCM自动2号_20240319_035050_Y00000000_PASS_F2.csv
+                if (underscoreCount == 6 && !(fileName_.Contains("OK") || fileName_.Contains("NG")))
+                {
+                    parts = fileName_.Split('_');
+                    result = parts.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                    BarCode_ = result[4];
+                    if (result[5].Contains("PASS"))
+                    {
+                        result_ = "PASS";
+                    }
+                    else
+                    {
+                        result_ = "FAIL";
+                    }
+                    Timeresult = TimeChange(result[2], result[3]); // 将日期字符串和时间字符串转换为DateTime对象
+                }
+                //③OK/HD125_GT9916T_No0_01167_30635_Y44-9733331A9D40405003897_20240408_134405_OK.csv
+                if (underscoreCount == 8 && (fileName_.Contains("OK") || fileName_.Contains("NG")))
+                {
+                    parts = fileName_.Split('_');
+                    result = parts.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                    BarCode_ = result[5];
+                    if (result[8].Contains("OK"))
+                    {
+                        result_ = "PASS";
+                    }
+                    else
+                    {
+                        result_ = "FAIL";
+                    }
+                    Timeresult = TimeChange(result[6], result[7]); // 将日期字符串和时间字符串转换为DateTime对象
+                }
+                //④Y0000000_FAIL_0_1_3_38_36_30_31_27_32_2_37_SYNA_20240326_165100_66.csv
+                if (underscoreCount == 16 && !(fileName_.Contains("OK") || fileName_.Contains("NG")))
+                {
+                    parts = fileName_.Split('_');
+                    result = parts.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                    BarCode_ = result[0];
+                    if (result[1].Contains("PASS"))
+                    {
+                        result_ = "PASS";
+                    }
+                    else
+                    {
+                        result_ = "FAIL";
+                    }
+                    Timeresult = TimeChange(result[14], result[15]); // 将日期字符串和时间字符串转换为DateTime对象
+                }
+                //⑤20231205_002245_Y04736103C30000431B00_FAIL.csv
+                if (underscoreCount == 3 && !(fileName_.Contains("OK") || fileName_.Contains("NG")))
+                {
+                    parts = fileName_.Split('_');
+                    result = parts.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                    BarCode_ = result[2];
+                    if (result[3].Contains("PASS"))
+                    {
+                        result_ = "PASS";
+                    }
+                    else
+                    {
+                        result_ = "FAIL";
+                    }
+                    Timeresult = TimeChange(result[0], result[1]); // 将日期字符串和时间字符串转换为DateTime对象
+                }
+                // 检测时间是否为空
+                Timeresult ??= DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                // 输出提取的信息
+                if (result.Length >= 3)
+                {
+
                     // 上传电子档案接口
-                    bool apiResponse1 = Post_ElectricalRecord(result[2], result[3], Timeresult, filePath);
+                    bool apiResponse1 = Post_ElectricalRecord(BarCode_, result_, Timeresult, filePath);
                     // 上传电测过站接口
-                    bool apiResponse2 = Post_ElectricalPastation(result[2], result[3], Timeresult, filePath);
+                    bool apiResponse2 = Post_ElectricalPastation(BarCode_, result_, Timeresult, filePath);
                     if (apiResponse1 && apiResponse2)
                     {
                         Configs.AnalysCount++;
@@ -901,51 +982,81 @@ namespace DLGCY.FilesWatcher.ViewModels
         }
 
         /// <summary>
-        /// （模式B）文件格式：__F0000000000000_1959292_2023-12-06_09-09-21_OK
+        /// （模式B）文件格式：
+        /// ①__F0000000000000_1959292_2023-12-06_09-09-21_OK.txt
+        /// ②D:\test\PASS\YYYYYYYYY25.txt | D:\test\FAIL\YYYYYYYYY25.txt
         /// </summary>
         /// <param name="fileName"></param>
         /// <param name="fileName"></param>
         /// <returns></returns>
         public bool FileTXTName_Analys(string fileName, string filePath)
         {
+            string fileName_ = fileName;
             Configs.ProductBarcode = "";
             Configs.UploadResult = "";
             Configs.MESErrorInfo = "";
+            string result_ = null;
+            string BarCode_ = null;
+            string Timeresult = null;
             try
             {
+                string[] parts = null;
+                string[] result = null;
                 if (fileName.Length < 18)
                 {
                     Console.WriteLine($"【文件名格式错误,解析失败！！！】");
                     Configs.MESErrorInfo = "文件名格式错误,解析失败！";
                     return true;
                 }
-
-                // 使用正则表达式匹配两个下划线之间的文本
-                string[] parts = fileName.Split('_');
-                string[] result = parts.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-                // 合并日期和时间字符串
-                string combinedDateTimeStr = $"{result[2]} {result[3]}";
-
-                // 将合并后的字符串转换为DateTime对象
-                DateTime combinedDateTime = DateTime.ParseExact(combinedDateTimeStr, "yyyy-MM-dd HH-mm-ss", null);
-
-                // 格式化输出
-                string Timeresult = combinedDateTime.ToString("yyyy-MM-dd HH:mm:ss");
-                // 输出提取的信息
-                if (result.Length >= 5)
+                int underscoreCount = fileName_.Split('_').Length - 1;
+                //①__F0000000000000_1959292_2023-12-06_09-09-21_OK.txt
+                if (underscoreCount == 6 && (fileName_.Contains("OK") || fileName_.Contains("NG")))
                 {
+                    // 使用正则表达式匹配两个下划线之间的文本
+                    parts = fileName.Split('_');
+                    result = parts.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                    BarCode_ = result[0];
                     if (result[4].Contains("OK"))
                     {
-                        result[4] = "PASS";
+                        result_ = "PASS";
                     }
                     else
                     {
-                        result[4] = "FAIL";
+                        result_ = "FAIL";
                     }
+                    // 合并日期和时间字符串
+                    string combinedDateTimeStr = $"{result[2]} {result[3]}";
+
+                    // 将合并后的字符串转换为DateTime对象
+                    DateTime combinedDateTime = DateTime.ParseExact(combinedDateTimeStr, "yyyy-MM-dd HH-mm-ss", null);
+
+                    // 格式化输出
+                    Timeresult = combinedDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+                }
+                if (underscoreCount == 0 && !(fileName_.Contains("OK") || fileName_.Contains("NG")))
+                {
+                    // 使用正则表达式匹配两个下划线之间的文本
+                    parts = fileName.Split('_');
+                    result = parts.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                    BarCode_ = result[0];
+                    if (filePath.Contains("PASS"))
+                    {
+                        result_ = "PASS";
+                    }
+                    else
+                    {
+                        result_ = "FAIL";
+                    }
+                }
+                // 检测时间是否为空
+                Timeresult ??= DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+                // 输出提取的信息
+                if (result.Length > 0)
+                {
                     // 上传电子档案接口
-                    bool apiResponse1 = Post_ElectricalRecord(result[0], result[4], Timeresult, filePath);
+                    bool apiResponse1 = Post_ElectricalRecord(BarCode_, result_, Timeresult, filePath);
                     // 上传电测过站接口
-                    bool apiResponse2 = Post_ElectricalPastation(result[0], result[4], Timeresult, filePath);
+                    bool apiResponse2 = Post_ElectricalPastation(BarCode_, result_, Timeresult, filePath);
                     if (apiResponse1 && apiResponse2)
                     {
                         Configs.AnalysCount++;
@@ -972,113 +1083,25 @@ namespace DLGCY.FilesWatcher.ViewModels
             }
         }
         /// <summary>
-        /// （模式C）文件格式：D:\test\PASS\YYYYYYYYY25.txt | D:\test\FAIL\YYYYYYYYY25.txt
+        /// （模式C）文件格式 
         /// </summary>
         /// <param name="filePath"></param>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public bool FileTXTName_SonFile(string fileName, string filePath)
-        {
-            Configs.ProductBarcode = "";
-            Configs.UploadResult = "";
-            Configs.MESErrorInfo = "";
-            string filePath_ = filePath;
-            string Result = "PASS";
-            string DateTime_ = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            if (filePath_.Contains("FAIL"))
-            {
-                Result = "FAIL";
-            }
-            // 上传电子档案接口
-            bool apiResponse1 = Post_ElectricalRecord(fileName, Result, DateTime_, filePath);
-            // 上传电测过站接口
-            bool apiResponse2 = Post_ElectricalPastation(fileName, Result, DateTime_, filePath);
-            if (apiResponse1 && apiResponse2)
-            {
-                Configs.AnalysCount++;
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
+        //public bool FileTXTName_SonFile(string fileName, string filePath)
+        //{
+        //   
+        //}
         /// <summary>
-        /// （模式C）文件格式：Y00000000000000_PASS_SYNA_20240326_165100_65.csv |Y0000000_FAIL_0_1_3_38_36_30_31_27_32_2_37_SYNA_20240326_165100_66.csv
+        /// （模式C） 
         /// </summary>
         /// <param name="filePath"></param>
         /// <param name="fileName"></param>
         /// <returns></returns>
-        public bool FileTXTName_FrontFile(string fileName, string filePath)
-        {
-            Configs.ProductBarcode = "";
-            Configs.UploadResult = "";
-            Configs.MESErrorInfo = "";
-            try
-            {
-                if (fileName.Length < 18)
-                {
-                    Console.WriteLine($"【文件名格式错误,解析失败！！！】");
-                    Configs.MESErrorInfo = "文件名格式错误,解析失败！";
-                    return true;
-                }
-                // 使用正则表达式匹配两个下划线之间的文本
-                string[] parts = fileName.Split('_');
-                string[] result = parts.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
-                // 寻找倒数第二个下划线的索引
-                int secondLastUnderscoreIndex = fileName.LastIndexOf('_');
-                // 寻找倒数第三个下划线的索引
-                int thirdLastUnderscoreIndex = fileName.LastIndexOf('_', secondLastUnderscoreIndex - 1);
+        //public bool FileTXTName_FrontFile(string fileName, string filePath)
+        //{
 
-                // 提取倒数第三部分的内容
-                string thirdPart = fileName.Substring(thirdLastUnderscoreIndex + 1, secondLastUnderscoreIndex - thirdLastUnderscoreIndex - 1);
-
-                // 寻找倒数第四个下划线的索引
-                int fourthLastUnderscoreIndex = fileName.LastIndexOf('_', thirdLastUnderscoreIndex - 1);
-
-                // 提取倒数第四部分的内容
-                string fourthPart = fileName.Substring(fourthLastUnderscoreIndex + 1, thirdLastUnderscoreIndex - fourthLastUnderscoreIndex - 1);
-
-                // 合并日期和时间字符串
-                string Timedate = $"{fourthPart} {thirdPart.Insert(2, ":").Insert(5, ":")}";
-
-                // 将合并后的字符串转换为DateTime对象
-                DateTime combinedDateTime = DateTime.ParseExact(Timedate.Trim(), "yyyyMMdd HH:mm:ss", null);
-
-                // 格式化输出
-                string Timeresult = combinedDateTime.ToString("yyyy-MM-dd HH:mm:ss");
-                // 输出提取的信息
-                if (result.Length >= 5)
-                {
-                    // 上传电子档案接口
-                    bool apiResponse1 = Post_ElectricalRecord(result[0], result[1], Timeresult, filePath);
-                    // 上传电测过站接口
-                    bool apiResponse2 = Post_ElectricalPastation(result[0], result[1], Timeresult, filePath);
-                    if (apiResponse1 && apiResponse2)
-                    {
-                        Configs.AnalysCount++;
-                        return true;
-                    }
-                    else
-                    {
-                        return false;
-                    }
-                }
-                else
-                {
-                    Console.WriteLine("文件名解析错误！");
-                    Configs.MESErrorInfo = "文件名解析错误！";
-                    return false;
-                }
-
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"文件名解析模式，解析错误！{ex.Message}");
-                Configs.MESErrorInfo = ex.Message;
-                return true;
-            }
-        }
+        //} 
         /// <summary>
         /// （模式A）文件格式 7700SII plus_20231219144327.txt（AOI）
         /// </summary>
@@ -1270,7 +1293,24 @@ namespace DLGCY.FilesWatcher.ViewModels
 
 
 
+        /// <summary>
+        /// 时间转化
+        /// </summary>
+        /// <param name="date">日期</param>
+        /// <param name="time">时间</param>
+        /// <returns></returns>
+        public string TimeChange(string date, string time)
+        {
+            // 将日期字符串和时间字符串转换为DateTime对象
+            DateTime dateObj = DateTime.ParseExact(date, "yyyyMMdd", null);
+            DateTime timeObj = DateTime.ParseExact(time, "HHmmss", null);
 
+            // 合并日期和时间
+            DateTime combinedDateTime = new DateTime(dateObj.Year, dateObj.Month, dateObj.Day, timeObj.Hour, timeObj.Minute, timeObj.Second);
+
+            // 格式化输出
+            return combinedDateTime.ToString("yyyy-MM-dd HH:mm:ss");
+        }
         /// <summary>
         /// 上传电子档案接口
         /// </summary>
@@ -1322,6 +1362,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                     Parameters = apiParameters,
                     Context = new RequestContext
                     {
+                        //正式 Zu5wt35NMs4OvENNGUwRgfLxE3PLwBxMJp8hFAbeXYGuUzC4cC8CreHCD2qD48QfynpOD3nvzB8= 测试 n3I+7MVqqsqqcz/SSpnvVc8Bt43r95txrWfBWQqe5DLHm6Lrh0zq5neKXXJGrPWYt9icWFp3ju4=
                         Ticket = "Zu5wt35NMs4OvENNGUwRgfLxE3PLwBxMJp8hFAbeXYGuUzC4cC8CreHCD2qD48QfynpOD3nvzB8=",
                         InvOrgId = 2
                     }
@@ -1411,6 +1452,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                     Parameters = apiParameters,
                     Context = new RequestContext
                     {
+                        //正式 Zu5wt35NMs4OvENNGUwRgfLxE3PLwBxMJp8hFAbeXYGuUzC4cC8CreHCD2qD48QfynpOD3nvzB8= 测试 n3I+7MVqqsqqcz/SSpnvVc8Bt43r95txrWfBWQqe5DLHm6Lrh0zq5neKXXJGrPWYt9icWFp3ju4=
                         Ticket = "Zu5wt35NMs4OvENNGUwRgfLxE3PLwBxMJp8hFAbeXYGuUzC4cC8CreHCD2qD48QfynpOD3nvzB8=",
                         InvOrgId = 2
                     }
@@ -1423,6 +1465,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                 if (apiResponsePastation.Success)
                 {
                     LogHelper.Debug($"【电子过站接口】设备编码：{Configs.MachineModel};条码：{BarCode};MES结果：【{apiResponsePastation.Success}】--{apiResponsePastation.Message}");
+                    Configs.ProductBarcode = BarCode;
                     Configs.MESErrorInfo = apiResponsePastation.Message;
                     Configs.UploadResult = "成功";
                 }
@@ -1641,11 +1684,5 @@ namespace DLGCY.FilesWatcher.ViewModels
             }
 
         }
-
-
-
     }
 }
-
-
-

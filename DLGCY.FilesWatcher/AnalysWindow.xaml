@@ -1,0 +1,82 @@
+﻿<Window x:Class="DLGCY.FilesWatcher.AnalysWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:dotnet="clr-namespace:DotNet.Utilities"
+        mc:Ignorable="d" WindowStartupLocation="CenterScreen"
+        Title="AnalysWindow" Height="450" Width="800">
+    <ScrollViewer Margin="3" CanContentScroll="True">
+        <StackPanel Margin="10">
+            <StackPanel.Resources>
+                <Style TargetType="TextBlock">
+                    <Setter Property="Margin" Value="0,5"></Setter>
+                </Style>
+            </StackPanel.Resources>
+            <StackPanel>
+                <TextBlock FontSize="14" FontWeight="Bold">解析模式A：</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>（例1）解析路径\</TextBlock>
+                    <TextBlock Foreground="#FFF70808">7700SII plus_20231219144327</TextBlock>
+                    <TextBlock Foreground="#FF080CF7" FontWeight="Bold"> .txt</TextBlock>
+
+                </StackPanel>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock FontSize="14" FontWeight="Bold">解析模式B：</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>（例1）解析路径\</TextBlock>
+                    <TextBlock Foreground="#FFF70808">Y000000000000_PASS_SYNA_20240326_165100_65</TextBlock>
+                    <TextBlock Foreground="#FF080CF7" FontWeight="Bold"> .csv</TextBlock>
+
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>（例2）解析路径\</TextBlock>
+                    <TextBlock Foreground="#FFF70808">V216006A020155_五楼LCM自动2号_20240319_035050_Y00000000_PASS_F2</TextBlock>
+                    <TextBlock Foreground="#FF080CF7" FontWeight="Bold"> .csv</TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>（例3）解析路径\</TextBlock>
+                    <TextBlock Foreground="#FFF70808">20231205_002245_Y0000000000000_FAIL</TextBlock>
+                    <TextBlock Foreground="#FF080CF7" FontWeight="Bold"> .csv</TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>（例4）解析路径\</TextBlock>
+                    <TextBlock Foreground="#FFF70808">Y000000000_FAIL_0_1_3_38_36_30_31_27_32_2_37_SYNA_20240326_165100_66</TextBlock>
+                    <TextBlock Foreground="#FF080CF7" FontWeight="Bold"> .csv</TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>（例5）解析路径\</TextBlock>
+                    <TextBlock Foreground="#FF080CF7" FontWeight="Bold">OK\</TextBlock>
+                    <TextBlock Foreground="#FFF70808">HD125_GT9916T_No0_01167_30635_Y00000000000000000000_20240408_134405_OK</TextBlock>
+                    <TextBlock Foreground="#FF080CF7" FontWeight="Bold"> .csv</TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>（例6）解析路径\</TextBlock>
+                    <TextBlock Foreground="#FFF70808">__F0000000000000_1959292_2023-12-06_09-09-21_OK</TextBlock>
+                    <TextBlock Foreground="#FF080CF7" FontWeight="Bold"> .txt</TextBlock>
+                </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>（例7）解析路径\</TextBlock>
+                    <TextBlock Foreground="#FF080CF7" FontWeight="Bold">PASS\</TextBlock>
+                    <TextBlock Foreground="#FFF70808"><Run Text="Y000000000"/></TextBlock>
+                    <TextBlock Foreground="#FF080CF7" FontWeight="Bold">.txt</TextBlock>
+                </StackPanel>
+            </StackPanel>
+
+            <StackPanel>
+                <TextBlock FontSize="14" FontWeight="Bold">解析模式C：</TextBlock>
+               
+            </StackPanel>
+            <StackPanel>
+                <TextBlock FontSize="14" FontWeight="Bold">解析模式D：</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock> </TextBlock>
+                    <TextBlock Foreground="#FFF70808"> </TextBlock>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal"/>
+        </StackPanel>
+    </ScrollViewer>
+
+</Window>
