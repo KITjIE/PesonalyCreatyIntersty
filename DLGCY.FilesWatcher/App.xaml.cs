@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.IO;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -21,7 +22,11 @@ namespace WPFTemplate
             const string mutexName = "DLGCY.FilesWatcher"; // 请替换为你的独特互斥体名称
 
             mutex = new Mutex(true, mutexName, out bool createdNew);
-
+            if (!Directory.Exists(@"C:\APPConfig"))
+            {
+                // 如果不存在，则创建文件夹路径
+                Directory.CreateDirectory(@"C:\APPConfig");
+            }
             if (!createdNew)
             {
                 // 如果互斥体已存在，说明应用程序已经在运行

@@ -12,7 +12,14 @@ namespace WPFTemplateLib
         /// 消息框是否自动滚动;
         /// </summary>
         public bool IsAutoScroll { get; set; } = true;
-
+        /// <summary>
+        /// 是否MES返回报错弹窗;
+        /// </summary>
+        public bool IsMESerrorWin { get; set; } = true;
+        /// <summary>
+        /// 是否匹配AOI产品型号;
+        /// </summary>
+        public bool IsMatchAOIModel { get; set; } = false;
         /// <summary>
         /// 是否同时记录到日志中;
         /// </summary>

@@ -26,7 +26,7 @@ namespace WPFTemplate
         /// <summary>
         /// URL地址
         /// </summary>
-        public string URLPath { get; set; } = "http://10.164.19.102:1040/api/dataportal/invoke";
+        public string URLPath { get; set; } = "http://10.164.19.106:2030/api/dataportal/invoke";
 
         /// <summary>
         /// 是否可编辑
@@ -36,12 +36,16 @@ namespace WPFTemplate
         /// <summary>
         /// 解析完成地址
         /// </summary>
-        public string FinalPath { get; set; } = @"D:\FinalPath";
+        public string FinalPath { get; set; } = @"C:\FinalPath";
 
+        /// <summary>
+        /// 解析失败地址（MES问题）
+        /// </summary>
+        public string ErrorPath { get; set; } = @"C:\ErrorPath";
         /// <summary>
         /// 解析失败地址（网络问题）
         /// </summary>
-        public string ErrorPath { get; set; } = @"C:\ErrorPath";
+        public string ErrorInetrnetPath { get; set; } = @"C:\ErrorPath\网络连接错误";
         /// <summary>
         /// 解析完成计数
         /// </summary>

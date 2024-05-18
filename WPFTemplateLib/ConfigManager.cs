@@ -15,7 +15,7 @@ namespace WPFTemplate
         /// <summary>
         /// 配置文件路径
         /// </summary>
-        private static string _configFilePath = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, $"{nameof(ConfigItems)}.txt");
+        private static string _configFilePath = Path.Combine(@"C:\APPConfig", $"{nameof(ConfigItems)}.txt");//AppDomain.CurrentDomain.BaseDirectory
 
         /// <summary>
         /// 配置文件备份路径

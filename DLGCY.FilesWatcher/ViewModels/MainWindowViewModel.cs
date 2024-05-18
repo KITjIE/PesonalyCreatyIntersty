@@ -5,6 +5,8 @@ using System.IO;
 using System.Linq;
 using System.Net.Http;
 using System.Text;
+using System.Text.RegularExpressions;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Forms;
@@ -19,7 +21,9 @@ using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using PropertyChanged;
 using TemplateClassLibrary;
+using Windows.Devices.Power;
 using Windows.UI.Composition;
+using Windows.UI.Popups;
 using WPFTemplate;
 using WPFTemplate.ViewModels;
 using WPFTemplateLib.UserControls;
@@ -544,11 +548,15 @@ namespace DLGCY.FilesWatcher.ViewModels
             if (e.Name == "NetworkConnect.txt") { return; }
             try
             {
+
                 if (Configs.SupervisMode == "文件解析模式A")
                 {
                     if (e.Name.Contains(".txt"))
                     {
-                        FileTXT_Analys(GetPath(e));
+                        if (!FileTXT_Analys(GetPath(e)))
+                        {
+                            //ShowErrorWin();
+                        };
                     }
                 }
                 if (Configs.SupervisMode == "文件解析模式C")
@@ -579,26 +587,19 @@ namespace DLGCY.FilesWatcher.ViewModels
                     //}
 
                 }
-                if (Configs.SupervisMode == "文件解析模式DD")
-                {
-                    if (e.Name.Contains(".xls") || e.FullPath.Contains(".csv"))
-                    {
-                        FileCSV_Analys(GetPath(e));
-                    }
-                }
                 if (Configs.SupervisMode == "文件解析模式B")
                 {
                     string fileSuffixName = GetPath(e).Substring(GetPath(e).LastIndexOf('.') + 1);//获取文件的后缀名
                     switch (fileSuffixName)
                     {
                         case "csv":
-                            if (!FileCSVName_Analys(Path.GetFileNameWithoutExtension(GetPath(e)), GetPath(e)))
+                            if ((!FileCSVName_Analys(Path.GetFileNameWithoutExtension(GetPath(e)), GetPath(e))) && Configs.IsMESerrorWin)
                             {
                                 ShowErrorWin();
                             };
                             return;
                         case "txt":
-                            if (!FileTXTName_Analys(Path.GetFileNameWithoutExtension(GetPath(e)), GetPath(e)))
+                            if ((!FileTXTName_Analys(Path.GetFileNameWithoutExtension(GetPath(e)), GetPath(e))) && Configs.IsMESerrorWin)
                             {
                                 ShowErrorWin();
                             }
@@ -606,9 +607,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                         default:
                             break;
                     }
-
                 }
-
             }
             catch (Exception ex)
             {
@@ -745,7 +744,11 @@ namespace DLGCY.FilesWatcher.ViewModels
                 {
                     try
                     {
-                        FileTXT_Analys(filePath);
+                        if ((!FileTXT_Analys(filePath)))
+                        {
+                            //ShowErrorWin();
+                        }
+
                     }
                     catch (Exception ex)
                     {
@@ -779,7 +782,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                         {
                             using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                             {
-                                if (!FileCSVName_Analys(fileName, filePath))
+                                if ((!FileCSVName_Analys(fileName, filePath)) && Configs.IsMESerrorWin)
                                 {
                                     ShowErrorWin();
                                 }
@@ -789,7 +792,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                         {
                             using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                             {
-                                if (!FileTXTName_Analys(fileName, filePath))
+                                if ((!FileTXTName_Analys(fileName, filePath)) && Configs.IsMESerrorWin)
                                 {
                                     ShowErrorWin();
                                 }
@@ -799,7 +802,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                         {
                             using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                             {
-                                //if (!FileTXTName_FrontFile(fileName, filePath))
+                                //if (!FileTXTName_FrontFile(fileName, filePath)&& Configs.IsMESerrorWin)
                                 //{
                                 //    ShowErrorWin();
                                 //}
@@ -809,7 +812,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                         {
                             using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                             {
-                                //if (!FileTXTName_SonFile(fileName, filePath))
+                                //if (!FileTXTName_SonFile(fileName, filePath)&& Configs.IsMESerrorWin)
                                 //{
                                 //    ShowErrorWin();
                                 //}
@@ -1033,6 +1036,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                     // 格式化输出
                     Timeresult = combinedDateTime.ToString("yyyy-MM-dd HH:mm:ss");
                 }
+                //②D:\test\PASS\YYYYYYYYY25.txt | D:\test\FAIL\YYYYYYYYY25.txt
                 if (underscoreCount == 0 && !(fileName_.Contains("OK") || fileName_.Contains("NG")))
                 {
                     // 使用正则表达式匹配两个下划线之间的文本
@@ -1106,42 +1110,61 @@ namespace DLGCY.FilesWatcher.ViewModels
         /// （模式A）文件格式 7700SII plus_20231219144327.txt（AOI）
         /// </summary>
         /// <param name="filePath"></param>
-        public void FileTXT_Analys(string filePath)
+        public bool FileTXT_Analys(string filePath)
         {
-            if (filePath.Length < 20)
+            Thread.Sleep(10);
+            try
             {
-                Console.WriteLine($"【文件名格式错误,解析失败！！！】");
-                return;
-            }
-            List<AOIData> aoiDataList = new List<AOIData>();
-            // 用于存储当前整体的数据
-            List<string> currentData = new List<string>();
-            string[] lines = System.IO.File.ReadAllLines(filePath, Encoding.UTF8);
-            // 遍历每一行
-            foreach (string line in lines)
-            {
-                // 如果遇到空行，则处理当前整体的数据并开始新的整体
-                if (string.IsNullOrWhiteSpace(line))
+                if (filePath.Length < 20)
                 {
-                    ProcessCurrentData(aoiDataList, currentData);
-                    currentData.Clear();  // 清空当前整体的数据，准备处理新的整体
+                    Console.WriteLine($"【文件名格式错误,解析失败！！！】");
+                    return false;
                 }
-                else
+                List<AOIData> aoiDataList = new List<AOIData>();
+                // 用于存储当前整体的数据
+                List<string> currentData = new List<string>();
+                string[] lines = File.ReadAllLines(filePath, Encoding.UTF8);
+                // 遍历每一行
+                foreach (string line in lines)
                 {
-                    // 将当前行添加到当前整体的数据中
-                    currentData.Add(line);
+                    // 如果遇到空行，则处理当前整体的数据并开始新的整体
+                    if (string.IsNullOrWhiteSpace(line))
+                    {
+                        ProcessCurrentData(aoiDataList, currentData);
+                        currentData.Clear();  // 清空当前整体的数据，准备处理新的整体
+                    }
+                    else
+                    {
+                        // 将当前行添加到当前整体的数据中
+                        currentData.Add(line);
+                    }
                 }
-            }
-            // 处理文件末尾可能存在的最后一个整体
-            ProcessCurrentData(aoiDataList, currentData);
+                // 处理文件末尾可能存在的最后一个整体
+                ProcessCurrentData(aoiDataList, currentData);
 
-            // 显示解析的数据
-            foreach (var entry in aoiDataList)
-            {
-                lock (entry)
+                // 显示解析的数据
+                foreach (var entry in aoiDataList)
                 {
-                    _ = SendHttpPostRequest(entry);
+                    if (Configs.IsMatchAOIModel && entry.EQPTypeName != Configs.PorductModel)
+                    {
+                        Console.WriteLine("AOI产品型号不是目标型号，无需解析！");
+                        return false;
+                    }
+                    lock (entry)
+                    {
+                        bool re = SendHttpPostRequest(entry, filePath);
+                        if (!re && Configs.IsMESerrorWin)
+                        {
+                            ShowErrorWin();
+                        }
+                    }
                 }
+                return true;
+            }
+            catch (Exception ex) 
+            {
+                Console.WriteLine(ex.Message);
+                return false;
             }
         }
         public void FileCSV_Analys(string filePath)
@@ -1323,6 +1346,7 @@ namespace DLGCY.FilesWatcher.ViewModels
         {
             try
             {
+                string errortype = "";
                 // 对象
                 YS_ElectrRecords electrRecords = new YS_ElectrRecords
                 {
@@ -1362,8 +1386,8 @@ namespace DLGCY.FilesWatcher.ViewModels
                     Parameters = apiParameters,
                     Context = new RequestContext
                     {
-                        //正式 Zu5wt35NMs4OvENNGUwRgfLxE3PLwBxMJp8hFAbeXYGuUzC4cC8CreHCD2qD48QfynpOD3nvzB8= 测试 n3I+7MVqqsqqcz/SSpnvVc8Bt43r95txrWfBWQqe5DLHm6Lrh0zq5neKXXJGrPWYt9icWFp3ju4=
-                        Ticket = "Zu5wt35NMs4OvENNGUwRgfLxE3PLwBxMJp8hFAbeXYGuUzC4cC8CreHCD2qD48QfynpOD3nvzB8=",
+                        //正式 fqqPHVfSUjtah6cjKXVnaJ6VfQYxIvmBfLApllYUjC/rhIr6rpaa6XERYTVoOX1A  
+                        Ticket = "fqqPHVfSUjtah6cjKXVnaJ6VfQYxIvmBfLApllYUjC/rhIr6rpaa6XERYTVoOX1A",
                         InvOrgId = 2
                     }
                 };
@@ -1379,6 +1403,20 @@ namespace DLGCY.FilesWatcher.ViewModels
                 else
                 {
                     LogHelper.Error($"【电子档案接口】设备编码：{electrRecords.MachineNumber};条码：{electrRecords.BarCode};MES结果：【{apiResponse.Success}】--{apiResponse.Message}");
+                    if (apiResponse.Message.Contains(BarCode))
+                    {
+                        errortype = Regex.Replace(apiResponse.Message, BarCode, "");
+                        errortype = Regex.Replace(errortype, @"[\\/:\*\?\""<>\|]", "");
+                    }
+                    else
+                    {
+                        errortype = Regex.Replace(apiResponse.Message, @"[\\/:\*\?\""<>\|]", "");
+
+                    };
+                    // 强制释放文件资源
+                    TryForceFileRelease(filePath);
+                    // 获取源文件夹中的所有文件
+                    FlieMove(filePath, filePath, Configs.ErrorPath + @"\" + $"{errortype}");
                 }
 
                 return apiResponse.Success;
@@ -1389,9 +1427,10 @@ namespace DLGCY.FilesWatcher.ViewModels
                 // 强制释放文件资源
                 TryForceFileRelease(filePath);
                 // 获取源文件夹中的所有文件
-                FlieMove(filePath, filePath, Configs.ErrorPath);
+                FlieMove(filePath, filePath, Configs.ErrorInetrnetPath);
                 return false;
             }
+
         }
 
         /// <summary>
@@ -1405,6 +1444,7 @@ namespace DLGCY.FilesWatcher.ViewModels
         {
             try
             {
+                string errortype = "";
                 // 构造值对象
                 Value valuePastation = new Value
                 {
@@ -1452,8 +1492,8 @@ namespace DLGCY.FilesWatcher.ViewModels
                     Parameters = apiParameters,
                     Context = new RequestContext
                     {
-                        //正式 Zu5wt35NMs4OvENNGUwRgfLxE3PLwBxMJp8hFAbeXYGuUzC4cC8CreHCD2qD48QfynpOD3nvzB8= 测试 n3I+7MVqqsqqcz/SSpnvVc8Bt43r95txrWfBWQqe5DLHm6Lrh0zq5neKXXJGrPWYt9icWFp3ju4=
-                        Ticket = "Zu5wt35NMs4OvENNGUwRgfLxE3PLwBxMJp8hFAbeXYGuUzC4cC8CreHCD2qD48QfynpOD3nvzB8=",
+                        //正式 fqqPHVfSUjtah6cjKXVnaJ6VfQYxIvmBfLApllYUjC/rhIr6rpaa6XERYTVoOX1A 
+                        Ticket = "fqqPHVfSUjtah6cjKXVnaJ6VfQYxIvmBfLApllYUjC/rhIr6rpaa6XERYTVoOX1A",
                         InvOrgId = 2
                     }
                 };
@@ -1475,6 +1515,17 @@ namespace DLGCY.FilesWatcher.ViewModels
                     Configs.ProductBarcode = BarCode;
                     Configs.MESErrorInfo = apiResponsePastation.Message;
                     Configs.UploadResult = "失败";
+                    if (apiResponsePastation.Message.Contains(BarCode))
+                    {
+                        errortype = Regex.Replace(apiResponsePastation.Message, BarCode, "");
+                        errortype = Regex.Replace(errortype, @"[\\/:\*\?\""<>\|]", "");
+
+                    }
+                    else { errortype = Regex.Replace(apiResponsePastation.Message, @"[\\/:\*\?\""<>\|]", ""); };
+                    // 强制释放文件资源
+                    TryForceFileRelease(filePath);
+                    // 获取源文件夹中的所有文件
+                    FlieMove(filePath, filePath, Configs.ErrorPath + @"\" + $"{errortype}");
                 }
 
                 return apiResponsePastation.Success;
@@ -1488,15 +1539,16 @@ namespace DLGCY.FilesWatcher.ViewModels
                 // 强制释放文件资源
                 TryForceFileRelease(filePath);
                 // 获取源文件夹中的所有文件
-                FlieMove(filePath, filePath, Configs.ErrorPath);
+                FlieMove(filePath, filePath, Configs.ErrorInetrnetPath);
                 return false;
             }
         }
 
-        private async Task SendHttpPostRequest(AOIData aoidata)
+        private bool SendHttpPostRequest(AOIData aoidata, string filePath)
         {
             try
             {
+                string errortype = "";
                 // 创建 HttpClient 实例
                 using (HttpClient client = new HttpClient())
                 {
@@ -1515,7 +1567,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                             {
                                 ProgramName = "V1.0",
                                 Qty = Convert.ToInt16(aoidata.CurrentNumber),
-                                DeviceId = aoidata.EQPTypeName,
+                                DeviceId = Configs.MachineModel,
                                 Barcode = aoidata.SubBoardBarCode,
                                 TestResult = aoidata.DefectiveNumber=="0" ? true : false,
                                 ReviseResult = null,
@@ -1552,7 +1604,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                         Method = "SMTWipMove",
                         Context = new Context
                         {
-                            Ticket = "Zu5wt35NMs4OvENNGUwRgfLxE3PLwBxMJp8hFAbeXYGuUzC4cC8CreHCD2qD48QfynpOD3nvzB8=",
+                            Ticket = "fqqPHVfSUjtah6cjKXVnaJ6VfQYxIvmBfLApllYUjC/rhIr6rpaa6XERYTVoOX1A",
                             InvOrgId = 2
                         }
                     };
@@ -1561,26 +1613,55 @@ namespace DLGCY.FilesWatcher.ViewModels
                     string jsonData = JsonConvert.SerializeObject(requestData);
 
                     // 发送 POST 请求
-                    HttpResponseMessage response = await client.PostAsync(apiUrl, new StringContent(jsonData, Encoding.UTF8, "application/json"));
+                    HttpResponseMessage response =  client.PostAsync(apiUrl, new StringContent(jsonData, Encoding.UTF8, "application/json")).Result;
                     // 获取响应内容
-                    string responseContent = await response.Content.ReadAsStringAsync();
+                    string responseContent =  response.Content.ReadAsStringAsync().Result;
                     MESRespon responseObject = JsonConvert.DeserializeObject<MESRespon>(responseContent);
                     // 处理响应
-                    if (response.IsSuccessStatusCode)
+                    if (responseObject.Success)
                     {
-                        Configs.AnalysCount++;
                         LogHelper.Debug($"【AOI数据接口】设备编码：{aoidata.EQPTypeName};板码：{aoidata.SubBoardBarCode};MES结果：{responseContent}");
+                        Configs.ProductBarcode = aoidata.SubBoardBarCode;
+                        Configs.MESErrorInfo = responseContent;
+                        Configs.UploadResult = "成功";
+                        Configs.AnalysCount++;
                     }
                     else
                     {
                         LogHelper.Error($"【AOI数据接口】设备编码：{aoidata.EQPTypeName};板码：{aoidata.SubBoardBarCode};MES结果：{responseContent}");
+                        Configs.ProductBarcode = aoidata.SubBoardBarCode;
+                        Configs.MESErrorInfo = responseObject.Message;
+                        Configs.UploadResult = "失败";
+                        //if (responseObject.Message.Contains(aoidata.SubBoardBarCode))
+                        //{
+                        //    errortype = Regex.Replace(responseObject.Message, aoidata.SubBoardBarCode, "");
+                        //    errortype = Regex.Replace(errortype, @"[\\/:\*\?\""<>\|]", "");
+
+                        //}
+                        //else { errortype = Regex.Replace(responseObject.Message, @"[\\/:\*\?\""<>\|]", ""); };
+                        //// 强制释放文件资源
+                        //TryForceFileRelease(filePath);
+                        //// 获取源文件夹中的所有文件
+                        //FlieMove(filePath, filePath, Configs.ErrorPath + @"\" + $"{errortype}");
                     }
+                    return responseObject.Success;
                 }
+
             }
+
             catch (Exception ex)
             {
                 LogHelper.Error($"上传【AOI数据接口】异常：{ex.Message}");
+                Configs.ProductBarcode = aoidata.SubBoardBarCode;
+                Configs.MESErrorInfo = ex.Message;
+                Configs.UploadResult = "失败";
+                // 强制释放文件资源
+                TryForceFileRelease(filePath);
+                // 获取源文件夹中的所有文件
+                FlieMove(filePath, filePath, Configs.ErrorInetrnetPath);
+                return false;
             }
+
         }
         // 处理当前整体的数据并添加到列表中
         static void ProcessCurrentData(List<AOIData> list, List<string> data)

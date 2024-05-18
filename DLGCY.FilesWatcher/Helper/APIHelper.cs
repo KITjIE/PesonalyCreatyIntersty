@@ -24,7 +24,7 @@ namespace DLGCY.FilesWatcher.Helper
         {
             string url = $"{baseUrl}{method}";
             if (url.StartsWith("https"))
-                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
             T result = default(T);
             HttpContent httpContent = new StringContent(postData);
             httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");
@@ -55,7 +55,7 @@ namespace DLGCY.FilesWatcher.Helper
             HttpClient httpClient = new HttpClient() { Timeout = new TimeSpan(0, 3, 0) };
             string url = $"{baseUrl}{method}";
             if (url.StartsWith("https"))
-                System.Net.ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
+                ServicePointManager.SecurityProtocol = SecurityProtocolType.Tls;
             T result = default(T);
             HttpContent httpContent = new StringContent(postData);
             httpContent.Headers.ContentType = new MediaTypeHeaderValue("application/json");

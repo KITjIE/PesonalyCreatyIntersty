@@ -151,7 +151,7 @@
                 </StackPanel>
             </StackPanel>
         </Expander>
-        <Button Command="{Binding AnalysCommand}" Width="77" Height="26" Style="{StaticResource Default}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="4" Margin="180,5,0,0" Content="解析模式说明" FontStyle="Italic"   />
+        <Button Command="{Binding AnalysCommand}" Width="77" Height="26" Style="{StaticResource Default}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="4" Margin="180,5,0,0" Content="解析模式说明"   />
         <Button Command="{Binding AboutCommand}" Width="28" Height="26" Style="{StaticResource Default}" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="4" Margin="0,5,10,0" Content="关于" />
 
         <Grid Grid.Row="1" Grid.ColumnSpan="5" Margin="0,0,0,20" Grid.RowSpan="2">
@@ -216,10 +216,17 @@
                                     <Setter Property="VerticalAlignment" Value="Center"/>
                                 </Style>
                             </StackPanel.Resources>
-
+                            <StackPanel Style="{StaticResource SP}">
+                                <Label Content="是否显示MES报错框？" Width="130"/>
+                                <CheckBox IsChecked="{Binding Configs.IsMESerrorWin, Converter={StaticResource TrueFalseConverter}, Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource SP}">
+                                <Label Content="是否匹配AOI产品型号？" Width="130"/>
+                                <CheckBox IsChecked="{Binding Configs.IsMatchAOIModel, Converter={StaticResource TrueFalseConverter}, Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
                             <StackPanel Style="{StaticResource SP}">
                                 <Label Content="是否自动滚动消息框？" Width="130"/>
-                                <CheckBox x:Name="CBIsAutoScroll" IsChecked="{Binding Configs.IsAutoScroll, Converter={StaticResource TrueFalseConverter}, Mode=TwoWay}" VerticalAlignment="Center"/>
+                                <CheckBox  IsChecked="{Binding Configs.IsAutoScroll, Converter={StaticResource TrueFalseConverter}, Mode=TwoWay}" VerticalAlignment="Center"/>
                             </StackPanel>
                             <StackPanel Style="{StaticResource SP}">
                                 <Label Content="消息是否自动减半？" Width="130"/>
