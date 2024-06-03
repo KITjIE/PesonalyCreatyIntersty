@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "uDk5o82N5meMoFCTLdhXVx+pZwXrpOZHNgYDgxy2qn04d6oe9QG1lCrxvUp87OePg1NsxaoxiwmkoRhtXGyymw==",
+  "dgSpecHash": "O672GLTeRsrIfY43FKjchBzhYhx1VHEETxGf++wNQMU2vE2r38qaFRNGuhIHzdmN9OhdJBzaznIKI3V5qO1Z2Q==",
   "success": true,
   "projectFilePath": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\fuspguij\\.nuget\\packages\\bouncycastle.cryptography\\2.2.1\\bouncycastle.cryptography.2.2.1.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\commonservicelocator\\2.0.2\\commonservicelocator.2.0.2.nupkg.sha512",
+    "C:\\Users\\fuspguij\\.nuget\\packages\\communitytoolkit.mvvm\\8.2.2\\communitytoolkit.mvvm.8.2.2.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\enums.net\\4.0.1\\enums.net.4.0.1.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\fody\\6.2.4\\fody.6.2.4.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\freesql\\3.2.810\\freesql.3.2.810.nupkg.sha512",
@@ -199,18 +200,17 @@
     "C:\\Users\\fuspguij\\.nuget\\packages\\system.xml.xpath.xdocument\\4.0.1\\system.xml.xpath.xdocument.4.0.1.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\microsoft.netcore.app.runtime.win-x86\\6.0.27\\microsoft.netcore.app.runtime.win-x86.6.0.27.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\microsoft.windowsdesktop.app.runtime.win-x86\\6.0.27\\microsoft.windowsdesktop.app.runtime.win-x86.6.0.27.nupkg.sha512",
-    "C:\\Users\\fuspguij\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x86\\6.0.27\\microsoft.aspnetcore.app.runtime.win-x86.6.0.27.nupkg.sha512",
-    "C:\\Users\\fuspguij\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.22000.31\\microsoft.windows.sdk.net.ref.10.0.22000.31.nupkg.sha512"
+    "C:\\Users\\fuspguij\\.nuget\\packages\\microsoft.aspnetcore.app.runtime.win-x86\\6.0.27\\microsoft.aspnetcore.app.runtime.win-x86.6.0.27.nupkg.sha512"
   ],
   "logs": [
     {
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "已使用“.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1”而不是项目目标框架“net6.0-windows10.0.22000”还原包“MvvmLightLibs 5.4.1.1”。此包可能与项目不完全兼容。",
+      "message": "已使用“.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1”而不是项目目标框架“net6.0-windows7.0”还原包“MvvmLightLibs 5.4.1.1”。此包可能与项目不完全兼容。",
       "libraryId": "MvvmLightLibs",
       "targetGraphs": [
-        "net6.0-windows10.0.22000"
+        "net6.0-windows7.0"
       ]
     }
   ]

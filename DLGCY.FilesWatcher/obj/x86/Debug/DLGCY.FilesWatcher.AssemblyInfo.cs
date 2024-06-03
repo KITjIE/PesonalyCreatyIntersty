@@ -15,11 +15,11 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("文件变动监控器")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.3.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.3+d9aeae9f76cffc0f31d804c92b8a7b6e9ed1fc99")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.3+a77d016ab980f4e227eb2616c0ff2579fd09f13c")]
 [assembly: System.Reflection.AssemblyProductAttribute("DLGCY.FilesWatcher")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DLGCY.FilesWatcher")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.3.*")]
-[assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows10.0.22000.0")]
+[assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]
 
 // 由 MSBuild WriteCodeFragment 类生成。

@@ -236,6 +236,18 @@
                                 <Label Content="消息减半阈值：" Width="90"/>
                                 <TextBox Width="60" Text="{Binding Configs.AutoHalveThresholdValue, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}"/>
                             </StackPanel>
+                            <StackPanel Style="{StaticResource SP}">
+                                <Label Content="条码特殊符号是否替换？" Width="140"/>
+                                <CheckBox IsChecked="{Binding Configs.IsCodeReplace, Converter={StaticResource TrueFalseConverter}, Mode=TwoWay}" VerticalAlignment="Center"/>
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource SP}">
+                                <Label Content="替换前：" Width="60"/>
+                                <TextBox Width="90" Text="{Binding Configs.IsCodeReplaceBefore, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}"/>
+                            </StackPanel>
+                            <StackPanel Style="{StaticResource SP}">
+                                <Label Content="替换后：" Width="60"/>
+                                <TextBox Width="90" Text="{Binding Configs.IsCodeReplaceAfter, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" ToolTip="{Binding Text, RelativeSource={RelativeSource Mode=Self}}"/>
+                            </StackPanel>
                             <Button Command="{Binding ClearInfoCommand}" HorizontalAlignment="Center" Content="清空消息"/>
 
                             <StackPanel Style="{StaticResource SP}">

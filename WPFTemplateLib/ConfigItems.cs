@@ -29,7 +29,18 @@ namespace WPFTemplateLib
         /// 信息过多是否自动删除（减半）;
         /// </summary>
         public bool IsAutoHalve { get; set; } = true;
-
+        /// <summary>
+        /// 条码特殊符号是否替换;
+        /// </summary>
+        public bool IsCodeReplace { get; set; } = false;
+        /// <summary>
+        /// 条码特殊符号替换前;
+        /// </summary>
+        public string IsCodeReplaceBefore { get; set; } = "";
+        /// <summary>
+        /// 条码特殊符号替换后;
+        /// </summary>
+        public string IsCodeReplaceAfter { get; set; } = "";
         /// <summary>
         /// 触发信息自动减半的阈值;
         /// </summary>

@@ -21,9 +21,9 @@ using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using PropertyChanged;
 using TemplateClassLibrary;
-using Windows.Devices.Power;
-using Windows.UI.Composition;
-using Windows.UI.Popups;
+//using Windows.Devices.Power;
+//using Windows.UI.Composition;
+//using Windows.UI.Popups;
 using WPFTemplate;
 using WPFTemplate.ViewModels;
 using WPFTemplateLib.UserControls;
@@ -845,7 +845,16 @@ namespace DLGCY.FilesWatcher.ViewModels
         /// <returns></returns>
         public bool FileCSVName_Analys(string fileName, string filePath)
         {
-            string fileName_ = fileName;
+            string fileName_;
+            // 条码特殊符号替换
+            if (Configs.IsCodeReplace)
+            {
+                fileName_ = ReplaceDclWithAsterisk(fileName);
+            }
+            else
+            {
+                fileName_ = fileName;
+            }
             Configs.ProductBarcode = "";
             Configs.MESErrorInfo = "";
             Configs.UploadResult = "";
@@ -994,7 +1003,16 @@ namespace DLGCY.FilesWatcher.ViewModels
         /// <returns></returns>
         public bool FileTXTName_Analys(string fileName, string filePath)
         {
-            string fileName_ = fileName;
+            string fileName_;
+            // 条码特殊符号替换
+            if (Configs.IsCodeReplace)
+            {
+                fileName_ = ReplaceDclWithAsterisk(fileName);
+            }
+            else
+            {
+                fileName_ = fileName;
+            }
             Configs.ProductBarcode = "";
             Configs.UploadResult = "";
             Configs.MESErrorInfo = "";
@@ -1161,7 +1179,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                 }
                 return true;
             }
-            catch (Exception ex) 
+            catch (Exception ex)
             {
                 Console.WriteLine(ex.Message);
                 return false;
@@ -1613,9 +1631,9 @@ namespace DLGCY.FilesWatcher.ViewModels
                     string jsonData = JsonConvert.SerializeObject(requestData);
 
                     // 发送 POST 请求
-                    HttpResponseMessage response =  client.PostAsync(apiUrl, new StringContent(jsonData, Encoding.UTF8, "application/json")).Result;
+                    HttpResponseMessage response = client.PostAsync(apiUrl, new StringContent(jsonData, Encoding.UTF8, "application/json")).Result;
                     // 获取响应内容
-                    string responseContent =  response.Content.ReadAsStringAsync().Result;
+                    string responseContent = response.Content.ReadAsStringAsync().Result;
                     MESRespon responseObject = JsonConvert.DeserializeObject<MESRespon>(responseContent);
                     // 处理响应
                     if (responseObject.Success)
@@ -1764,6 +1782,10 @@ namespace DLGCY.FilesWatcher.ViewModels
                 return false;
             }
 
+        }
+        public string ReplaceDclWithAsterisk(string input)
+        {
+            return input.Replace(Configs.IsCodeReplaceBefore, Configs.IsCodeReplaceAfter);
         }
     }
 }

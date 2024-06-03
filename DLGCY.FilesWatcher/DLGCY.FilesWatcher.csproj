@@ -11,9 +11,9 @@
 	  <PackageIcon>监控.ico</PackageIcon>
 	  <RepositoryType>https://gitee.com/dlgcy/DLGCY.FilesWatcher.git</RepositoryType>
     <Description>文件变动监控器</Description>
-    <AssemblyVersion>1.0.3.*</AssemblyVersion>
-    <FileVersion>1.0.3.0</FileVersion>
-    <Version>1.0.3</Version>
+    <AssemblyVersion>1.0.4.*</AssemblyVersion>
+    <FileVersion>1.0.4.0</FileVersion>
+    <Version>1.0.4</Version>
     <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
@@ -30,6 +30,7 @@
     <AppendRuntimeIdentifierToOutputPath>false</AppendRuntimeIdentifierToOutputPath>
     <SupportedOSPlatformVersion>7.0</SupportedOSPlatformVersion>
     <DebugType>full</DebugType>
+    <PlatformTarget>x86</PlatformTarget>
   </PropertyGroup>
 
   <ItemGroup>
@@ -84,6 +85,21 @@
     <Content Include="zj.PNG">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Properties\Settings.Designer.cs">
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
 
 </Project>

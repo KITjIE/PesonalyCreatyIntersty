@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WPFTemplateLib")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+d9aeae9f76cffc0f31d804c92b8a7b6e9ed1fc99")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+a77d016ab980f4e227eb2616c0ff2579fd09f13c")]
 [assembly: System.Reflection.AssemblyProductAttribute("WPFTemplateLib")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WPFTemplateLib")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

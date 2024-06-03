@@ -251,8 +251,6 @@ D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\x8
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\x86\Release\runtimes\osx\lib\net6.0\System.DirectoryServices.Protocols.dll
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\x86\Release\runtimes\win\lib\net6.0\System.DirectoryServices.Protocols.dll
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\x86\Release\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
-D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\x86\Release\Microsoft.Windows.SDK.NET.dll
-D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\x86\Release\WinRT.Runtime.dll
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\x86\Release\Microsoft.Expression.Interactions.dll
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\x86\Release\System.Windows.Interactivity.dll
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\x86\Release\TemplateClassLibrary.dll
@@ -316,3 +314,9 @@ D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\x8
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\x86\Release\AnalysWindow.g.cs
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\x86\Release\AnalysWindow.baml
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\x86\Release\CommunityToolkit.Mvvm.dll
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\x86\Release\Microsoft.Windows.SDK.NET.dll
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\x86\Release\WinRT.Runtime.dll
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\x86\Release\DLGCY.FilesWatcher.dll.manifest
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\x86\Release\DLGCY.FilesWatcher.application
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\x86\Release\DLGCY.FilesWatcher.dll.manifest
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\x86\Release\DLGCY.FilesWatcher.application
