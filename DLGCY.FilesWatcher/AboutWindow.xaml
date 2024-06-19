@@ -21,7 +21,7 @@
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <TextBlock>程序版本：</TextBlock>
-            <TextBlock><Run Text="1.0.3."/><Run Language="zh-cn" Text="240112"/></TextBlock>
+            <TextBlock Text="{x:Static dotnet:AssemblyHelper.AssemblyVersion}"></TextBlock>
         </StackPanel>
         <StackPanel Orientation="Horizontal">
             <TextBlock>文件版本：</TextBlock>

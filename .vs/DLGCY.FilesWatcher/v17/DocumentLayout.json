@@ -3,28 +3,44 @@
   "WorkspaceRootPath": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|d:\\users\\fuspguij\\source\\repos\\pesonalycreatyinterstyq\\dlgcy.fileswatcher\\dlgcy.fileswatcher.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
-      "RelativeMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|solutionrelative:dlgcy.fileswatcher\\dlgcy.fileswatcher.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+      "AbsoluteMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\dlgcy.fileswatcher\\handuploadwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|solutionrelative:dlgcy.fileswatcher\\handuploadwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|d:\\users\\fuspguij\\source\\repos\\pesonalycreatyinterstyq\\dlgcy.fileswatcher\\viewmodels\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\dlgcy.fileswatcher\\handuploadwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|solutionrelative:dlgcy.fileswatcher\\handuploadwindow.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\dlgcy.fileswatcher\\viewmodels\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|solutionrelative:dlgcy.fileswatcher\\viewmodels\\mainwindowviewmodel.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|d:\\users\\fuspguij\\source\\repos\\pesonalycreatyinterstyq\\dlgcy.fileswatcher\\assemblyhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|solutionrelative:dlgcy.fileswatcher\\assemblyhelper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\dlgcy.fileswatcher\\configitems.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|solutionrelative:dlgcy.fileswatcher\\configitems.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\dlgcy.fileswatcher\\mainwindow.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
       "RelativeMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|solutionrelative:dlgcy.fileswatcher\\mainwindow.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{E11DD2D9-C415-4E1C-B737-A4EE9CF603E3}|WPFTemplateLib\\WPFTemplateLib.csproj|D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\wpftemplatelib\\configitems.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{E11DD2D9-C415-4E1C-B737-A4EE9CF603E3}|WPFTemplateLib\\WPFTemplateLib.csproj|solutionrelative:wpftemplatelib\\configitems.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|d:\\users\\fuspguij\\source\\repos\\pesonalycreatyinterstyq\\dlgcy.fileswatcher\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|solutionrelative:dlgcy.fileswatcher\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\dlgcy.fileswatcher\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|solutionrelative:dlgcy.fileswatcher\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{E11DD2D9-C415-4E1C-B737-A4EE9CF603E3}|WPFTemplateLib\\WPFTemplateLib.csproj|D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\wpftemplatelib\\usercontrols\\uc_confirmbox.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
+      "RelativeMoniker": "D:0:0:{E11DD2D9-C415-4E1C-B737-A4EE9CF603E3}|WPFTemplateLib\\WPFTemplateLib.csproj|solutionrelative:wpftemplatelib\\usercontrols\\uc_confirmbox.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E11DD2D9-C415-4E1C-B737-A4EE9CF603E3}|WPFTemplateLib\\WPFTemplateLib.csproj|D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\wpftemplatelib\\wpfhelpers\\getcontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E11DD2D9-C415-4E1C-B737-A4EE9CF603E3}|WPFTemplateLib\\WPFTemplateLib.csproj|solutionrelative:wpftemplatelib\\wpfhelpers\\getcontrol.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E11DD2D9-C415-4E1C-B737-A4EE9CF603E3}|WPFTemplateLib\\WPFTemplateLib.csproj|D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\wpftemplatelib\\usercontrols\\uc_confirmbox.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{E11DD2D9-C415-4E1C-B737-A4EE9CF603E3}|WPFTemplateLib\\WPFTemplateLib.csproj|solutionrelative:wpftemplatelib\\usercontrols\\uc_confirmbox.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\dlgcy.fileswatcher\\dlgcy.fileswatcher.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|",
+      "RelativeMoniker": "D:0:0:{B30C9E0C-4958-476E-AF52-844D307C0BB0}|DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj|solutionrelative:dlgcy.fileswatcher\\dlgcy.fileswatcher.csproj||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     }
   ],
   "DocumentGroupContainers": [
@@ -34,7 +50,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 8,
           "Children": [
             {
               "$type": "Bookmark",
@@ -62,66 +78,40 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "DLGCY.FilesWatcher",
-              "DocumentMoniker": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj",
-              "RelativeDocumentMoniker": "DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj",
-              "ToolTip": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj",
-              "RelativeToolTip": "DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
-              "WhenOpened": "2024-06-03T06:17:46.32Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "AssemblyHelper.cs",
-              "DocumentMoniker": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\AssemblyHelper.cs",
-              "RelativeDocumentMoniker": "DLGCY.FilesWatcher\\AssemblyHelper.cs",
-              "ToolTip": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\AssemblyHelper.cs",
-              "RelativeToolTip": "DLGCY.FilesWatcher\\AssemblyHelper.cs",
-              "ViewState": "AQIAACMAAAAAAAAAAAAAwBkAAAAVAAAA",
+              "DocumentIndex": 3,
+              "Title": "ConfigItems.cs",
+              "DocumentMoniker": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\ConfigItems.cs",
+              "RelativeDocumentMoniker": "DLGCY.FilesWatcher\\ConfigItems.cs",
+              "ToolTip": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\ConfigItems.cs",
+              "RelativeToolTip": "DLGCY.FilesWatcher\\ConfigItems.cs",
+              "ViewState": "AQIAAEsAAAAAAAAAAADwv2IAAAAhAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-06-03T05:58:05.417Z",
+              "WhenOpened": "2024-06-19T08:44:52.864Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "MainWindowViewModel.cs",
-              "DocumentMoniker": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\ViewModels\\MainWindowViewModel.cs",
-              "RelativeDocumentMoniker": "DLGCY.FilesWatcher\\ViewModels\\MainWindowViewModel.cs",
-              "ToolTip": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\ViewModels\\MainWindowViewModel.cs",
-              "RelativeToolTip": "DLGCY.FilesWatcher\\ViewModels\\MainWindowViewModel.cs",
-              "ViewState": "AQIAAEUBAAAAAAAAAADgv1QBAABKAAAA",
+              "Title": "HandUpLoadWindow.xaml.cs",
+              "DocumentMoniker": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\HandUpLoadWindow.xaml.cs",
+              "RelativeDocumentMoniker": "DLGCY.FilesWatcher\\HandUpLoadWindow.xaml.cs",
+              "ToolTip": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\HandUpLoadWindow.xaml.cs",
+              "RelativeToolTip": "DLGCY.FilesWatcher\\HandUpLoadWindow.xaml.cs",
+              "ViewState": "AQIAAAIAAAAAAAAAAAAlwBkAAAA2AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-29T08:13:30.068Z",
+              "WhenOpened": "2024-06-19T08:09:26.947Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "MainWindow.xaml.cs",
-              "DocumentMoniker": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\MainWindow.xaml.cs",
-              "RelativeDocumentMoniker": "DLGCY.FilesWatcher\\MainWindow.xaml.cs",
-              "ToolTip": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\MainWindow.xaml.cs",
-              "RelativeToolTip": "DLGCY.FilesWatcher\\MainWindow.xaml.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAABcAAAA2AAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-29T08:13:28.019Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "ConfigItems.cs",
-              "DocumentMoniker": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\WPFTemplateLib\\ConfigItems.cs",
-              "RelativeDocumentMoniker": "WPFTemplateLib\\ConfigItems.cs",
-              "ToolTip": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\WPFTemplateLib\\ConfigItems.cs",
-              "RelativeToolTip": "WPFTemplateLib\\ConfigItems.cs",
-              "ViewState": "AQIAABkAAAAAAAAAAAA0wCEAAAAWAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-05-29T08:09:42.826Z",
+              "DocumentIndex": 0,
+              "Title": "HandUpLoadWindow.xaml",
+              "DocumentMoniker": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\HandUpLoadWindow.xaml",
+              "RelativeDocumentMoniker": "DLGCY.FilesWatcher\\HandUpLoadWindow.xaml",
+              "ToolTip": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\HandUpLoadWindow.xaml",
+              "RelativeToolTip": "DLGCY.FilesWatcher\\HandUpLoadWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-19T08:08:27.832Z",
               "EditorCaption": ""
             },
             {
@@ -133,8 +123,80 @@
               "ToolTip": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\MainWindow.xaml",
               "RelativeToolTip": "DLGCY.FilesWatcher\\MainWindow.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-05-29T07:53:09.55Z",
+              "WhenOpened": "2024-06-19T08:03:40.775Z",
               "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MainWindowViewModel.cs",
+              "DocumentMoniker": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\ViewModels\\MainWindowViewModel.cs",
+              "RelativeDocumentMoniker": "DLGCY.FilesWatcher\\ViewModels\\MainWindowViewModel.cs",
+              "ToolTip": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\ViewModels\\MainWindowViewModel.cs",
+              "RelativeToolTip": "DLGCY.FilesWatcher\\ViewModels\\MainWindowViewModel.cs",
+              "ViewState": "AQIAAGUAAAAAAAAAAIA8wGUAAAAiAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-19T06:29:43.257Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "MainWindow.xaml.cs",
+              "DocumentMoniker": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\MainWindow.xaml.cs",
+              "RelativeDocumentMoniker": "DLGCY.FilesWatcher\\MainWindow.xaml.cs",
+              "ToolTip": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\MainWindow.xaml.cs",
+              "RelativeToolTip": "DLGCY.FilesWatcher\\MainWindow.xaml.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAAEUAAAASAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-19T06:29:40.344Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "GetControl.cs",
+              "DocumentMoniker": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\WPFTemplateLib\\WpfHelpers\\GetControl.cs",
+              "RelativeDocumentMoniker": "WPFTemplateLib\\WpfHelpers\\GetControl.cs",
+              "ToolTip": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\WPFTemplateLib\\WpfHelpers\\GetControl.cs",
+              "RelativeToolTip": "WPFTemplateLib\\WpfHelpers\\GetControl.cs",
+              "ViewState": "AQIAAEIAAAAAAAAAAAAiwFIAAAApAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-19T06:24:42.176Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "DLGCY.FilesWatcher",
+              "DocumentMoniker": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj",
+              "RelativeDocumentMoniker": "DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj",
+              "ToolTip": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj",
+              "RelativeToolTip": "DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000758|",
+              "WhenOpened": "2024-06-19T05:42:11.821Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UC_ConfirmBox.xaml.cs",
+              "DocumentMoniker": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\WPFTemplateLib\\UserControls\\UC_ConfirmBox.xaml.cs",
+              "RelativeDocumentMoniker": "WPFTemplateLib\\UserControls\\UC_ConfirmBox.xaml.cs",
+              "ToolTip": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\WPFTemplateLib\\UserControls\\UC_ConfirmBox.xaml.cs",
+              "RelativeToolTip": "WPFTemplateLib\\UserControls\\UC_ConfirmBox.xaml.cs",
+              "ViewState": "AQIAACIBAAAAAAAAAAAawEYBAAAfAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-06-14T07:00:57.818Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "UC_ConfirmBox.xaml",
+              "DocumentMoniker": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\WPFTemplateLib\\UserControls\\UC_ConfirmBox.xaml",
+              "RelativeDocumentMoniker": "WPFTemplateLib\\UserControls\\UC_ConfirmBox.xaml",
+              "ToolTip": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\WPFTemplateLib\\UserControls\\UC_ConfirmBox.xaml",
+              "RelativeToolTip": "WPFTemplateLib\\UserControls\\UC_ConfirmBox.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-06-14T07:00:39.533Z"
             }
           ]
         },

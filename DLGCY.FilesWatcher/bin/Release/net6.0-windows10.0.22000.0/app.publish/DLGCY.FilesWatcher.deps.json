@@ -6,7 +6,7 @@
   "compilationOptions": {},
   "targets": {
     ".NETCoreApp,Version=v6.0": {
-      "DLGCY.FilesWatcher/1.0.4": {
+      "DLGCY.FilesWatcher/1.0.8": {
         "dependencies": {
           "CommunityToolkit.Mvvm": "8.2.2",
           "MvvmLightLibs": "5.4.1.1",
@@ -1843,7 +1843,7 @@
     }
   },
   "libraries": {
-    "DLGCY.FilesWatcher/1.0.4": {
+    "DLGCY.FilesWatcher/1.0.8": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -9,10 +9,10 @@ namespace WPFTemplate.ViewModels
     [AddINotifyPropertyChangedInterface]
     public class TestInputViewModel : CustomInfoViewModel
     {
-        public double InputWidth { get; set; } = 100;
+        public string InputWidth { get; set; } = string.Empty;
 
-        public double InputHeight { get; set; } = 30;
+        public string InputHeight { get; set; } = string.Empty;
 
-        public string InputNo { get; set; } = "A001";
+        public string InputNo { get; set; } = string.Empty;
     }
 }

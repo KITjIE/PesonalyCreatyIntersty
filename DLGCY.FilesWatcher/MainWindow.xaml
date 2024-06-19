@@ -22,8 +22,8 @@
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
-            <RowDefinition Height="*"/>
-            <RowDefinition Height="20"/>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
         <Expander IsExpanded="True" Header="配置区" Grid.ColumnSpan="5">
@@ -266,7 +266,8 @@
                             <Button Command="{Binding StartWatchCommand}" HorizontalAlignment="Center" Background="#FF48E910" Content="自动解析【启动】"/>
                             <Button Command="{Binding StopWatchCommand}" HorizontalAlignment="Center" Background="#FFE94210" Content="自动解析【停止】"/>
                             <Button Command="{Binding HandWatchCommand}" HorizontalAlignment="Center" Content="手动上传文件"/>
-                            <!--<Button Command="{Binding WaitCommand}" HorizontalAlignment="Center" Background="#FF9810E9" Content="测试"/>-->
+                            <Button Command="{Binding ScanCodeUploadCommand}" HorizontalAlignment="Center" Background="#FF9810E9" Content="人工扫码上传"/>
+                            <!--<Button Command="{Binding WaitCommand}" HorizontalAlignment="Center" Background="#FF908E8E" Content="测试"/>-->
 
                             <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Height="27">
                                 <Label Content="已上传：" Width="63" FontWeight="Bold"/>
@@ -278,9 +279,9 @@
             </Grid>
         </Grid>
 
-        <!--<StatusBar Grid.Row="2" Grid.ColumnSpan="5">
+        <StatusBar Grid.Row="2" Grid.ColumnSpan="5" >
             <TextBlock Text="{Binding Status}"/>
-        </StatusBar>-->
+        </StatusBar>
 
         <userControls:UC_ConfirmBox Grid.RowSpan="3" DataContext="{Binding DialogVm}" Visibility="Collapsed" IsShowDialog="{Binding IsShowDialog}" DialogWidth="500" DialogHeight="400" Grid.ColumnSpan="5"/>
 

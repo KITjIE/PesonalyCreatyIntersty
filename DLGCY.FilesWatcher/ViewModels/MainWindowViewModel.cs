@@ -15,6 +15,7 @@ using System.Windows.Media;
 using DotNet.Utilities.ConsoleHelper;
 using FreeSql;
 using Newtonsoft.Json;
+using NPOI.HPSF;
 using NPOI.HSSF.UserModel;
 using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
@@ -29,6 +30,7 @@ using WPFTemplate.ViewModels;
 using WPFTemplateLib.UserControls;
 using WPFTemplateLib.WpfHelpers;
 using static DLGCY.FilesWatcher.Helper.ApiClient;
+using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
 using static Org.BouncyCastle.Math.EC.ECCurve;
 using File = System.IO.File;
 
@@ -83,7 +85,7 @@ namespace DLGCY.FilesWatcher.ViewModels
         /// <summary>
         /// 底部状态栏信息
         /// </summary>
-        public string Status { get; set; } = "中京元盛";
+        public string Status { get; set; } = "程序版本：" + DotNet.Utilities.AssemblyHelper.AssemblyFileVersion;
 
         /// <summary>
         /// 弹窗VM;
@@ -113,6 +115,14 @@ namespace DLGCY.FilesWatcher.ViewModels
             //AddFreeSql();
             //fsql.CodeFirst.SyncStructure(typeof(YS_TestModel));
             vMTempTest = new VMTempTest(Configs);
+            //Thread thread1 = new Thread(new ThreadStart(DoWork));
+            //Thread thread2 = new Thread(new ParameterizedThreadStart(DoWorkWithParam));
+
+            //thread1.Start();
+            //thread2.Start("Hello from thread with parameter");
+
+            //thread1.Join();
+            //thread2.Join();
         }
 
         ~MainWindowViewModel()
@@ -193,8 +203,38 @@ namespace DLGCY.FilesWatcher.ViewModels
         /// 手动上传命令
         /// </summary>
         public ICommand HandWatchCommand { get; set; }
-        #endregion
 
+        /// <summary>
+        /// 人工扫码上传命令
+        /// </summary>
+        public ICommand ScanCodeUploadCommand { get; set; }
+        /// <summary>
+        /// 人工扫码上传命令
+        /// </summary>
+        public ICommand UpLoadCommand { get; set; }
+
+        #endregion
+        static void DoWork()
+        {
+            // Console.WriteLine("Thread 1 is running");
+            //Thread.Sleep(2000); // 模拟工作
+            //Console.WriteLine("Thread 1 has finished");
+        }
+
+        public void DoWorkWithParam(object message)
+        {
+            string barCode = message.ToString();
+            string testtime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+            string result = "PASS";
+            string path = "HandUpLoad";
+            // 上传过站接口
+            bool apiResponse2 = Post_PastationAPI(barCode, result, testtime, path);
+            if (!apiResponse2)
+            {
+               // ShowErrorWin();
+            }
+            Thread.Sleep(20);
+        }
         /// <summary>
         /// 命令方法赋值(在构造函数中调用)
         /// </summary>
@@ -407,7 +447,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                 }, ShowInfo, isShowText: false);
             });
 
-            WaitCommand ??= new RelayCommand(o => true, async o =>
+            WaitCommand ??= new RelayCommand(o => true, o =>
             {
                 //await ConfirmBoxHelper.ShowWait(DialogVm, "正在执行业务操作...", async () =>
                 //{
@@ -415,27 +455,34 @@ namespace DLGCY.FilesWatcher.ViewModels
                 //    Console.WriteLine("操作完成");
                 //});
 
-
-
-                // 要写入的文件路径
-                string filePath = @"D:\test\结果.xls";
-                // 如果文件不存在，创建新文件并添加文件头
-                if (!File.Exists(filePath))
+                try
                 {
-                    InitializeExcel(filePath);
-                }
-                List<HuaJingAlarms> alarms = new List<HuaJingAlarms>
+                    // 要写入的文件路径
+                    string filePath = @"C:\test\结果.xls";
+                    // 如果文件不存在，创建新文件并添加文件头
+                    if (!File.Exists(filePath))
+                    {
+                        InitializeExcel(filePath);
+                    }
+                    List<HuaJingAlarms> alarms = new List<HuaJingAlarms>
                 {
-                    new HuaJingAlarms(DateTime.Now.ToString(),DateTime.Now.ToString(),"报警文本示例1"),
-                    new HuaJingAlarms(DateTime.Now.AddDays(1).ToString(),DateTime.Now.AddDays(1).ToString(),"报警文本示例2"),
-                    new HuaJingAlarms(DateTime.Now.AddDays(2).ToString(),DateTime.Now.AddDays(2).ToString(),"报警文本示例3")
+                    new HuaJingAlarms(DateTime.Now.ToString("yyyy/MM/dd"),DateTime.Now.ToString("HH:mm:ss"),"低液位"),
+                    new HuaJingAlarms(DateTime.Now.ToString("yyyy/MM/dd"),DateTime.Now.ToString("HH:mm:ss"),"报警文本示例2"),
+                    new HuaJingAlarms(DateTime.Now.ToString("yyyy/MM/dd"),DateTime.Now.ToString("HH:mm:ss"),"天车碰撞")
 
                 };
-                // 打开文件流
-                using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite))
-                {
-                    WriteToExcelFile(fileStream, alarms);
+                    // 打开文件流
+                    using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite))
+                    {
+                        WriteToExcelFile(fileStream, alarms);
+                    }
                 }
+                catch (Exception)
+                {
+
+                }
+
+
             });
 
 
@@ -472,6 +519,66 @@ namespace DLGCY.FilesWatcher.ViewModels
                 IsMonitoring = false;
                 await ConfirmBoxHelper.ShowMessage(DialogVm, $"已停止监控：[{Configs.FolderPath}]");
             });
+
+            ScanCodeUploadCommand ??= new RelayCommand(o => true, async o =>
+            {
+
+                new HandUpLoadWindow().ShowDialog();
+                //var inputVM = new TestInputViewModel()
+                //{
+                //    IsOnlyOneColumn = true,
+                //    TitleLeft = "请人工扫码",
+                //    //IsShowTitle = false,
+                //    IsShowBottom = false,
+                //};
+
+                //inputVM.LeftContent = new StackPanel
+                //{
+                //    Children =
+                //    {
+                //        GetControl.GetLineInput("拼板码：", nameof(inputVM.InputHeight)),
+
+                //    },
+                //};
+                //DialogVm.CustomContent = new UC_CustomInfo()
+                //{
+                //    DataContext = inputVM,
+                //};
+
+
+                //await ConfirmBoxHelper.ShowConfirm(DialogVm, "", () =>
+                //{
+                //    if (inputVM.InputHeight == null || inputVM.InputHeight == "")
+                //    {
+                //        Console.WriteLine("输入条码不能为空！！");
+                //        return;
+                //    }
+                //    else
+                //    {
+                //        Thread thread2 = new Thread(new ParameterizedThreadStart(DoWorkWithParam));
+                //        thread2.Start(inputVM.InputHeight);
+                //        thread2.Join();
+                //    }
+                //}, ShowInfo, isShowText: false);
+            });
+
+            UpLoadCommand ??= new RelayCommand(o => true, async o =>
+            {
+                if (Configs.HandBarCode == null || Configs.HandBarCode == "")
+                {
+                    Console.WriteLine("输入条码不能为空！！");
+                    return;
+                }
+                else
+                {
+                    Thread thread2 = new Thread(new ParameterizedThreadStart(DoWorkWithParam));
+                    thread2.Start(Configs.HandBarCode);
+                    thread2.Join();
+                }
+
+            });
+
+
         }
 
         #region 辅助方法
@@ -521,25 +628,7 @@ namespace DLGCY.FilesWatcher.ViewModels
 
         private void FileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
         {
-            try
-            {
-                #region excel解析
 
-                //Console.WriteLine($"【{GetPathType(e.FullPath)}更改】{GetPath(e)}");
-                //if (!e.Name.StartsWith("~$"))
-                //{
-                //    if (e.Name.Contains(".xls") || e.FullPath.Contains(".csv"))
-                //    {
-                //        FileCSV_Analys(GetPath(e));
-                //    }
-                //}
-                #endregion
-
-            }
-            catch (Exception ex)
-            {
-
-            }
 
         }
 
@@ -559,22 +648,26 @@ namespace DLGCY.FilesWatcher.ViewModels
                         };
                     }
                 }
-                if (Configs.SupervisMode == "文件解析模式C")
+                try
                 {
-                    if (e.Name.Contains(".txt"))
+                    #region excel解析
+                    if (Configs.SupervisMode == "文件解析模式C")
                     {
-                        //if (!FileTXTName_SonFile(Path.GetFileNameWithoutExtension(GetPath(e)), GetPath(e)))
-                        //{
-                        //    ShowErrorWin();
-                        //}
+                        Console.WriteLine($"【{GetPathType(e.FullPath)}更改】{GetPath(e)}");
+                        if (!e.Name.StartsWith("~$"))
+                        {
+                            if (e.Name.Contains(".xls") || e.FullPath.Contains(".csv"))
+                            {
+                                FileCSV_Analys(GetPath(e));
+                            }
+                        }
                     }
-                    if (e.Name.Contains(".csv"))
-                    {
-                        //if (!FileTXTName_FrontFile(Path.GetFileNameWithoutExtension(GetPath(e)), GetPath(e)))
-                        //{
-                        //    ShowErrorWin();
-                        //}
-                    }
+                    #endregion
+
+                }
+                catch (Exception ex)
+                {
+
                 }
                 if (Configs.SupervisMode == "文件解析模式D")
                 {
@@ -808,16 +901,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                                 //}
                             }
                         }
-                        if (fileSuffixName == "txt" && Configs.SupervisMode == "文件解析模式C")
-                        {
-                            using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
-                            {
-                                //if (!FileTXTName_SonFile(fileName, filePath)&& Configs.IsMESerrorWin)
-                                //{
-                                //    ShowErrorWin();
-                                //}
-                            }
-                        }
+
                         // 强制释放文件资源
                         TryForceFileRelease(filePath);
                         // 获取源文件夹中的所有文件
@@ -1114,16 +1198,7 @@ namespace DLGCY.FilesWatcher.ViewModels
         //{
         //   
         //}
-        /// <summary>
-        /// （模式C） 
-        /// </summary>
-        /// <param name="filePath"></param>
-        /// <param name="fileName"></param>
-        /// <returns></returns>
-        //public bool FileTXTName_FrontFile(string fileName, string filePath)
-        //{
 
-        //} 
         /// <summary>
         /// （模式A）文件格式 7700SII plus_20231219144327.txt（AOI）
         /// </summary>
@@ -1151,6 +1226,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                         ProcessCurrentData(aoiDataList, currentData);
                         currentData.Clear();  // 清空当前整体的数据，准备处理新的整体
                     }
+
                     else
                     {
                         // 将当前行添加到当前整体的数据中
@@ -1159,7 +1235,8 @@ namespace DLGCY.FilesWatcher.ViewModels
                 }
                 // 处理文件末尾可能存在的最后一个整体
                 ProcessCurrentData(aoiDataList, currentData);
-
+                //SKIP的意思是报废板，不上传
+                aoiDataList.RemoveAll(item => item.PCBStatus.Contains("SKIP"));
                 // 显示解析的数据
                 foreach (var entry in aoiDataList)
                 {
@@ -1249,7 +1326,10 @@ namespace DLGCY.FilesWatcher.ViewModels
                         string account = currentRow.GetCell(2) != null ? currentRow.GetCell(2).StringCellValue : "";
 
                         HuaJingAlarms moduleInfo = new HuaJingAlarms(module, address, account);
-                        alarms.Add(moduleInfo);
+                        if (account.Contains("A/B车定位异常") || account.Contains("低液位") || account.Contains("温度异常") || account.Contains("电导率超标异常") || account.Contains("天车碰撞"))
+                        {
+                            alarms.Add(moduleInfo);
+                        }
                     }
 
                     // 更新 Configs.ExcelLastRow
@@ -1261,7 +1341,16 @@ namespace DLGCY.FilesWatcher.ViewModels
                     // 输出每个 ModuleInfo 对象的信息
                     foreach (var moduleInfo in alarms)
                     {
-                        Console.WriteLine($"Module: {moduleInfo.Module}, Address: {moduleInfo.Address}, Account: {moduleInfo.Account}");
+                        Console.WriteLine($"日期: {moduleInfo.Date_}, 时间: {moduleInfo.Time_}, 报警: {moduleInfo.AlarmText_}");
+                        // 发送API请求
+                        WechatMsgPushModel pushModel = new()
+                        {
+                            chatId = "wrh5MlCwAAqPYkBuAJEBdNnNfSXDPKOw",
+                            messageContent = $"【发生报警】\n设备名称：{Configs.MachineModel}\n设备编号：{Configs.Computer}\n报警信息：{moduleInfo.AlarmText_}\n日期时间：{moduleInfo.Date_}{" "}{moduleInfo.Time_}"
+                        };
+
+                        Console.WriteLine($"报警推送：\n{string.Join(", ", pushModel.messageContent)}");
+                        MESRespon apiResponse = PostResponse<MESRespon>(Configs.AlarmURLPath, "", JsonConvert.SerializeObject(pushModel));
                     }
                 }
 
@@ -1292,9 +1381,9 @@ namespace DLGCY.FilesWatcher.ViewModels
                 lastRowNum++;
                 // 创建新行并写入数据
                 IRow newRow = sheet.CreateRow(lastRowNum);
-                newRow.CreateCell(0).SetCellValue(huaJingAlarm.Module);
-                newRow.CreateCell(1).SetCellValue(huaJingAlarm.Address);
-                newRow.CreateCell(2).SetCellValue(huaJingAlarm.Account);
+                newRow.CreateCell(0).SetCellValue(huaJingAlarm.Date_);
+                newRow.CreateCell(1).SetCellValue(huaJingAlarm.Time_);
+                newRow.CreateCell(2).SetCellValue(huaJingAlarm.AlarmText_);
             }
 
             // 将文档写入到内存流中
@@ -1331,9 +1420,6 @@ namespace DLGCY.FilesWatcher.ViewModels
 
 
         #endregion
-
-
-
         /// <summary>
         /// 时间转化
         /// </summary>
@@ -1558,6 +1644,104 @@ namespace DLGCY.FilesWatcher.ViewModels
                 TryForceFileRelease(filePath);
                 // 获取源文件夹中的所有文件
                 FlieMove(filePath, filePath, Configs.ErrorInetrnetPath);
+                return false;
+            }
+        }
+
+
+        public bool Post_PastationAPI(string BarCode, string result, string testTime, string filePath)
+        {
+            try
+            {
+                string errortype = "";
+                // 构造值对象
+                Value valuePastation = new Value
+                {
+                    Qty = 1,
+                    DeviceId = Configs.MachineModel,
+                    Barcode = BarCode,
+                    TestResult = result == "PASS",
+                    TimeStamp = DateTime.Now,
+                    PartDetectionInfos = new List<PartDetectionInfo>
+                    {
+                        new PartDetectionInfo
+                        {
+                            BothSideCode = BarCode,
+                            CreateDate = testTime,
+                            TestResult = result == "PASS",
+                            Barcode = BarCode,
+                            FaultCode = result == "PASS" ? "" : "短路",
+                            RevisedFaultCode = null,
+                            ImageUrl = null
+                        }
+                    },
+                    ImageInfos = new List<ImageInfo>
+                    {
+                       new ImageInfo
+                       {
+                           ImageUrl = null,
+                           ImageIndex = 0,
+                           TotalImage = 0,
+                           UploadResult = false
+                       }
+                    }
+                };
+
+                // 构造API请求参数
+                var apiParameters = new List<ApiParameter>
+                {
+                  new ApiParameter { Value = valuePastation }
+                };
+
+                // 构造API请求对象
+                ApiRequest apiRequestPastation = new ApiRequest
+                {
+                    ApiType = "ScadaApiController",
+                    Method = "SMTWipMove",
+                    Parameters = apiParameters,
+                    Context = new RequestContext
+                    {
+                        //正式 fqqPHVfSUjtah6cjKXVnaJ6VfQYxIvmBfLApllYUjC/rhIr6rpaa6XERYTVoOX1A 
+                        Ticket = "fqqPHVfSUjtah6cjKXVnaJ6VfQYxIvmBfLApllYUjC/rhIr6rpaa6XERYTVoOX1A",
+                        InvOrgId = 2
+                    }
+                };
+
+                // 发送API请求
+                MESRespon apiResponsePastation = PostResponse<MESRespon>(Configs.URLPath, "", JsonConvert.SerializeObject(apiRequestPastation));
+
+                // 处理API响应
+                if (apiResponsePastation.Success)
+                {
+                    LogHelper.Debug($"【MES过站接口】设备编码：{Configs.MachineModel};条码：{BarCode};MES结果：【{apiResponsePastation.Success}】--{apiResponsePastation.Message}");
+                    Configs.ProductBarcode = BarCode;
+                    Configs.MESErrorInfo = apiResponsePastation.Message;
+                    Configs.UploadResult = "成功";
+                }
+                else
+                {
+                    LogHelper.Error($"【MES过站接口】设备编码：{Configs.MachineModel};条码：{BarCode};MES结果：【{apiResponsePastation.Success}】--{apiResponsePastation.Message}");
+                    Configs.ProductBarcode = BarCode;
+                    Configs.MESErrorInfo = apiResponsePastation.Message;
+                    Configs.UploadResult = "失败";
+                    if (apiResponsePastation.Message.Contains(BarCode))
+                    {
+                        errortype = Regex.Replace(apiResponsePastation.Message, BarCode, "");
+                        errortype = Regex.Replace(errortype, @"[\\/:\*\?\""<>\|]", "");
+
+                    }
+                    else { errortype = Regex.Replace(apiResponsePastation.Message, @"[\\/:\*\?\""<>\|]", ""); };
+
+                }
+
+                return apiResponsePastation.Success;
+            }
+            catch (Exception ex)
+            {
+                LogHelper.Error($"处理MES过站时出错：{ex.Message}");
+                Configs.ProductBarcode = BarCode;
+                Configs.MESErrorInfo = ex.Message;
+                Configs.UploadResult = "失败";
                 return false;
             }
         }

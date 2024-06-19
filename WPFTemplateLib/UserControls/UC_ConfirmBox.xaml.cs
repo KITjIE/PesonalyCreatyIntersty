@@ -150,7 +150,7 @@ namespace WPFTemplateLib.UserControls
         /// <summary>
         /// 确认弹窗超时时间（单位：秒，默认20）
         /// </summary>
-        public int ConfirmDialogTimeOut { get; set; } = 20;
+        public int ConfirmDialogTimeOut { get; set; } = 60;
 
         /// <summary>
         /// 消息弹窗超时时间（单位：秒，默认5）
@@ -310,7 +310,7 @@ namespace WPFTemplateLib.UserControls
                 }
 
                 vm.AutoResetEvent.Reset();
-                bool resultWaitOne = vm.AutoResetEvent.WaitOne(1000 * vm.ConfirmDialogTimeOut);
+                bool resultWaitOne = vm.AutoResetEvent.WaitOne(1000 * vm.ConfirmDialogTimeOut);//
                 if (!resultWaitOne)
                 {
                     logAction?.Invoke($"超时[{vm.ConfirmDialogTimeOut}s]");

@@ -16,5 +16,5 @@ TRACE;DEBUG;NETFRAMEWORK;NET472;
 21-986393642
 Styles\DictionaryBorder.xaml;Styles\DictionaryTextBox.xaml;UserControls\UC_ConfirmBox.xaml;UserControls\UC_CustomInfo.xaml;UserControls\UC_Wait.xaml;
 
-False
+True
 

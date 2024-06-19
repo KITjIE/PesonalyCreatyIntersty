@@ -27,7 +27,10 @@ namespace WPFTemplate
         /// URL地址
         /// </summary>
         public string URLPath { get; set; } = "http://10.164.19.106:2030/api/dataportal/invoke";
-
+        /// <summary>
+        /// 报警推送URL地址
+        /// </summary>
+        public string AlarmURLPath { get; set; } = "http://10.163.19.90:38880/DataService/WebApi/sendChatTextMessage";
         /// <summary>
         /// 是否可编辑
         /// </summary>
@@ -89,6 +92,10 @@ namespace WPFTemplate
         /// <summary>
         /// Excel读取最后一行
         /// </summary>
-        public int ExcelLastRow { get; set; } = 0;
+        public int ExcelLastRow { get; set; } = 1;
+        /// <summary>
+        /// 人工上传条码
+        /// </summary>
+        public string HandBarCode { get; set; } = string.Empty;
     }
 }

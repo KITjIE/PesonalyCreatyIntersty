@@ -11,9 +11,9 @@
 	  <PackageIcon>监控.ico</PackageIcon>
 	  <RepositoryType>https://gitee.com/dlgcy/DLGCY.FilesWatcher.git</RepositoryType>
     <Description>文件变动监控器</Description>
-    <AssemblyVersion>1.0.4.*</AssemblyVersion>
-    <FileVersion>1.0.4.0</FileVersion>
-    <Version>1.0.4</Version>
+    <AssemblyVersion>1.0.7.*</AssemblyVersion>
+    <FileVersion>1.0.7.1</FileVersion>
+    <Version>1.0.8</Version>
     <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
 
@@ -88,6 +88,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Compile Update="HandUpLoadWindow.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Properties\Settings.Designer.cs">
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
       <AutoGen>True</AutoGen>
