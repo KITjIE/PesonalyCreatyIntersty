@@ -1,6 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="DLGCY.FilesWatcher.exe" version="1.0.0.6" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="DLGCY.FilesWatcher.exe" version="1.0.0.10" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <description asmv2:iconFile="监控.ico" xmlns="urn:schemas-microsoft-com:asm.v1">文件变动监控器</description>
   <application />
   <entryPoint>
@@ -90,22 +90,22 @@
       <dsig:DigestValue>oqsulFVnM7C7ilbH956OoKNj+YTEmgrnV+MponOkV3Q=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="DLGCY.FilesWatcher.deps.json" size="128648">
+  <file name="DLGCY.FilesWatcher.deps.json" size="128091">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>kwQlBz9F3y/GHd9U/Je6Gc4LsrHQZ3bySgODFsbXfrg=</dsig:DigestValue>
+      <dsig:DigestValue>bMsT3ACHJJElDR098Cmyo9tzvFnEmM4AiPJQW4GQb4k=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="DLGCY.FilesWatcher.dll" size="173568">
+  <file name="DLGCY.FilesWatcher.dll" size="197120">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>OTTJnZitKlXz7B7HHGVtszYBbISVmCcfMswTeooTYPg=</dsig:DigestValue>
+      <dsig:DigestValue>7fpIIcOQGEtXpEkJ9jqVzeuYXlfxKQGrSVxdN33XjZg=</dsig:DigestValue>
     </hash>
   </file>
   <file name="DLGCY.FilesWatcher.dll.config" size="3357">
@@ -123,7 +123,7 @@
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>USBL13VeOhgZ85hpyTud1MTk5aLg9EudERuj1TpaXOo=</dsig:DigestValue>
+      <dsig:DigestValue>Jr5vjbhmF+cOJHjDJmJzygUcTELApY6As402UQ2VaFY=</dsig:DigestValue>
     </hash>
   </file>
   <file name="DLGCY.FilesWatcher.runtimeconfig.json" size="372">
@@ -331,15 +331,6 @@
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
       <dsig:DigestValue>16gd7FsEaR0aOqXUjWRy6EvWURKRo4f4XjisuQW+hnA=</dsig:DigestValue>
-    </hash>
-  </file>
-  <file name="Microsoft.Windows.SDK.NET.dll" size="22412840">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>y7Yd+TePQ2qWYhFwIzkRIWFut+b0mb+CEQZGKLao0Rc=</dsig:DigestValue>
     </hash>
   </file>
   <file name="Newtonsoft.Json.dll" size="712464">
@@ -684,22 +675,13 @@
       <dsig:DigestValue>YtEbhQNlgpECu+1yO6S9X9xIbkuMJ5UC5fskAt6MMkM=</dsig:DigestValue>
     </hash>
   </file>
-  <file name="WinRT.Runtime.dll" size="399280">
-    <hash>
-      <dsig:Transforms>
-        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
-      </dsig:Transforms>
-      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>SXeh5tzuTDMQpo4g8oec85uVJV4p8/11V3geBYRFy5s=</dsig:DigestValue>
-    </hash>
-  </file>
   <file name="WPFTemplateLib.dll" size="9856000">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
       </dsig:Transforms>
       <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-      <dsig:DigestValue>2zs/XmbQe/cABVNJyIN6rL6amg2F3o6Vf/MDRGQbYCw=</dsig:DigestValue>
+      <dsig:DigestValue>I0havud1Poe9J891+aw4uh2Zn2Mf+JtTDFIw/2JMtP4=</dsig:DigestValue>
     </hash>
   </file>
   <file name="zh-Hans\FreeSql.resources.dll" size="28672">

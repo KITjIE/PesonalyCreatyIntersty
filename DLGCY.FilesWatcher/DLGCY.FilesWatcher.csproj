@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <OutputType>WinExe</OutputType>
-    <TargetFramework>net6.0-windows10.0.22000.0</TargetFramework>
+    <TargetFramework>net6.0-windows7.0</TargetFramework>
     <UseWPF>true</UseWPF>
 	  <Deterministic>False</Deterministic>
 	  <ApplicationIcon>监控.ico</ApplicationIcon>
@@ -12,7 +12,7 @@
 	  <RepositoryType>https://gitee.com/dlgcy/DLGCY.FilesWatcher.git</RepositoryType>
     <Description>文件变动监控器</Description>
     <AssemblyVersion>1.0.7.*</AssemblyVersion>
-    <FileVersion>1.0.7.1</FileVersion>
+    <FileVersion>1.0.7.9</FileVersion>
     <Version>1.0.8</Version>
     <Platforms>AnyCPU;x86</Platforms>
   </PropertyGroup>
@@ -54,6 +54,7 @@
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="NPOI" Version="2.6.2" />
     <PackageReference Include="PropertyChanged.Fody" Version="3.2.9" />
+    <PackageReference Include="System.Text.Encoding.CodePages" Version="6.0.0" />
   </ItemGroup>
 
   <ItemGroup>

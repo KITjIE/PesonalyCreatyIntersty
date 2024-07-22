@@ -1,5 +1,4 @@
 ﻿using PropertyChanged;
-using static System.Net.WebRequestMethods;
 
 namespace WPFTemplate
 {
@@ -97,5 +96,9 @@ namespace WPFTemplate
         /// 人工上传条码
         /// </summary>
         public string HandBarCode { get; set; } = string.Empty;
+        /// <summary>
+        /// 人工上传tips
+        /// </summary>
+        public string tips { get; set; } = string.Empty;
     }
 }

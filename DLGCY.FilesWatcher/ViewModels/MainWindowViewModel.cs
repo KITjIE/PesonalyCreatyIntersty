@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net.Http;
+using System.Net.Http; 
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -11,28 +12,23 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media;
+using System.Windows.Media; 
 using DotNet.Utilities.ConsoleHelper;
 using FreeSql;
 using Newtonsoft.Json;
-using NPOI.HPSF;
 using NPOI.HSSF.UserModel;
-using NPOI.SS.Formula.Functions;
 using NPOI.SS.UserModel;
 using NPOI.XSSF.UserModel;
 using PropertyChanged;
 using TemplateClassLibrary;
-//using Windows.Devices.Power;
-//using Windows.UI.Composition;
-//using Windows.UI.Popups;
 using WPFTemplate;
 using WPFTemplate.ViewModels;
 using WPFTemplateLib.UserControls;
 using WPFTemplateLib.WpfHelpers;
 using static DLGCY.FilesWatcher.Helper.ApiClient;
-using static Org.BouncyCastle.Crypto.Engines.SM2Engine;
-using static Org.BouncyCastle.Math.EC.ECCurve;
 using File = System.IO.File;
+using Path = System.IO.Path;
+
 
 namespace DLGCY.FilesWatcher.ViewModels
 {
@@ -59,7 +55,12 @@ namespace DLGCY.FilesWatcher.ViewModels
             set => _configs = value;
         }
 
+        static long lastPosition = 0;
+        static string directoryPath = string.Empty;
+        static string currentFilePath;
 
+
+        private Dictionary<string, long> _fileReadPositions = new Dictionary<string, long>();
         private string _Info = "";
         /// <summary>
         /// 信息窗内容;
@@ -115,14 +116,7 @@ namespace DLGCY.FilesWatcher.ViewModels
             //AddFreeSql();
             //fsql.CodeFirst.SyncStructure(typeof(YS_TestModel));
             vMTempTest = new VMTempTest(Configs);
-            //Thread thread1 = new Thread(new ThreadStart(DoWork));
-            //Thread thread2 = new Thread(new ParameterizedThreadStart(DoWorkWithParam));
 
-            //thread1.Start();
-            //thread2.Start("Hello from thread with parameter");
-
-            //thread1.Join();
-            //thread2.Join();
         }
 
         ~MainWindowViewModel()
@@ -205,23 +199,30 @@ namespace DLGCY.FilesWatcher.ViewModels
         public ICommand HandWatchCommand { get; set; }
 
         /// <summary>
-        /// 人工扫码上传命令
+        /// 人工扫码上传窗口
         /// </summary>
         public ICommand ScanCodeUploadCommand { get; set; }
         /// <summary>
         /// 人工扫码上传命令
         /// </summary>
         public ICommand UpLoadCommand { get; set; }
-
+        /// <summary>
+        /// 人工扫码取消命令
+        /// </summary>
+        public ICommand CancelCommand { get; set; }
+        /// <summary>
+        /// 导入配置命令
+        /// </summary>
+        public ICommand InputConfigCommand { get; set; }
+        /// <summary>
+        /// 导出配置命令
+        /// </summary>
+        public ICommand ExportConfigCommand { get; set; }
+        public string DirectoryPath { get => directoryPath; set => directoryPath = value; }
         #endregion
-        static void DoWork()
-        {
-            // Console.WriteLine("Thread 1 is running");
-            //Thread.Sleep(2000); // 模拟工作
-            //Console.WriteLine("Thread 1 has finished");
-        }
 
-        public void DoWorkWithParam(object message)
+
+        public async Task DoWorkWithParam(object message)
         {
             string barCode = message.ToString();
             string testtime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
@@ -231,9 +232,17 @@ namespace DLGCY.FilesWatcher.ViewModels
             bool apiResponse2 = Post_PastationAPI(barCode, result, testtime, path);
             if (!apiResponse2)
             {
-               // ShowErrorWin();
+                //ShowErrorWin();
+                // 在 UI 线程上调度创建和显示 FullScreenPopupWindow
+                System.Windows.Application.Current.Dispatcher.Invoke(() =>
+                {
+                    // 创建 FullScreenPopupWindow 实例
+                    MsgWindow msgWindow = new MsgWindow(Configs);
+                    // 显示窗口
+                    msgWindow.ShowDialog();
+                });
             }
-            Thread.Sleep(20);
+            await Task.Delay(20);
         }
         /// <summary>
         /// 命令方法赋值(在构造函数中调用)
@@ -307,10 +316,13 @@ namespace DLGCY.FilesWatcher.ViewModels
                     }
                 }, msg => { Console.WriteLine(msg); }, isShowText: false);
             });
+            InputConfigCommand ??= new RelayCommand(o => true, o => { InputConfig(); });
+            ExportConfigCommand ??= new RelayCommand(o => true, o => { ExportConfig(); });
 
             ClearInfoCommand ??= new RelayCommand(o => true, o =>
             {
                 Info = "";
+                Configs.AnalysCount = 0;
             });
 
             AboutCommand ??= new RelayCommand(o => true, o =>
@@ -449,43 +461,77 @@ namespace DLGCY.FilesWatcher.ViewModels
 
             WaitCommand ??= new RelayCommand(o => true, o =>
             {
-                //await ConfirmBoxHelper.ShowWait(DialogVm, "正在执行业务操作...", async () =>
-                //{
-                //    await Task.Delay(1000 * 10);
-                //    Console.WriteLine("操作完成");
-                //});
 
+
+                //try
+                //{
+                //    // 要写入的文件路径
+                //    string filePath = @"C:\test\结果.xls";
+                //    // 如果文件不存在，创建新文件并添加文件头
+                //    if (!File.Exists(filePath))
+                //    {
+                //        InitializeExcel(filePath);
+                //    }
+                //    List<HuaJingAlarms> alarms = new List<HuaJingAlarms>
+                //{
+                //    new HuaJingAlarms(DateTime.Now.ToString("yyyy/MM/dd"),DateTime.Now.ToString("HH:mm:ss"),"低液位"),
+                //    new HuaJingAlarms(DateTime.Now.ToString("yyyy/MM/dd"),DateTime.Now.ToString("HH:mm:ss"),"报警文本示例2"),
+                //    new HuaJingAlarms(DateTime.Now.ToString("yyyy/MM/dd"),DateTime.Now.ToString("HH:mm:ss"),"天车碰撞")
+
+                //};
+                //    // 打开文件流
+                //    using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite))
+                //    {
+                //        WriteToExcelFile(fileStream, alarms);
+                //    }
+                //}
+                //catch (Exception)
+                //{
+
+                //}
                 try
                 {
                     // 要写入的文件路径
-                    string filePath = @"C:\test\结果.xls";
+                    string filePath = currentFilePath;
                     // 如果文件不存在，创建新文件并添加文件头
                     if (!File.Exists(filePath))
                     {
                         InitializeExcel(filePath);
                     }
-                    List<HuaJingAlarms> alarms = new List<HuaJingAlarms>
-                {
-                    new HuaJingAlarms(DateTime.Now.ToString("yyyy/MM/dd"),DateTime.Now.ToString("HH:mm:ss"),"低液位"),
-                    new HuaJingAlarms(DateTime.Now.ToString("yyyy/MM/dd"),DateTime.Now.ToString("HH:mm:ss"),"报警文本示例2"),
-                    new HuaJingAlarms(DateTime.Now.ToString("yyyy/MM/dd"),DateTime.Now.ToString("HH:mm:ss"),"天车碰撞")
-
-                };
-                    // 打开文件流
-                    using (FileStream fileStream = new FileStream(filePath, FileMode.Open, FileAccess.ReadWrite))
+                    List<YS_DianCe_Model> existingRecords = new List<YS_DianCe_Model>();
+                    var record = new YS_DianCe_Model
                     {
-                        WriteToExcelFile(fileStream, alarms);
+                        Date = DateTime.Now, // 解析日期
+                        DeviceName = "values[1]", // 设备名称
+                        DeviceNumber = "values[1]", // 设备编号
+                        ProductNumber = "values[1]", // 产品号
+                        BatchNumber = "values[1]", // 批次号
+                        UnitOrder = 123, // 单元排序
+                        Barcode = "values[1]", // 条码
+                        Result = "values[1]", // 结果
+                        GoodUnitCount = 123, // 良品单元数
+                        BadUnitCount = 123, // 不良品单元数
+                        BadUnitInfo = "1" // 不良品信息
+                    };
+                    existingRecords.Add(record);
+                    try
+                    {
+                        // 使用StreamWriter以追加方式打开文件，使用GBK编码
+                        using (var writer = new StreamWriter(filePath, true, Encoding.UTF8))//Encoding.GetEncoding("GBK")
+                        {
+                            // 写入新数据到文件末尾
+                            string lineToAdd = $"{record.Date},{record.DeviceName},{record.DeviceNumber},{record.ProductNumber},{record.BatchNumber},{record.UnitOrder},{record.Barcode},{record.Result},{record.GoodUnitCount},{record.BadUnitCount},{record.BadUnitInfo}";
+                            writer.WriteLine(lineToAdd);
+                        }
+                        Console.WriteLine("数据成功追加到CSV文件末尾。");
                     }
+                    catch (Exception) { }
                 }
                 catch (Exception)
                 {
 
                 }
-
-
             });
-
-
             #endregion
             ChooseFolderCommand ??= new RelayCommand(o => true, o =>
             {
@@ -505,7 +551,9 @@ namespace DLGCY.FilesWatcher.ViewModels
                 {
                     FileTXTName_HansAnalys();
                 }
-
+                if (Configs.SupervisMode == "文件解析模式D")
+                {
+                }
             });
             StartWatchCommand ??= new RelayCommand(o => !string.IsNullOrWhiteSpace(Configs.FolderPath), o =>
             {
@@ -522,63 +570,27 @@ namespace DLGCY.FilesWatcher.ViewModels
 
             ScanCodeUploadCommand ??= new RelayCommand(o => true, async o =>
             {
-
                 new HandUpLoadWindow().ShowDialog();
-                //var inputVM = new TestInputViewModel()
-                //{
-                //    IsOnlyOneColumn = true,
-                //    TitleLeft = "请人工扫码",
-                //    //IsShowTitle = false,
-                //    IsShowBottom = false,
-                //};
-
-                //inputVM.LeftContent = new StackPanel
-                //{
-                //    Children =
-                //    {
-                //        GetControl.GetLineInput("拼板码：", nameof(inputVM.InputHeight)),
-
-                //    },
-                //};
-                //DialogVm.CustomContent = new UC_CustomInfo()
-                //{
-                //    DataContext = inputVM,
-                //};
-
-
-                //await ConfirmBoxHelper.ShowConfirm(DialogVm, "", () =>
-                //{
-                //    if (inputVM.InputHeight == null || inputVM.InputHeight == "")
-                //    {
-                //        Console.WriteLine("输入条码不能为空！！");
-                //        return;
-                //    }
-                //    else
-                //    {
-                //        Thread thread2 = new Thread(new ParameterizedThreadStart(DoWorkWithParam));
-                //        thread2.Start(inputVM.InputHeight);
-                //        thread2.Join();
-                //    }
-                //}, ShowInfo, isShowText: false);
             });
 
             UpLoadCommand ??= new RelayCommand(o => true, async o =>
             {
                 if (Configs.HandBarCode == null || Configs.HandBarCode == "")
                 {
-                    Console.WriteLine("输入条码不能为空！！");
+                    Configs.tips = "输入条码不能为空！！";
                     return;
                 }
                 else
                 {
-                    Thread thread2 = new Thread(new ParameterizedThreadStart(DoWorkWithParam));
-                    thread2.Start(Configs.HandBarCode);
-                    thread2.Join();
+                    await Task.Run(() => DoWorkWithParam(Configs.HandBarCode));
                 }
 
             });
+            CancelCommand ??= new RelayCommand(o => true, async o =>
+            {
 
-
+                Configs.HandBarCode = null;
+            });
         }
 
         #region 辅助方法
@@ -622,18 +634,49 @@ namespace DLGCY.FilesWatcher.ViewModels
             _FileSystemWatcher.Changed += FileSystemWatcher_Changed;
             //开始监控
             _FileSystemWatcher.EnableRaisingEvents = true;
-
             await ConfirmBoxHelper.ShowMessage(DialogVm, $"已开启监控：[{Configs.FolderPath}]");
         }
-
         private void FileSystemWatcher_Changed(object sender, FileSystemEventArgs e)
         {
-
-
+            if (Configs.SupervisMode == "文件解析模式D")
+            {
+                Thread.Sleep(1000); // 延时10秒钟
+                string fileType = string.Empty;
+                if (GetPath(e).Contains("ProdData"))
+                {
+                    fileType = "HWDC";
+                }
+                else if (GetPath(e).Contains("log") && GetPath(e).Contains("-"))
+                {
+                    fileType = "XNYKT";
+                }
+                switch (fileType)
+                {
+                    case "HWDC":
+                        if (IsNewFileForToday(e.FullPath, false))
+                        {
+                            currentFilePath = e.FullPath;
+                            //lastPosition = 0; // 重置读取位置
+                            Task.Run(() => YS_DianCEReadNewLines(currentFilePath));
+                        }
+                        return;
+                    case "XNYKT":
+                        if (IsNewFileForToday(e.FullPath, true))
+                        {
+                            currentFilePath = e.FullPath;
+                            //lastPosition = 0; // 重置读取位置
+                            Task.Run(() => XNY_KTReadNewLines(currentFilePath));
+                        }
+                        return;
+                    default:
+                        break;
+                }
+            }
         }
 
-        private void FileSystemWatcher_Created(object sender, FileSystemEventArgs e)
+        private async void FileSystemWatcher_Created(object sender, FileSystemEventArgs e)
         {
+            bool skipFinally = false;
             if (e.Name == "NetworkConnect.txt") { return; }
             try
             {
@@ -653,6 +696,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                     #region excel解析
                     if (Configs.SupervisMode == "文件解析模式C")
                     {
+                        await Task.Delay(10000); // 延时10秒钟
                         Console.WriteLine($"【{GetPathType(e.FullPath)}更改】{GetPath(e)}");
                         if (!e.Name.StartsWith("~$"))
                         {
@@ -671,14 +715,63 @@ namespace DLGCY.FilesWatcher.ViewModels
                 }
                 if (Configs.SupervisMode == "文件解析模式D")
                 {
-                    //if (e.Name.Contains(".txt"))
-                    //{
-                    //    if (!FileTXTName_SonFile(Path.GetFileNameWithoutExtension(GetPath(e)), GetPath(e)))
-                    //    {
-                    //        ShowErrorWin();
-                    //    }
-                    //}
+                    skipFinally = true;
+                    Thread.Sleep(5000); // 延时5秒钟
+                    string fileType = string.Empty;
+                    if (GetPath(e).Contains("ProdData"))
+                    {
+                        fileType = "HWDC";
+                    }
+                    else if (e.FullPath.Contains("log") && e.FullPath.Contains('-'))
+                    {
+                        fileType = "XNYKT";
+                    }
+                    else
+                    {
+                        Console.WriteLine("检测到有文件新建" + GetPath(e));
+                    }
+                    switch (fileType)
+                    {
+                        case "HWDC":
+                            if (IsNewFileForToday(e.FullPath, false))
+                            {
+                                currentFilePath = e.FullPath;
+                                lastPosition = 0; // 重置读取位置
+                                await Task.Run(() => YS_DianCEReadNewLines(currentFilePath));
+                            }
+                            return;
+                        case "XNYKT":
+                            if (IsNewFileForToday(e.FullPath, true))
+                            {
+                                currentFilePath = e.FullPath;
+                                lastPosition = 0; // 重置读取位置
+                                await Task.Run(() => KTHuiLiuHanAlarm(e.FullPath));
+                            }
+                            var newWarningLines = KTHuiLiuHanAlarm(e.FullPath);
+                            // 输出结果
+                            foreach (var warningLine in newWarningLines)
+                            {
+                                Console.WriteLine(warningLine);
+                            }
+                            return;
+                        default:
+                            break;
+                    }
 
+                }
+                if (Configs.SupervisMode == "文件解析模式E")
+                {
+                    if (e.FullPath.Contains(".xlsx") || e.FullPath.Contains(".xls") || e.FullPath.Contains(".csv"))
+                    {
+                        await Task.Delay(500); // 等待文件完全写入
+                        List<YS_WaiXieZiLiao> records = YS_WaiXieExcelFile((GetPath(e)), Configs.Computer, Configs.BuildUser);
+                        // 输出解析结果
+                        foreach (var record in records)
+                        {
+                            await Task.Run(() => Post_PastationAPI(record.Code, record.Result, record.Date, record.Machine));
+                            // Console.WriteLine($"时间: {record.Date}, 条码: {record.Code}, 结果: {record.Result}, 设备:{record.Machine},用户{record.User}");
+                        }
+                    }
                 }
                 if (Configs.SupervisMode == "文件解析模式B")
                 {
@@ -686,13 +779,13 @@ namespace DLGCY.FilesWatcher.ViewModels
                     switch (fileSuffixName)
                     {
                         case "csv":
-                            if ((!FileCSVName_Analys(Path.GetFileNameWithoutExtension(GetPath(e)), GetPath(e))) && Configs.IsMESerrorWin)
+                            if ((!FileCSVName_Analys(System.IO.Path.GetFileNameWithoutExtension(GetPath(e)), GetPath(e))) && Configs.IsMESerrorWin)
                             {
                                 ShowErrorWin();
                             };
                             return;
                         case "txt":
-                            if ((!FileTXTName_Analys(Path.GetFileNameWithoutExtension(GetPath(e)), GetPath(e))) && Configs.IsMESerrorWin)
+                            if ((!FileTXTName_Analys(System.IO.Path.GetFileNameWithoutExtension(GetPath(e)), GetPath(e))) && Configs.IsMESerrorWin)
                             {
                                 ShowErrorWin();
                             }
@@ -708,11 +801,13 @@ namespace DLGCY.FilesWatcher.ViewModels
             }
             finally
             {
-                // 强制释放文件资源
-                TryForceFileRelease(GetPath(e));
-                // 获取源文件夹中的所有文件
-                FlieMove(GetPath(e), GetPath(e), Configs.FinalPath);
-
+                if (!skipFinally)
+                {
+                    // 强制释放文件资源
+                    TryForceFileRelease(GetPath(e));
+                    // 获取源文件夹中的所有文件
+                    FlieMove(GetPath(e), GetPath(e), Configs.FinalPath);
+                }
             }
         }
 
@@ -726,6 +821,221 @@ namespace DLGCY.FilesWatcher.ViewModels
             Console.WriteLine($"【删除】{GetPath(e)}");
         }
 
+        //private bool IsNewFileForToday(string filePath)
+        //{
+        //    var fileName = Path.GetFileNameWithoutExtension(filePath);
+        //    var today = DateTime.Now.ToString("yyyyMMdd");
+        //    return fileName.Contains(today);
+        //}
+        //private bool IsNewFileForToday_(string filePath)
+        //{
+        //    var fileName = Path.GetFileNameWithoutExtension(filePath).Replace("-",null);
+        //    var today = DateTime.Now.ToString("yyyyMdd");
+        //    return fileName.Contains(today);
+        //}
+        private bool IsNewFileForToday(string filePath, bool removeDashes)
+        {
+            var fileName = Path.GetFileNameWithoutExtension(filePath);
+            if (removeDashes)
+            {
+                fileName = fileName.Replace("-", string.Empty);
+            }
+
+            var today = DateTime.Now.ToString("yyyyMMdd");
+            return fileName.Contains(today);
+        }
+
+
+        #region 导入/导出配置
+        /// <summary>
+        /// 导入配置
+        /// </summary>
+        private void InputConfig()
+        {
+            OpenFileDialog openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = "Text files (*.txt)|*.txt";
+            openFileDialog.Title = "Select a TXT file";
+
+            if (openFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = openFileDialog.FileName;
+                List<string> contents = new List<string>();
+                try
+                {
+                    using (StreamReader reader = new StreamReader(filePath))
+                    {
+                        string line;
+                        while ((line = reader.ReadLine()) != null)
+                        {
+                            contents.Add(line);
+
+                        }
+
+                        if (contents.Count > 0)
+                            Configs.Computer = contents[0];
+                        if (contents.Count > 1)
+                            Configs.BuildUser = contents[1];
+                        if (contents.Count > 2)
+                            Configs.PorductModel = contents[2];
+                        if (contents.Count > 3)
+                            Configs.MachineModel = contents[3];
+                    }
+                    if (ConfigManager.SaveConfig(Configs))
+                    {
+                        Console.WriteLine(filePath + "【配置导入成功】");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("配置导入失败" + ex.Message);
+                }
+            }
+        }
+        /// <summary>
+        /// 导出配置
+        /// </summary>
+        private void ExportConfig()
+        {
+            SaveFileDialog saveFileDialog = new SaveFileDialog();
+            saveFileDialog.Filter = "Text files (*.txt)|*.txt";
+            saveFileDialog.Title = "Save a TXT file";
+
+            if (saveFileDialog.ShowDialog() == DialogResult.OK)
+            {
+                string filePath = saveFileDialog.FileName;
+
+                List<string> contents = new List<string>
+                {
+                     Configs.Computer,
+                     Configs.BuildUser,
+                     Configs.PorductModel,
+                     Configs.MachineModel
+                };
+                try
+                {
+                    using (StreamWriter writer = new StreamWriter(filePath))
+                    {
+                        foreach (string item in contents)
+                        {
+                            writer.WriteLine(item);
+                        }
+                        Console.WriteLine(filePath + "【配置导出成功】");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("配置导出异常" + ex.Message);
+                }
+            }
+        }
+        #endregion
+
+
+        /// <summary>
+        /// 元盛外协资料解析
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
+        private static List<YS_WaiXieZiLiao> YS_WaiXieExcelFile(string filePath, string machine, string usr)
+        {
+            List<YS_WaiXieZiLiao> records = new List<YS_WaiXieZiLiao>();
+            using (var fileStream = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            {
+                IWorkbook workbook = new XSSFWorkbook(fileStream);
+                ISheet sheet = workbook.GetSheetAt(0);
+                for (int row = 1; row <= sheet.LastRowNum; row++)
+                {
+                    IRow currentRow = sheet.GetRow(row);
+                    if (currentRow == null) continue; // 跳过空行
+
+                    // 创建记录
+                    string date = currentRow.Cells.Count > 0 ? GetCellStringValue(currentRow.GetCell(0)) : string.Empty;
+                    string code = currentRow.Cells.Count > 1 ? currentRow.Cells[1].ToString() : string.Empty;
+                    string result = currentRow.Cells.Count > 2 ? currentRow.Cells[2].ToString() : string.Empty;
+
+                    // 检查所有字段是否都有值
+                    if (!string.IsNullOrEmpty(date) && !string.IsNullOrEmpty(code) && !string.IsNullOrEmpty(result))
+                    {
+                        YS_WaiXieZiLiao record = new YS_WaiXieZiLiao
+                        {
+                            Date = date,
+                            Code = code,
+                            Result = result,
+                            Machine = machine,
+                            User = usr
+                        };
+                        records.Add(record);
+                    }
+
+                }
+                return records;
+            }
+
+        }
+
+        private static string GetCellStringValue(ICell cell)
+        {
+            if (cell == null) return string.Empty;
+
+            switch (cell.CellType)
+            {
+                case CellType.Numeric:
+                    if (DateUtil.IsCellDateFormatted(cell))
+                    {
+                        return cell.DateCellValue.ToString("yyyy/MM/dd HH:mm:ss"); // 格式化日期
+                    }
+                    return cell.NumericCellValue.ToString();
+                case CellType.String:
+                    return cell.StringCellValue;
+                case CellType.Boolean:
+                    return cell.BooleanCellValue.ToString();
+                case CellType.Formula:
+                    return cell.CellFormula;
+                case CellType.Blank:
+                    return string.Empty;
+                default:
+                    return cell.ToString();
+            }
+        }
+        // 读取文件最新行内容的方法
+        private void YS_DianCEReadNewLines(string filePath)
+        {
+            var newRecords = YS_DianCeReadCsvFile(filePath, lastPosition);
+
+            if (newRecords.Count > 0)
+            {
+                foreach (var record in newRecords)
+                {
+                    ProcessRecord(record);
+                }
+            }
+
+            lastPosition = new FileInfo(filePath).Length; // 更新最后读取位置
+        }
+        private void XNY_KTReadNewLines(string filePath)
+        {
+            Console.WriteLine("上次读取记录" + lastPosition);
+            var newRecords = KTHuiLiuHanAlarm(filePath, lastPosition);
+            if (newRecords.Count > 0)
+            {
+                foreach (var record in newRecords)
+                {
+                    KT_ProcessRecord(record);
+                }
+            }
+            lastPosition = new FileInfo(filePath).Length; // 更新最后读取位置
+            Console.WriteLine("最后读取记录" + lastPosition);
+        }
+        private void ProcessRecord(YS_DianCe_Model record)
+        {
+            // 在这里实现处理每条记录的逻辑
+            Console.WriteLine($"新记录: {record.Date}, {record.DeviceName}, {record.DeviceNumber}, {record.ProductNumber}, {record.BatchNumber}, {record.UnitOrder}, {record.Barcode}, {record.Result}, {record.GoodUnitCount}, {record.BadUnitCount}, {record.BadUnitInfo}");
+        }
+        private void KT_ProcessRecord(YSXNY_KTHuiLiuHan record)
+        {
+            // 在这里实现处理每条记录的逻辑
+            Console.WriteLine($"新记录: {record.Date}, {record.User}, {record.Model}, {record.Message}");
+        }
         /// <summary>
         /// 获取变动的路径的显示字符串
         /// </summary>
@@ -812,7 +1122,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                 {
                     return;
                 }
-                string destinationFile = Path.Combine(destFilePath, Path.GetFileName(files));
+                string destinationFile = System.IO.Path.Combine(destFilePath, Path.GetFileName(files));
                 if (File.Exists(destinationFile))
                 {
                     // 移除只读属性（否则无法删除）
@@ -1154,6 +1464,22 @@ namespace DLGCY.FilesWatcher.ViewModels
                         result_ = "FAIL";
                     }
                 }
+                //③#1_20240718062746_Y048235147E0075879.txt
+                if (underscoreCount == 2 && fileName.Contains('#'))
+                {
+                    // 使用正则表达式匹配两个下划线之间的文本
+                    parts = fileName.Split('_');
+                    result = parts.Where(x => !string.IsNullOrWhiteSpace(x)).ToArray();
+                    BarCode_ = result[2];
+                    if (filePath.Contains("PassLog"))
+                    {
+                        result_ = "PASS";
+                    }
+                    else
+                    {
+                        result_ = "FAIL";
+                    }
+                }
                 // 检测时间是否为空
                 Timeresult ??= DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                 // 输出提取的信息
@@ -1189,16 +1515,46 @@ namespace DLGCY.FilesWatcher.ViewModels
             }
         }
         /// <summary>
-        /// （模式C）文件格式 
+        /// 模式D）元盛新能源--文件格式 2024-07-03.txt
         /// </summary>
         /// <param name="filePath"></param>
-        /// <param name="fileName"></param>
         /// <returns></returns>
-        //public bool FileTXTName_SonFile(string fileName, string filePath)
-        //{
-        //   
-        //}
+        public List<YSXNY_KTHuiLiuHan> KTHuiLiuHanAlarm(string filePath, long startPosition = 0)
+        {
+            List<YSXNY_KTHuiLiuHan> warningLines = new List<YSXNY_KTHuiLiuHan>();
 
+            if (!File.Exists(filePath))
+            {
+                return warningLines; // 文件不存在时直接返回空列表
+            }
+
+            using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.ReadWrite))
+            {
+                fs.Seek(lastPosition, SeekOrigin.Begin);
+                using (var sr = new StreamReader(fs))
+                {
+                    while (!sr.EndOfStream)
+                    {
+                        var line = sr.ReadLine();
+                        var columns = line.Split(new[] { '\t', ' ' }, StringSplitOptions.RemoveEmptyEntries);
+                        if (columns.Length > 3 && columns[2] == "警告")
+                        {
+                            var _KTHuiLiuHan = new YSXNY_KTHuiLiuHan
+                            {
+                                Date = columns[0],
+                                User = columns[1],
+                                Model = columns[2],
+                                Message = columns[3]
+                            };
+                            warningLines.Add(_KTHuiLiuHan);
+                        }
+                    }
+                    lastPosition = fs.Position; // 更新 lastPosition 到文件流的位置
+                }
+            }
+
+            return warningLines;
+        }
         /// <summary>
         /// （模式A）文件格式 7700SII plus_20231219144327.txt（AOI）
         /// </summary>
@@ -1237,6 +1593,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                 ProcessCurrentData(aoiDataList, currentData);
                 //SKIP的意思是报废板，不上传
                 aoiDataList.RemoveAll(item => item.PCBStatus.Contains("SKIP"));
+                aoiDataList.RemoveAll(item => item.SubBoardBarCode.Contains(':'));
                 // 显示解析的数据
                 foreach (var entry in aoiDataList)
                 {
@@ -1283,16 +1640,6 @@ namespace DLGCY.FilesWatcher.ViewModels
                     currentRowCount = sheet.PhysicalNumberOfRows;
                 }
 
-                // 获取上次记录的行数
-                int originalRowCount = Configs.ExcelLastRow;
-
-                // 检查是否有新增内容
-                if (originalRowCount == currentRowCount)
-                {
-                    Console.WriteLine("Excel 文件没有新增内容，无需解析！");
-                    return;
-                }
-
                 // 读取 Excel 文件
                 using (var fs = new FileStream(filePath, FileMode.Open, FileAccess.Read))
                 {
@@ -1312,7 +1659,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                     List<HuaJingAlarms> alarms = new List<HuaJingAlarms>();
 
                     // 从上次读取的行数之后开始读取数据
-                    for (int row = originalRowCount; row < currentRowCount; row++)
+                    for (int row = 1; row < currentRowCount; row++)
                     {
                         IRow currentRow = sheet.GetRow(row);
 
@@ -1326,7 +1673,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                         string account = currentRow.GetCell(2) != null ? currentRow.GetCell(2).StringCellValue : "";
 
                         HuaJingAlarms moduleInfo = new HuaJingAlarms(module, address, account);
-                        if (account.Contains("A/B车定位异常") || account.Contains("低液位") || account.Contains("温度异常") || account.Contains("电导率超标异常") || account.Contains("天车碰撞"))
+                        if (account.Contains("车定位异常") || account.Contains("低液位") || account.Contains("温度异常") || account.Contains("电导率") || account.Contains("天车碰撞"))
                         {
                             alarms.Add(moduleInfo);
                         }
@@ -1361,9 +1708,86 @@ namespace DLGCY.FilesWatcher.ViewModels
                 Console.WriteLine($"Excel 文件读取错误: {e.Message}");
             }
         }
+        /// <summary>
+        /// 洪湾电测数据解析：ProdData_20240710.csv
+        /// </summary>
+        /// <param name="filePath"></param>
+        /// <param name="startPosition"></param>
+        /// <returns></returns>
+        public List<YS_DianCe_Model> YS_DianCeReadCsvFile(string filePath, long startPosition = 0)
+        {
+            var records = new List<YS_DianCe_Model>();
 
+            // 注册编码提供程序
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
 
+            // 尝试使用不同的编码读取文件
+            Encoding[] encodings = new Encoding[] { Encoding.GetEncoding("GBK") };
+            foreach (var encoding in encodings)
+            {
+                try
+                {
+                    using (var reader = new StreamReader(filePath, encoding))
+                    {
+                        // 从指定位置开始读取
+                        reader.BaseStream.Seek(startPosition, SeekOrigin.Begin);
 
+                        // 如果起始位置为0，读取表头
+                        if (startPosition == 0)
+                        {
+                            var header = reader.ReadLine();
+                            Console.WriteLine($"尝试使用编码 {header}");
+                        }
+
+                        // 逐行读取文件内容
+                        while (!reader.EndOfStream)
+                        {
+                            var line = reader.ReadLine();
+                            var values = line.Split(',');
+
+                            // 解析不良品信息并汇总为一个字符串
+                            var badUnitInfo = new StringBuilder();
+                            if (values.Length < 11)
+                            {
+                                badUnitInfo = null;
+                            }
+                            for (int i = 10; i < values.Length; i++)
+                            {
+                                if (i > 10)
+                                {
+                                    badUnitInfo.Append(", ");
+                                }
+                                badUnitInfo.Append(values[i]);
+                            }
+                            // 创建一个YS_DianCe_Model对象，并填充数据
+                            var record = new YS_DianCe_Model
+                            {
+                                Date = DateTime.Parse(values[0], CultureInfo.InvariantCulture), // 解析日期
+                                DeviceName = values[1], // 设备名称
+                                DeviceNumber = values[2], // 设备编号
+                                ProductNumber = values[3], // 产品号
+                                BatchNumber = values[4], // 批次号
+                                UnitOrder = int.Parse(values[5]), // 单元排序
+                                Barcode = values[6], // 条码
+                                Result = values[7], // 结果
+                                GoodUnitCount = int.Parse(values[8]), // 良品单元数
+                                BadUnitCount = int.Parse(values[9]), // 不良品单元数
+                                BadUnitInfo = badUnitInfo.ToString()  // 不良品信息
+                            };
+
+                            records.Add(record);
+                        }
+                    }
+                    break; // 如果成功读取，跳出循环
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"尝试使用编码 {encoding.EncodingName} 读取文件失败: {ex.Message}");
+                }
+            }
+
+            return records;
+        }
 
         //此处是将list集合写入excel表，Supply也是自己定义的类，每一个字段对应需要写入excel表的每一列的数据
         //一次最多能写65535行数据，超过需将list集合拆分，分多次写入
@@ -1565,16 +1989,16 @@ namespace DLGCY.FilesWatcher.ViewModels
                             CreateDate = testTime,
                             TestResult = result == "PASS",
                             Barcode = BarCode,
-                            FaultCode = result == "PASS" ? "" : "短路",
+                            FaultCode = result == "PASS" ? "" : "BF372",
                             RevisedFaultCode = null,
-                            ImageUrl = null
+                            ImageUrl = Configs.FinalPath
                         }
                     },
                     ImageInfos = new List<ImageInfo>
                     {
                        new ImageInfo
                        {
-                           ImageUrl = null,
+                           ImageUrl = Configs.FinalPath,
                            ImageIndex = 0,
                            TotalImage = 0,
                            UploadResult = false
@@ -1648,7 +2072,14 @@ namespace DLGCY.FilesWatcher.ViewModels
             }
         }
 
-
+        /// <summary>
+        /// 上传MES过站接口
+        /// </summary>
+        /// <param name="BarCode"></param>
+        /// <param name="result"></param>
+        /// <param name="testTime"></param>
+        /// <param name="filePath"></param>
+        /// <returns></returns>
         public bool Post_PastationAPI(string BarCode, string result, string testTime, string filePath)
         {
             try
@@ -1670,7 +2101,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                             CreateDate = testTime,
                             TestResult = result == "PASS",
                             Barcode = BarCode,
-                            FaultCode = result == "PASS" ? "" : "短路",
+                            FaultCode = result == "PASS" ? "" : "BF372",
                             RevisedFaultCode = null,
                             ImageUrl = null
                         }
@@ -1715,8 +2146,10 @@ namespace DLGCY.FilesWatcher.ViewModels
                 {
                     LogHelper.Debug($"【MES过站接口】设备编码：{Configs.MachineModel};条码：{BarCode};MES结果：【{apiResponsePastation.Success}】--{apiResponsePastation.Message}");
                     Configs.ProductBarcode = BarCode;
-                    Configs.MESErrorInfo = apiResponsePastation.Message;
+                    //Configs.MESErrorInfo = apiResponsePastation.Message;
                     Configs.UploadResult = "成功";
+                    Configs.MESErrorInfo = "--过站成功--";
+                    Configs.AnalysCount++;
                 }
                 else
                 {

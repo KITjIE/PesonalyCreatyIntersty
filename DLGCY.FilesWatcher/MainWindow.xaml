@@ -117,9 +117,14 @@
                         </StackPanel>
 
                         <Button x:Name="ChangeBtn" Style="{StaticResource ExpanderContentButtonV}" Command="{Binding ChangeConfigCommand}" Content="修改配置" Margin="5,10,10,10"/>
-                        <Button Style="{StaticResource ExpanderContentButtonV}" Command="{Binding SaveConfigCommand}" Content="保存配置"/>
-                        <Button Style="{StaticResource ExpanderContentButtonV}" Command="{Binding LoadConfigCommand}" Content="重载配置"/>
+                        <Button Style="{StaticResource ExpanderContentButtonV}" Command="{Binding SaveConfigCommand}" Content="保存配置" Margin="10,10,10,10"/>
+                        <Button Style="{StaticResource ExpanderContentButtonV}" Command="{Binding LoadConfigCommand}" Content="重载配置" Margin="10,10,10,10"/>
                     </StackPanel>
+                    <!--<StackPanel Width="170" Height="50" Margin="400,120,0,0" Orientation="Horizontal">
+                        <Button Style="{StaticResource ExpanderContentButtonV}" Command="{Binding SaveConfigCommand}" Content="导出配置" Height="28" Width="73"/>
+                        <Button Style="{StaticResource ExpanderContentButtonV}" Command="{Binding SaveConfigCommand}" Content="导入配置" Height="28" Width="73" Margin="0,10,0,10"/>
+
+                    </StackPanel>-->
 
                 </Grid>
                 <StackPanel Height="180" VerticalAlignment="Top" Width="217">
@@ -151,6 +156,9 @@
                 </StackPanel>
             </StackPanel>
         </Expander>
+        <Button Command="{Binding ExportConfigCommand}" Width="77" Height="26" Style="{StaticResource Default}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="4" Margin="90,5,0,0" Content="导出配置"   />
+        <Button Command="{Binding InputConfigCommand}" Width="77" Height="26" Style="{StaticResource Default}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="4" Margin="0,5,0,0" Content="导入配置"   />
+
         <Button Command="{Binding AnalysCommand}" Width="77" Height="26" Style="{StaticResource Default}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="4" Margin="180,5,0,0" Content="解析模式说明"   />
         <Button Command="{Binding AboutCommand}" Width="28" Height="26" Style="{StaticResource Default}" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="4" Margin="0,5,10,0" Content="关于" />
 
@@ -226,7 +234,7 @@
                             </StackPanel>
                             <StackPanel Style="{StaticResource SP}">
                                 <Label Content="是否自动滚动消息框？" Width="130"/>
-                                <CheckBox  IsChecked="{Binding Configs.IsAutoScroll, Converter={StaticResource TrueFalseConverter}, Mode=TwoWay}" VerticalAlignment="Center"/>
+                                <CheckBox x:Name="CBIsAutoScroll" IsChecked="{Binding Configs.IsAutoScroll, Converter={StaticResource TrueFalseConverter}, Mode=TwoWay}" VerticalAlignment="Center"/>
                             </StackPanel>
                             <StackPanel Style="{StaticResource SP}">
                                 <Label Content="消息是否自动减半？" Width="130"/>
@@ -267,7 +275,7 @@
                             <Button Command="{Binding StopWatchCommand}" HorizontalAlignment="Center" Background="#FFE94210" Content="自动解析【停止】"/>
                             <Button Command="{Binding HandWatchCommand}" HorizontalAlignment="Center" Content="手动上传文件"/>
                             <Button Command="{Binding ScanCodeUploadCommand}" HorizontalAlignment="Center" Background="#FF9810E9" Content="人工扫码上传"/>
-                            <!--<Button Command="{Binding WaitCommand}" HorizontalAlignment="Center" Background="#FF908E8E" Content="测试"/>-->
+                            <Button Command="{Binding WaitCommand}" HorizontalAlignment="Center" Background="#FF010102" Content="测试" BorderBrush="#FF612424"/>
 
                             <StackPanel Orientation="Horizontal" Margin="5,5,5,5" Height="27">
                                 <Label Content="已上传：" Width="63" FontWeight="Bold"/>

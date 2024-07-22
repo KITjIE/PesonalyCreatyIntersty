@@ -14,7 +14,7 @@
                 </Style>
             </StackPanel.Resources>
             <StackPanel>
-                <TextBlock FontSize="14" FontWeight="Bold">解析模式A：</TextBlock>
+                <TextBlock FontSize="14" FontWeight="Bold">○解析模式A：</TextBlock>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock>（例1）解析路径\</TextBlock>
                     <TextBlock Foreground="#FFF70808">7700SII plus_20231219144327</TextBlock>
@@ -23,7 +23,7 @@
                 </StackPanel>
             </StackPanel>
             <StackPanel>
-                <TextBlock FontSize="14" FontWeight="Bold">解析模式B：</TextBlock>
+                <TextBlock FontSize="14" FontWeight="Bold">○解析模式B：</TextBlock>
                 <StackPanel Orientation="Horizontal">
                     <TextBlock>（例1）解析路径\</TextBlock>
                     <TextBlock Foreground="#FFF70808">Y000000000000_PASS_SYNA_20240326_165100_65</TextBlock>
@@ -62,23 +62,45 @@
                     <TextBlock Foreground="#FFF70808"><Run Text="Y000000000"/></TextBlock>
                     <TextBlock Foreground="#FF080CF7" FontWeight="Bold">.txt</TextBlock>
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock>（例8）解析路径\</TextBlock>
+                    <TextBlock Foreground="#FF080CF7" FontWeight="Bold">PassLog\</TextBlock>
+                    <TextBlock Foreground="#FFF70808"><Run Text="#1_20240718062746_Y048235147E0075879"/></TextBlock>
+                    <TextBlock Foreground="#FF080CF7" FontWeight="Bold">.txt</TextBlock>
+                </StackPanel>
             </StackPanel>
 
             <StackPanel>
-                <TextBlock FontSize="14" FontWeight="Bold">解析模式C：</TextBlock>
+                <TextBlock FontSize="14" FontWeight="Bold">●解析模式C：</TextBlock>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock>（例1）解析路径\</TextBlock>
-                    <TextBlock Foreground="#FFF70808">化金线报警</TextBlock>
-                    <TextBlock Foreground="#FF080CF7" FontWeight="Bold"> .csv</TextBlock>
+                    <TextBlock><Run Text="（例1）解析路径\"/></TextBlock>
+                    <TextBlock Foreground="#FFF70808"><Run Text="化金线报警"/></TextBlock>
+                    <TextBlock Foreground="#FF080CF7" FontWeight="Bold"><Run Text=".csv"/></TextBlock>
 
                 </StackPanel>
             </StackPanel>
             <StackPanel>
-                <TextBlock FontSize="14" FontWeight="Bold">解析模式D：</TextBlock>
+                <TextBlock FontSize="14" FontWeight="Bold">●解析模式D：</TextBlock>
                 <StackPanel Orientation="Horizontal">
-                    <TextBlock> </TextBlock>
-                    <TextBlock Foreground="#FFF70808"> </TextBlock>
+                    <TextBlock><Run Text="（例1）解析路径\电测日志\"/></TextBlock>
+                    <TextBlock Foreground="#FFF70808"><Run Text="ProdData_20240712"/></TextBlock>
+                    <TextBlock Foreground="#FF080CF7" FontWeight="Bold"><Run Text=".csv"/></TextBlock>
+                   
                 </StackPanel>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock><Run Text="（例2）解析路径\新能源凯泰回流焊日志\"/></TextBlock>
+                    <TextBlock Foreground="#FFF70808"><Run Text="2024-7-15"/></TextBlock>
+                    <TextBlock Foreground="#FF080CF7" FontWeight="Bold"><Run Text=".log"/></TextBlock>
+                </StackPanel>
+            </StackPanel>
+            <StackPanel>
+                <TextBlock FontSize="14" FontWeight="Bold">●解析模式E：</TextBlock>
+                <StackPanel Orientation="Horizontal">
+                    <TextBlock><Run Text="（例1）解析路径\"/></TextBlock>
+                    <TextBlock Foreground="#FFF70808"><Run Text="外协生产记录"/></TextBlock>
+                    <TextBlock Foreground="#FF080CF7" FontWeight="Bold"><Run Text=".xlsx"/></TextBlock>
+                </StackPanel>
+                
             </StackPanel>
             <StackPanel Orientation="Horizontal"/>
         </StackPanel>

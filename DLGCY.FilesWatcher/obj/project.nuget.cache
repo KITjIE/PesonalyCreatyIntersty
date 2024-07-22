@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "uPvizrseNJG8Zl9SCKBRRcZTlTN2TcwvQcwfJ3f7LPf5yvQa/UFgPbLTGmtE8UMdN59hteVOMPW1p2vQU+g5yw==",
+  "dgSpecHash": "XaAMwQTJm5Fhmp9aP8py2ogBddGMBOyBNUegj0QlhlzOilG7BgWP01LfMyo/piIG8dQDi+GqD8ckYJd2gQQZZg==",
   "success": true,
   "projectFilePath": "D:\\Users\\fuspguij\\Source\\Repos\\PesonalyCreatyInterstyQ\\DLGCY.FilesWatcher\\DLGCY.FilesWatcher.csproj",
   "expectedPackageFiles": [
@@ -34,7 +34,7 @@
     "C:\\Users\\fuspguij\\.nuget\\packages\\microsoft.netcore.dotnethostpolicy\\1.0.5\\microsoft.netcore.dotnethostpolicy.1.0.5.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\microsoft.netcore.dotnethostresolver\\1.0.1\\microsoft.netcore.dotnethostresolver.1.0.1.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\microsoft.netcore.jit\\1.0.7\\microsoft.netcore.jit.1.0.7.nupkg.sha512",
-    "C:\\Users\\fuspguij\\.nuget\\packages\\microsoft.netcore.platforms\\5.0.0\\microsoft.netcore.platforms.5.0.0.nupkg.sha512",
+    "C:\\Users\\fuspguij\\.nuget\\packages\\microsoft.netcore.platforms\\1.1.0\\microsoft.netcore.platforms.1.1.0.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\microsoft.netcore.runtime.coreclr\\1.0.7\\microsoft.netcore.runtime.coreclr.1.0.7.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\microsoft.netcore.targets\\1.1.0\\microsoft.netcore.targets.1.1.0.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\microsoft.netcore.windows.apisets\\1.0.1\\microsoft.netcore.windows.apisets.1.0.1.nupkg.sha512",
@@ -130,7 +130,7 @@
     "C:\\Users\\fuspguij\\.nuget\\packages\\system.resources.resourcemanager\\4.3.0\\system.resources.resourcemanager.4.3.0.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\system.runtime\\4.3.0\\system.runtime.4.3.0.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\system.runtime.caching\\4.7.0\\system.runtime.caching.4.7.0.nupkg.sha512",
-    "C:\\Users\\fuspguij\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\5.0.0\\system.runtime.compilerservices.unsafe.5.0.0.nupkg.sha512",
+    "C:\\Users\\fuspguij\\.nuget\\packages\\system.runtime.compilerservices.unsafe\\6.0.0\\system.runtime.compilerservices.unsafe.6.0.0.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\system.runtime.extensions\\4.3.0\\system.runtime.extensions.4.3.0.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\system.runtime.handles\\4.3.0\\system.runtime.handles.4.3.0.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\system.runtime.interopservices\\4.3.0\\system.runtime.interopservices.4.3.0.nupkg.sha512",
@@ -153,7 +153,7 @@
     "C:\\Users\\fuspguij\\.nuget\\packages\\system.security.principal\\4.0.1\\system.security.principal.4.0.1.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\system.security.principal.windows\\4.7.0\\system.security.principal.windows.4.7.0.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\system.text.encoding\\4.3.0\\system.text.encoding.4.3.0.nupkg.sha512",
-    "C:\\Users\\fuspguij\\.nuget\\packages\\system.text.encoding.codepages\\5.0.0\\system.text.encoding.codepages.5.0.0.nupkg.sha512",
+    "C:\\Users\\fuspguij\\.nuget\\packages\\system.text.encoding.codepages\\6.0.0\\system.text.encoding.codepages.6.0.0.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\system.text.encoding.extensions\\4.3.0\\system.text.encoding.extensions.4.3.0.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\system.text.regularexpressions\\4.3.0\\system.text.regularexpressions.4.3.0.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\system.threading\\4.3.0\\system.threading.4.3.0.nupkg.sha512",
@@ -170,18 +170,17 @@
     "C:\\Users\\fuspguij\\.nuget\\packages\\system.xml.xdocument\\4.3.0\\system.xml.xdocument.4.3.0.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\system.xml.xmldocument\\4.0.1\\system.xml.xmldocument.4.0.1.nupkg.sha512",
     "C:\\Users\\fuspguij\\.nuget\\packages\\system.xml.xpath\\4.0.1\\system.xml.xpath.4.0.1.nupkg.sha512",
-    "C:\\Users\\fuspguij\\.nuget\\packages\\system.xml.xpath.xdocument\\4.0.1\\system.xml.xpath.xdocument.4.0.1.nupkg.sha512",
-    "C:\\Users\\fuspguij\\.nuget\\packages\\microsoft.windows.sdk.net.ref\\10.0.22000.31\\microsoft.windows.sdk.net.ref.10.0.22000.31.nupkg.sha512"
+    "C:\\Users\\fuspguij\\.nuget\\packages\\system.xml.xpath.xdocument\\4.0.1\\system.xml.xpath.xdocument.4.0.1.nupkg.sha512"
   ],
   "logs": [
     {
       "code": "NU1701",
       "level": "Warning",
       "warningLevel": 1,
-      "message": "已使用“.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1”而不是项目目标框架“net6.0-windows10.0.22000”还原包“MvvmLightLibs 5.4.1.1”。此包可能与项目不完全兼容。",
+      "message": "已使用“.NETFramework,Version=v4.6.1, .NETFramework,Version=v4.6.2, .NETFramework,Version=v4.7, .NETFramework,Version=v4.7.1, .NETFramework,Version=v4.7.2, .NETFramework,Version=v4.8, .NETFramework,Version=v4.8.1”而不是项目目标框架“net6.0-windows7.0”还原包“MvvmLightLibs 5.4.1.1”。此包可能与项目不完全兼容。",
       "libraryId": "MvvmLightLibs",
       "targetGraphs": [
-        "net6.0-windows10.0.22000"
+        "net6.0-windows7.0"
       ]
     }
   ]

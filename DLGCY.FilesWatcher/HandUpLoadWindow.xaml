@@ -14,11 +14,12 @@
                     <Setter Property="Margin" Value="0,5"></Setter>
                 </Style>
             </StackPanel.Resources>
-            <StackPanel HorizontalAlignment="Center" Height="119" Margin="0,50,0,0" Width="430">
+            <StackPanel HorizontalAlignment="Center" Height="80" Margin="0,50,0,0" Width="430">
                 <TextBlock FontSize="50" FontWeight="Bold" HorizontalAlignment="Center" Margin="0,0,0,5">人工扫码上传</TextBlock>
-               
-                
+
             </StackPanel>
+            <TextBlock TextWrapping="Wrap" Text="{Binding Configs.tips}" HorizontalAlignment="Center" Foreground="#FFF70404"/>
+
             <StackPanel HorizontalAlignment="Center">
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center">
                     <TextBlock FontSize="30">板件码：</TextBlock>
@@ -26,13 +27,23 @@
                     <!--<TextBox TextWrapping="Wrap" Width="346" Text="{Binding Configs.URLPath, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" IsEnabled="{Binding Configs.EditMode}"-->
                 </StackPanel>
                 <StackPanel Orientation="Horizontal" HorizontalAlignment="Center" Margin="0,30,0,0">
-                    <Button Content="取消" Command="{Binding CancelCommand}" Width="100" Height="30" Margin="30,10,0,0" FontSize="18" Click="Button_Click"/>
+                    <Button Content="取消" Command="{Binding CancelCommand}" Width="100" Height="30" Margin="30,10,0,0" FontSize="18" />
 
                     <Button Content="上传" Command="{Binding UpLoadCommand}" Width="100" Height="30" Margin="50,10,0,0"  FontSize="18"/>
                 </StackPanel>
 
-                </StackPanel>
+            </StackPanel>
             <StackPanel Orientation="Horizontal"/>
+            <StackPanel Height="36" Orientation="Horizontal">
+                <TextBlock TextWrapping="Wrap" Text="条码：" Height="65" FontSize="20"/>
+                <TextBlock TextWrapping="Wrap" Text="{Binding Configs.ProductBarcode}" Height="65" FontSize="20" FontWeight="Bold"/>
+            </StackPanel>
+            <StackPanel Height="100" Orientation="Horizontal">
+                <TextBlock TextWrapping="Wrap" Text="MES结果：" Height="40" FontSize="20"/>
+
+                <TextBlock TextWrapping="Wrap" Text="{Binding Configs.MESErrorInfo}" Height="40" FontSize="20" FontWeight="Bold"/>
+            </StackPanel>
+            
         </StackPanel>
     </ScrollViewer>
 

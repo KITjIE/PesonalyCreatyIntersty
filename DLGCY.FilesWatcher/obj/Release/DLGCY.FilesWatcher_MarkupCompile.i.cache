@@ -1,5 +1,5 @@
 ﻿DLGCY.FilesWatcher
-1.0.4.*
+1.0.7.*
 
 winexe
 C#
@@ -10,11 +10,11 @@ none
 false
 TRACE;RELEASE;NET;NET6_0;NETCOREAPP
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\App.xaml
-41187602644
+52040895109
 3126382161
-231415956932
-2402132912862
-AboutWindow.xaml;AnalysWindow.xaml;MainWindow.xaml;MsgWindow.xaml;
+302068268083
+2381240769993
+AboutWindow.xaml;AnalysWindow.xaml;HandUpLoadWindow.xaml;MainWindow.xaml;MsgWindow.xaml;
 
-False
+True
 

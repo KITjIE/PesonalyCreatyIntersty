@@ -36,6 +36,8 @@ namespace DLGCY.FilesWatcher.ViewModels
                new ComplexInfoModel(){ Key="2",Text="文件解析模式B" },
                new ComplexInfoModel(){ Key="3",Text="文件解析模式C" },
                new ComplexInfoModel(){ Key="4",Text="文件解析模式D" },
+               new ComplexInfoModel(){ Key="5",Text="文件解析模式E" },
+
             };
             for (int i = 0; i < CombboxList.Count; i++)
             {

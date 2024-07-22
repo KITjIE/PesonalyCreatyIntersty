@@ -14,12 +14,12 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CEEPCB.com")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Release")]
 [assembly: System.Reflection.AssemblyDescriptionAttribute("文件变动监控器")]
-[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.7.1")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.8+f3a966ed059ed4fb8d3a41fe9ec9a512226fcb33")]
+[assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.7.8")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.8+9e75219a1082d8609e78490f6a9690e8221a9835")]
 [assembly: System.Reflection.AssemblyProductAttribute("DLGCY.FilesWatcher")]
 [assembly: System.Reflection.AssemblyTitleAttribute("DLGCY.FilesWatcher")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.7.*")]
-[assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows10.0.22000.0")]
+[assembly: System.Runtime.Versioning.TargetPlatformAttribute("Windows7.0")]
 [assembly: System.Runtime.Versioning.SupportedOSPlatformAttribute("Windows7.0")]
 
 // 由 MSBuild WriteCodeFragment 类生成。

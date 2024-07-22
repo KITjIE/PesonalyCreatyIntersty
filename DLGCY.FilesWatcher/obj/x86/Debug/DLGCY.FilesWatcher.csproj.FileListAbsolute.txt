@@ -387,7 +387,5 @@ D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\�
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\x86\Debug\AnalysWindow.g.cs
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\x86\Debug\AnalysWindow.baml
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\文件夹监控器\CommunityToolkit.Mvvm.dll
-D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\文件夹监控器\Microsoft.Windows.SDK.NET.dll
-D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\文件夹监控器\WinRT.Runtime.dll
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\x86\Debug\HandUpLoadWindow.g.cs
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\x86\Debug\HandUpLoadWindow.baml
