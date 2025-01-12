@@ -156,10 +156,10 @@
                 </StackPanel>
             </StackPanel>
         </Expander>
-        <Button Command="{Binding ExportConfigCommand}" Width="77" Height="26" Style="{StaticResource Default}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="4" Margin="90,5,0,0" Content="导出配置"   />
-        <Button Command="{Binding InputConfigCommand}" Width="77" Height="26" Style="{StaticResource Default}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="4" Margin="0,5,0,0" Content="导入配置"   />
+        <Button Command="{Binding ExportConfigCommand}" Width="77" Height="26" Style="{StaticResource Default}" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="4" Margin="0,5,140,0" Content="导出配置"   />
+        <Button Command="{Binding InputConfigCommand}" Width="77" Height="26" Style="{StaticResource Default}" IsEnabled="{Binding Configs.EditMode }" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="4" Margin="0,5,225,0" Content="导入配置"   />
 
-        <Button Command="{Binding AnalysCommand}" Width="77" Height="26" Style="{StaticResource Default}" HorizontalAlignment="Left" VerticalAlignment="Top" Grid.Column="4" Margin="180,5,0,0" Content="解析模式说明"   />
+        <Button Command="{Binding AnalysCommand}" Width="77" Height="26" Style="{StaticResource Default}" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="4" Margin="0,5,50,0" Content="解析模式说明"   />
         <Button Command="{Binding AboutCommand}" Width="28" Height="26" Style="{StaticResource Default}" HorizontalAlignment="Right" VerticalAlignment="Top" Grid.Column="4" Margin="0,5,10,0" Content="关于" />
 
         <Grid Grid.Row="1" Grid.ColumnSpan="5" Margin="0,0,0,20" Grid.RowSpan="2">

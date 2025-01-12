@@ -4,7 +4,7 @@ using System.Data;
 using System.Globalization;
 using System.IO;
 using System.Linq;
-using System.Net.Http; 
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
@@ -12,7 +12,8 @@ using System.Threading.Tasks;
 using System.Windows.Controls;
 using System.Windows.Forms;
 using System.Windows.Input;
-using System.Windows.Media; 
+using System.Windows.Media;
+using DLGCY.FilesWatcher.Helper;
 using DotNet.Utilities.ConsoleHelper;
 using FreeSql;
 using Newtonsoft.Json;
@@ -58,7 +59,7 @@ namespace DLGCY.FilesWatcher.ViewModels
         static long lastPosition = 0;
         static string directoryPath = string.Empty;
         static string currentFilePath;
-
+        private readonly RabbitMQHelper _rabbitMQHelper;
 
         private Dictionary<string, long> _fileReadPositions = new Dictionary<string, long>();
         private string _Info = "";
@@ -116,7 +117,7 @@ namespace DLGCY.FilesWatcher.ViewModels
             //AddFreeSql();
             //fsql.CodeFirst.SyncStructure(typeof(YS_TestModel));
             vMTempTest = new VMTempTest(Configs);
-
+            _rabbitMQHelper = new RabbitMQHelper("10.164.19.108", 5672, "YSXNYEQPALARM.topic");
         }
 
         ~MainWindowViewModel()
@@ -224,7 +225,11 @@ namespace DLGCY.FilesWatcher.ViewModels
 
         public async Task DoWorkWithParam(object message)
         {
-            string barCode = message.ToString();
+            if (Configs.HandBarCode_Son == "" || Configs.HandBarCode_Son == null)
+            {
+                Configs.HandBarCode_Son = "PBM";
+            }
+            string barCode = message.ToString() + "-" + Configs.HandBarCode_Son.ToString();
             string testtime = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             string result = "PASS";
             string path = "HandUpLoad";
@@ -575,7 +580,7 @@ namespace DLGCY.FilesWatcher.ViewModels
 
             UpLoadCommand ??= new RelayCommand(o => true, async o =>
             {
-                if (Configs.HandBarCode == null || Configs.HandBarCode == "")
+                if (Configs.HandBarCode == null || Configs.HandBarCode == "" || Configs.HandBarCode_Son == null || Configs.HandBarCode_Son == "")
                 {
                     Configs.tips = "输入条码不能为空！！";
                     return;
@@ -640,33 +645,26 @@ namespace DLGCY.FilesWatcher.ViewModels
         {
             if (Configs.SupervisMode == "文件解析模式D")
             {
-                Thread.Sleep(1000); // 延时10秒钟
+                Thread.Sleep(20000); // 延时10秒钟
                 string fileType = string.Empty;
                 if (GetPath(e).Contains("ProdData"))
                 {
                     fileType = "HWDC";
                 }
-                else if (GetPath(e).Contains("log") && GetPath(e).Contains("-"))
+                else if (GetPath(e).Contains("operatorlog"))
                 {
                     fileType = "XNYKT";
                 }
                 switch (fileType)
                 {
                     case "HWDC":
-                        if (IsNewFileForToday(e.FullPath, false))
-                        {
-                            currentFilePath = e.FullPath;
-                            //lastPosition = 0; // 重置读取位置
-                            Task.Run(() => YS_DianCEReadNewLines(currentFilePath));
-                        }
+                        currentFilePath = e.FullPath;
+                        Task.Run(() => YS_DianCEReadNewLines(currentFilePath));
                         return;
                     case "XNYKT":
-                        if (IsNewFileForToday(e.FullPath, true))
-                        {
-                            currentFilePath = e.FullPath;
-                            //lastPosition = 0; // 重置读取位置
-                            Task.Run(() => XNY_KTReadNewLines(currentFilePath));
-                        }
+                        currentFilePath = e.FullPath;
+                        string date = Path.GetFileNameWithoutExtension(GetPath(e));
+                        Task.Run(() => XNY_KTReadNewLines(currentFilePath,date));
                         return;
                     default:
                         break;
@@ -722,7 +720,7 @@ namespace DLGCY.FilesWatcher.ViewModels
                     {
                         fileType = "HWDC";
                     }
-                    else if (e.FullPath.Contains("log") && e.FullPath.Contains('-'))
+                    else if (e.FullPath.Contains("operatorlog"))
                     {
                         fileType = "XNYKT";
                     }
@@ -741,17 +739,17 @@ namespace DLGCY.FilesWatcher.ViewModels
                             }
                             return;
                         case "XNYKT":
-                            if (IsNewFileForToday(e.FullPath, true))
-                            {
-                                currentFilePath = e.FullPath;
-                                lastPosition = 0; // 重置读取位置
-                                await Task.Run(() => KTHuiLiuHanAlarm(e.FullPath));
-                            }
-                            var newWarningLines = KTHuiLiuHanAlarm(e.FullPath);
+                            currentFilePath = e.FullPath;
+                            lastPosition = 0; // 重置读取位置
+                            //await Task.Run(() => KTHuiLiuHanAlarm(e.FullPath));
+                            string date = Path.GetFileNameWithoutExtension(e.FullPath);
+                            var newWarningLines = KTHuiLiuHanAlarm(e.FullPath, date);
                             // 输出结果
                             foreach (var warningLine in newWarningLines)
                             {
-                                Console.WriteLine(warningLine);
+                                KT_ProcessRecord(warningLine);
+                                string msg = JsonConvert.SerializeObject(warningLine);
+                                _rabbitMQHelper.SendMessage(msg,"#");
                             }
                             return;
                         default:
@@ -827,12 +825,12 @@ namespace DLGCY.FilesWatcher.ViewModels
         //    var today = DateTime.Now.ToString("yyyyMMdd");
         //    return fileName.Contains(today);
         //}
-        //private bool IsNewFileForToday_(string filePath)
-        //{
-        //    var fileName = Path.GetFileNameWithoutExtension(filePath).Replace("-",null);
-        //    var today = DateTime.Now.ToString("yyyyMdd");
-        //    return fileName.Contains(today);
-        //}
+        private string IsNewFileForToday_(string filePath)
+        {
+            var fileName = Path.GetFileNameWithoutExtension(filePath);
+            var today = DateTime.Now.ToString("yyyyMdd");
+            return today;
+        }
         private bool IsNewFileForToday(string filePath, bool removeDashes)
         {
             var fileName = Path.GetFileNameWithoutExtension(filePath);
@@ -882,12 +880,12 @@ namespace DLGCY.FilesWatcher.ViewModels
                     }
                     if (ConfigManager.SaveConfig(Configs))
                     {
-                        Console.WriteLine(filePath + "【配置导入成功】");
+                        LogHelper.Debug(filePath + "【配置导入成功】");
                     }
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("配置导入失败" + ex.Message);
+                    LogHelper.Debug("配置导入失败" + ex.Message);
                 }
             }
         }
@@ -1012,15 +1010,17 @@ namespace DLGCY.FilesWatcher.ViewModels
 
             lastPosition = new FileInfo(filePath).Length; // 更新最后读取位置
         }
-        private void XNY_KTReadNewLines(string filePath)
+        private void XNY_KTReadNewLines(string filePath,string date)
         {
             Console.WriteLine("上次读取记录" + lastPosition);
-            var newRecords = KTHuiLiuHanAlarm(filePath, lastPosition);
+            var newRecords = KTHuiLiuHanAlarm(filePath, date,lastPosition);
             if (newRecords.Count > 0)
             {
                 foreach (var record in newRecords)
                 {
                     KT_ProcessRecord(record);
+                    string msg = JsonConvert.SerializeObject(record);
+                    _rabbitMQHelper.SendMessage(msg, "#");
                 }
             }
             lastPosition = new FileInfo(filePath).Length; // 更新最后读取位置
@@ -1034,7 +1034,7 @@ namespace DLGCY.FilesWatcher.ViewModels
         private void KT_ProcessRecord(YSXNY_KTHuiLiuHan record)
         {
             // 在这里实现处理每条记录的逻辑
-            Console.WriteLine($"新记录: {record.Date}, {record.User}, {record.Model}, {record.Message}");
+            Console.WriteLine($"新记录: {record.ALARM_START_TIME}, {record.MODEL}, {record.ALARMCODE}, {record.ALARMINFO}");
         }
         /// <summary>
         /// 获取变动的路径的显示字符串
@@ -1515,14 +1515,14 @@ namespace DLGCY.FilesWatcher.ViewModels
             }
         }
         /// <summary>
-        /// 模式D）元盛新能源--文件格式 2024-07-03.txt
+        /// 模式D）元盛新能源凯泰回流焊--文件格式 2024-07-03.txt
         /// </summary>
         /// <param name="filePath"></param>
         /// <returns></returns>
-        public List<YSXNY_KTHuiLiuHan> KTHuiLiuHanAlarm(string filePath, long startPosition = 0)
+        public List<YSXNY_KTHuiLiuHan> KTHuiLiuHanAlarm(string filePath, string date,long startPosition = 0)
         {
             List<YSXNY_KTHuiLiuHan> warningLines = new List<YSXNY_KTHuiLiuHan>();
-
+            string date_ = date;
             if (!File.Exists(filePath))
             {
                 return warningLines; // 文件不存在时直接返回空列表
@@ -1541,10 +1541,15 @@ namespace DLGCY.FilesWatcher.ViewModels
                         {
                             var _KTHuiLiuHan = new YSXNY_KTHuiLiuHan
                             {
-                                Date = columns[0],
-                                User = columns[1],
-                                Model = columns[2],
-                                Message = columns[3]
+
+                                WORKSTATION = Configs.MachineModel,
+                                MODEL = Configs.MachineModel,
+                                OPERATOR = "USER",
+                                ALARMCODE = columns[2],
+                                ALARMINFO = columns[3],
+                                ALARM_START_TIME = date_+" "+columns[0],
+                                ALARM_STOP_TIME = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss"),
+                                UPLOADTIME = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss")
                             };
                             warningLines.Add(_KTHuiLiuHan);
                         }

@@ -316,3 +316,10 @@ D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\x8
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\x86\Release\DLGCY.FilesWatcher.pdb
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\x86\Release\DLGCY.FilesWatcher.genruntimeconfig.cache
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\x86\Release\ref\DLGCY.FilesWatcher.dll
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\x86\Release\Interop.Shell32.dll
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\x86\Release\DLGCY.FilesWatcher.csproj.ResolveComReference.cache
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\x86\Release\RabbitMQ.Client.dll
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\x86\Release\DLGCY.FilesWatcher.dll.manifest
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\x86\Release\DLGCY.FilesWatcher.application
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\x86\Release\DLGCY.FilesWatcher.dll.manifest
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\x86\Release\DLGCY.FilesWatcher.application

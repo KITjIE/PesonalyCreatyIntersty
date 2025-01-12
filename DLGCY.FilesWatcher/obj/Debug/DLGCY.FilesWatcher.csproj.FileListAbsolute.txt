@@ -263,8 +263,6 @@ D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\�
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\文件夹监控器\runtimes\win\lib\net6.0\System.DirectoryServices.Protocols.dll
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\文件夹监控器\runtimes\win\lib\netstandard2.0\System.Runtime.Caching.dll
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\文件夹监控器\runtimes\win\lib\net6.0\System.Security.Cryptography.Pkcs.dll
-D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\文件夹监控器\Microsoft.Windows.SDK.NET.dll
-D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\文件夹监控器\WinRT.Runtime.dll
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\文件夹监控器\Microsoft.Expression.Interactions.dll
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\文件夹监控器\System.Windows.Interactivity.dll
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\文件夹监控器\TemplateClassLibrary.dll
@@ -313,3 +311,6 @@ D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\�
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\文件夹监控器\runtimes\win7-x86\native\libuv.dll
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\Debug\AnalysWindow.g.cs
 D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\Debug\AnalysWindow.baml
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\bin\文件夹监控器\CommunityToolkit.Mvvm.dll
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\Debug\HandUpLoadWindow.g.cs
+D:\Users\fuspguij\Source\Repos\PesonalyCreatyInterstyQ\DLGCY.FilesWatcher\obj\Debug\HandUpLoadWindow.baml

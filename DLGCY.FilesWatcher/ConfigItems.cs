@@ -97,6 +97,10 @@ namespace WPFTemplate
         /// </summary>
         public string HandBarCode { get; set; } = string.Empty;
         /// <summary>
+        /// 人工上传条码拼版码
+        /// </summary>
+        public string HandBarCode_Son { get; set; } = "PBM";
+        /// <summary>
         /// 人工上传tips
         /// </summary>
         public string tips { get; set; } = string.Empty;
